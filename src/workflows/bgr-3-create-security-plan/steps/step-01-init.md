@@ -36,22 +36,23 @@ Initialize the Security Plan workflow by detecting continuation state, discoveri
 
 First, check if the output document already exists:
 
-- Look for existing {bgr_artifacts}/`*security-plan*.md`
+- First, check for `{bgr_artifacts}/security-plan.md` (exact path)
+- If not found at exact path, fall back to glob: `{bgr_artifacts}/*security-plan*.md`
 - If exists, read the complete file(s) including frontmatter
 - If not exists, this is a fresh workflow
 
 ### 2. Handle Continuation (If Document Exists)
 
-If the document exists and has frontmatter with `stepsCompleted`:
+Evaluate `stepsCompleted` using mutually exclusive conditions:
 
+**Condition A — Valid non-empty array** (e.g., `stepsCompleted: [1]` or `stepsCompleted: [1, 2]`):
+- The frontmatter contains a `stepsCompleted` field that is a valid array with at least one element
 - **STOP here** and load `./step-01b-continue.md` immediately
 - Do not proceed with any initialization tasks
 - Let step-01b handle the continuation logic
 
-### 2b. Handle Existing Document Without Valid Frontmatter
-
-If the document exists but has **no** `stepsCompleted` in frontmatter (missing, empty, or malformed):
-
+**Condition B — Missing, empty, or invalid** (e.g., `stepsCompleted` key absent, `stepsCompleted: []`, or malformed value):
+- The frontmatter either lacks `stepsCompleted`, has an empty array, or has a non-array value
 - **Do NOT overwrite the file automatically**
 - Warn the user: "I found an existing `security-plan.md` but it has no valid workflow state (missing `stepsCompleted` frontmatter). This could be a manually created file or a partially completed workflow."
 - Present options:

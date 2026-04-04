@@ -119,7 +119,7 @@ Define secret management strategy:
 
 **Secret Storage:**
 - Centralized secret store: HashiCorp Vault, AWS Secrets Manager, Azure Key Vault, GCP Secret Manager
-- No secrets in code, environment variables, or configuration files
+- No long-lived secrets in environment variables — use short-lived, runtime-injected credentials with strict scoping
 - Secret injection at runtime via sidecar, init container, or SDK
 
 **Secret Lifecycle:**
@@ -301,6 +301,12 @@ Prepare the content to append to the document:
 ### 10.3 Periodic Assessments
 
 {{pen_testing_access_reviews_and_bug_bounty}}
+
+### Control-to-Threat Traceability
+
+| Threat ID | Threat Description | Control IDs | Control Owner | Status |
+|-----------|-------------------|-------------|---------------|--------|
+{{for_each_threat_map_to_mitigating_controls_with_owner_and_implementation_status}}
 ```
 
 ### 8. Present Content and Menu
