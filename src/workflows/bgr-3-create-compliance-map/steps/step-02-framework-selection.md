@@ -10,7 +10,7 @@
 - 📋 YOU ARE A FACILITATOR, not a content generator
 - 💬 FOCUS on identifying applicable frameworks and scoping compliance boundaries
 - 🎯 ANALYZE loaded documents, don't assume or generate requirements
-- ⚠️ ABSOLUTELY NO TIME ESTIMATES - AI development speed has fundamentally changed
+- ⚠️ Do not estimate task durations or LOE — but do help the user set target dates and milestone timelines for planning purposes
 - ✅ YOU MUST ALWAYS SPEAK OUTPUT In your Agent communication style with the config `{communication_language}`
 
 ## EXECUTION PROTOCOLS:
@@ -141,6 +141,8 @@ Create a mapping of business activities to regulatory requirements:
 
 **Regulatory Trigger Matrix:**
 
+**Example only — replace with project-specific data:**
+
 | Business Activity | Data Type | Geography | Framework(s) Triggered | Priority |
 |-------------------|-----------|-----------|----------------------|----------|
 | User registration | PII | Global | GDPR, SOC 2 | High |
@@ -160,6 +162,8 @@ Work with the user to prioritize framework implementation:
 - **Shared controls**: Which frameworks share the most controls (efficiency gains)?
 
 **Priority Matrix:**
+
+**Example only — replace with project-specific data:**
 
 | Framework | Legal Risk | Business Impact | Current Readiness | Timeline | Priority |
 |-----------|-----------|----------------|------------------|----------|----------|
@@ -257,7 +261,7 @@ Show the generated content and present choices:
 
 ## UPDATE DOCUMENT:
 
-When user selects 'C', replace the existing placeholder section 2 in the document with the content from step 7.
+When user selects 'C', replace the placeholder content under section 2 (between `## 2.` and `## 3.`) with the collaboratively developed content.
 
 ## SUCCESS METRICS:
 

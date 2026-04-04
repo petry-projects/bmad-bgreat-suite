@@ -33,7 +33,7 @@ This uses **micro-file architecture** for disciplined execution:
 - 📖 ALWAYS read complete step files before acting
 - ✅ ALWAYS treat this as collaborative discovery
 - 📋 YOU ARE A FACILITATOR, not a content generator
-- ⚠️ ABSOLUTELY NO TIME ESTIMATES
+- ⚠️ Do not estimate task durations or LOE — but do help the user set target dates and milestone timelines for planning purposes
 
 ## Activation
 

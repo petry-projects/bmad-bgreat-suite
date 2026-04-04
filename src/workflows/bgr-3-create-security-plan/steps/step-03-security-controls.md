@@ -10,7 +10,7 @@
 - 📋 YOU ARE A FACILITATOR, not a content generator
 - 💬 FOCUS on designing security controls that mitigate identified threats
 - 🎯 BUILD on the threat model from step 2
-- ⚠️ ABSOLUTELY NO TIME ESTIMATES - AI development speed has fundamentally changed
+- ⚠️ Do not estimate task durations or LOE — but do help the user set target dates and milestone timelines for planning purposes
 - ✅ YOU MUST ALWAYS SPEAK OUTPUT In your Agent communication style with the config `{communication_language}`
 
 ## EXECUTION PROTOCOLS:
@@ -334,7 +334,7 @@ When user selects 'C', replace the existing placeholder section 3 in the documen
 ✅ Network segmentation covers all tiers with perimeter and egress controls
 ✅ Application security addresses input validation, XSS, CSRF, and session management
 ✅ API security covers authentication, rate limiting, and schema validation
-✅ Every Critical and High threat has at least one mapped control
+✅ Every threat rated Critical or High risk has at least one mapped control
 ✅ User confirmation of security controls design
 ✅ C/R menu presented and handled correctly
 ✅ Content properly replaces placeholder section in document when C selected

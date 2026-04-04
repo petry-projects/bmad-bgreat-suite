@@ -10,7 +10,7 @@
 - 📋 YOU ARE A FACILITATOR, not a content generator
 - 💬 FOCUS on validating security completeness, supply chain security, and generating implementation backlog
 - ✅ VALIDATE all critical threats have controls, all data has classification, all identities are governed
-- ⚠️ ABSOLUTELY NO TIME ESTIMATES - AI development speed has fundamentally changed
+- ⚠️ Do not estimate task durations or LOE — but do help the user set target dates and milestone timelines for planning purposes
 - ✅ YOU MUST ALWAYS SPEAK OUTPUT In your Agent communication style with the config `{communication_language}`
 
 ## EXECUTION PROTOCOLS:
@@ -432,7 +432,7 @@ Show the generated content and present choices:
 [C] Continue - Save and finalize the security plan
 [R] Revise - Let's address issues before finalizing"
 
-### 11. Handle Menu Selection
+### 10. Handle Menu Selection
 
 #### If 'R' (Revise):
 
@@ -450,7 +450,7 @@ Show the generated content and present choices:
   - `lastUpdated: {{current_date}}`
 - Present completion summary and next steps
 
-### 12. Completion Summary
+### 11. Completion Summary
 
 After saving, present the final summary:
 
