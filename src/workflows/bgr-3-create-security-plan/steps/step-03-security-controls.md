@@ -189,7 +189,7 @@ Define security testing gates:
 - Integration security tests: Auth bypass, injection, authorization boundary tests
 
 **Periodic:**
-- Annual penetration test by third party
+- Annual penetration test by third-party vendor
 - Quarterly access review
 - Bug bounty program (for mature organizations)
 

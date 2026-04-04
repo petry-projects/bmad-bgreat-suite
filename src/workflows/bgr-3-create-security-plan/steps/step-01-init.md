@@ -59,7 +59,7 @@ Discover and load context documents using smart discovery. Documents can be in t
 - {project_knowledge}/**
 - {project-root}/docs/**
 
-Also - when searching - documents can be a single markdown file, or a folder with an index and multiple files. For example, if searching for `*foo*.md` and not found, also search for a folder called *foo*/index.md (which indicates sharded content)
+Also - when searching - documents can be a single markdown file, or a folder with an index and multiple files. For example, when searching for `*foo*`, first check for a folder called `*foo*/index.md` (which indicates sharded content), and if not found then search for a single markdown file matching `*foo*.md`
 
 Try to discover the following:
 - Architecture Document (`*architecture*.md`)

@@ -60,7 +60,9 @@ lastUpdated: ""
 ## 5. Authentication & Authorization
 
 ### 5.1 Authentication Strategy
+
 ### 5.2 Authorization Model
+
 ### 5.3 Session & Token Management
 
 ## 6. Data Protection
@@ -74,17 +76,21 @@ lastUpdated: ""
 | Application-level | | | | |
 
 ### 6.2 Data Handling Procedures
+
 ### 6.3 Privacy Controls
 
 ## 7. Network Security
 
 ### 7.1 Perimeter Security
+
 ### 7.2 Internal Network Controls
+
 ### 7.3 Zero-Trust Implementation
 
 ## 8. Secret Management
 
 ### 8.1 Secret Storage & Access
+
 ### 8.2 Secret Lifecycle
 
 | Secret Type | Rotation Period | Storage | Access Method |
@@ -100,6 +106,7 @@ lastUpdated: ""
 |------|---------|---------------|---------------|
 
 ### 9.2 Build & Artifact Security
+
 ### 9.3 Container Security
 
 ## 10. Security Testing Strategy
@@ -140,6 +147,7 @@ lastUpdated: ""
 |-----|-----------|-----------|-------------------|--------|----------|
 
 ### 12.2 Remediation Roadmap
+
 ### 12.3 Ongoing Compliance Activities
 
 ## 13. Implementation Sequence
