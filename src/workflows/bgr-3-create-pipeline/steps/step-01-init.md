@@ -8,14 +8,7 @@
 
 ---
 
-## 1.1 Check for Existing Pipeline Document
-
-Scan `{bgr_artifacts}` for any file matching `*pipeline*.md`.
-
-- **If found:** Load `./step-01b-continue.md` instead and follow its instructions. STOP here.
-- **If not found:** Continue to 1.1b.
-
-## 1.1b Check Production Readiness Checklist
+## 1.1 Check Production Readiness Checklist
 
 Look for `{bgr_artifacts}/production-readiness-checklist.md`:
 
@@ -23,7 +16,7 @@ Look for `{bgr_artifacts}/production-readiness-checklist.md`:
 - Note any completed workflow plans -- their key decisions and cross-references will be loaded in the discovery phase
 - If it does not exist, create it from the shared template at `../../../templates/bgr-production-readiness-checklist-template.md` and save to `{bgr_artifacts}/production-readiness-checklist.md`
 
-## 1.1c Load Context from Completed Workflow Artifacts
+## 1.2 Load Context from Completed Workflow Artifacts
 
 Check `{bgr_artifacts}/` for previously completed BGreat workflow outputs:
 
@@ -36,7 +29,14 @@ For each completed plan found:
 - Surface these as context during the workflow (e.g., "The Infrastructure Plan defines 3 environments with Kubernetes on EKS -- pipeline deployment stages should target these environments")
 - Track loaded plans in frontmatter `crossWorkflowContext` array
 
-## 1.2 Discover Input Documents
+## 1.3 Check for Existing Pipeline Document
+
+Scan `{bgr_artifacts}` for any file matching `*pipeline*.md`.
+
+- **If found:** Load `./step-01b-continue.md` instead and follow its instructions. STOP here.
+- **If not found:** Continue to 1.4.
+
+## 1.4 Discover Input Documents
 
 Scan `{bgr_artifacts}` and `{project_knowledge}` for these input documents:
 
@@ -53,7 +53,7 @@ Scan `{bgr_artifacts}` and `{project_knowledge}` for these input documents:
 - **Infrastructure plan is RECOMMENDED.** If not found, warn the user that pipeline decisions may need revisiting once infrastructure is defined.
 - For each document found, read it and extract relevant context for pipeline planning.
 
-## 1.3 Greet and Summarize
+## 1.5 Greet and Summarize
 
 Greet the user by `{user_name}` and present:
 
@@ -61,7 +61,7 @@ Greet the user by `{user_name}` and present:
 - 📋 Brief summary of key architectural decisions that affect pipeline design
 - 🔧 Any infrastructure constraints relevant to CI/CD
 
-## 1.4 Create Document from Template
+## 1.6 Create Document from Template
 
 Create the pipeline plan document from `./templates/pipeline-template.md`:
 
@@ -70,7 +70,7 @@ Create the pipeline plan document from `./templates/pipeline-template.md`:
 - Populate `inputDocuments` with discovered documents
 - Save to `{bgr_artifacts}/pipeline.md`
 
-## 1.5 Confirm and Proceed
+## 1.7 Confirm and Proceed
 
 Ask the user if they are ready to begin designing the pipeline architecture.
 

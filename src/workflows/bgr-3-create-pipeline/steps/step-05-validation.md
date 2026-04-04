@@ -48,7 +48,7 @@ If any quality gates failed:
 - Update `lastUpdated` to today's date
 - Save the final document to `{bgr_artifacts}/pipeline.md`
 
-## 5.4b Update Production Readiness Checklist
+## 5.5 Update Production Readiness Checklist
 
 After saving the pipeline plan, update the cross-workflow production readiness checklist:
 
@@ -73,10 +73,10 @@ After saving the pipeline plan, update the cross-workflow production readiness c
    - If Infrastructure Plan exists: Verify pipeline deployment targets match the defined environment topology, and runner infrastructure is provisioned
    - Record any inconsistencies in section **4.3 Consistency Issues**
 5. Update the `completedWorkflows` array in checklist frontmatter to include `pipeline`
-6. If all 4 workflows are now complete, update **Overall Status** to `READY` (if no critical gaps remain). A **critical gap** is any unresolved cross-plan consistency issue in section 4.3 that would block production deployment — e.g., mismatched environment topologies, missing rollback alignment, or undefined alerting-to-severity mappings.
+6. If all 4 workflows are now complete, update **Overall Status** to `READY` (if no critical gaps remain). A **critical gap** is a missing workflow artifact, an unresolved cross-plan dependency, or a key decision conflict between plans that would block production readiness (e.g., mismatched environment topologies, missing rollback alignment, or undefined alerting-to-severity mappings).
 7. Save the updated checklist
 
-## 5.5 Recommend Next Steps
+## 5.6 Recommend Next Steps
 
 Suggest logical follow-up actions:
 
@@ -96,6 +96,6 @@ Suggest logical follow-up actions:
 
 🔄 **Before completing:** Update `stepsCompleted` in frontmatter to include `"step-05-validation"`.
 
-🔄 **Before completing:** Update the production readiness checklist per step 5.4b.
+🔄 **Before completing:** Update the production readiness checklist per step 5.5.
 
 ✅ **Workflow complete.** The pipeline plan has been saved to `{bgr_artifacts}/pipeline.md`. The production readiness checklist has been updated with completion status and cross-plan dependency analysis.

@@ -218,7 +218,7 @@ After saving the incident response plan, update the cross-workflow production re
    - If Pipeline Plan exists: Verify escalation procedures account for deployment rollback capabilities
    - Record any inconsistencies in section **4.3 Consistency Issues**
 5. Update the `completedWorkflows` array in checklist frontmatter to include `incident-response`
-6. If all 4 workflows are now complete, update **Overall Status** to `READY` (if no critical gaps remain). A **critical gap** is any unresolved cross-plan consistency issue in section 4.3 that would block production deployment — e.g., mismatched environment topologies, missing rollback alignment, or undefined alerting-to-severity mappings.
+6. If all 4 workflows are now complete, update **Overall Status** to `READY` (if no critical gaps remain). A **critical gap** is a missing workflow artifact, an unresolved cross-plan dependency, or a key decision conflict between plans that would block production readiness (e.g., mismatched environment topologies, missing rollback alignment, or undefined alerting-to-severity mappings).
 7. Save the updated checklist
 
 ### 9. Finalization Report

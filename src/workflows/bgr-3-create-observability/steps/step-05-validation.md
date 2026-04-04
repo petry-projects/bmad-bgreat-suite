@@ -293,7 +293,7 @@ After saving the observability plan, update the cross-workflow production readin
    - If Pipeline Plan exists: Verify health check metrics align with post-deploy verification
    - Record any inconsistencies in section **4.3 Consistency Issues**
 5. Update the `completedWorkflows` array in checklist frontmatter to include `observability`
-6. If all 4 workflows are now complete, update **Overall Status** to `READY` (if no critical gaps remain). A **critical gap** is any unresolved cross-plan consistency issue in section 4.3 that would block production deployment — e.g., mismatched environment topologies, missing rollback alignment, or undefined alerting-to-severity mappings.
+6. If all 4 workflows are now complete, update **Overall Status** to `READY` (if no critical gaps remain). A **critical gap** is a missing workflow artifact, an unresolved cross-plan dependency, or a key decision conflict between plans that would block production readiness (e.g., mismatched environment topologies, missing rollback alignment, or undefined alerting-to-severity mappings).
 7. Save the updated checklist
 
 ### 10. Completion Summary

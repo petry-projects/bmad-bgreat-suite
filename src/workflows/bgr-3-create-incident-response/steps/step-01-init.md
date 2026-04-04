@@ -40,15 +40,7 @@ First, check if the output document already exists:
 - If exists, read the complete file(s) including frontmatter
 - If not exists, this is a fresh workflow
 
-### 2. Handle Continuation (If Document Exists)
-
-If the document exists and has frontmatter with `stepsCompleted`:
-
-- **STOP here** and load `./step-01b-continue.md` immediately
-- Do not proceed with any initialization tasks
-- Let step-01b handle the continuation logic
-
-### 2b. Check Production Readiness Checklist
+### 2. Check Production Readiness Checklist
 
 Look for `{bgr_artifacts}/production-readiness-checklist.md`:
 
@@ -56,7 +48,7 @@ Look for `{bgr_artifacts}/production-readiness-checklist.md`:
 - Note any completed workflow plans — their key decisions and cross-references will be loaded in the discovery phase
 - If it does not exist, create it from the shared template at `../../../templates/bgr-production-readiness-checklist-template.md` and save to `{bgr_artifacts}/production-readiness-checklist.md`
 
-### 2c. Load Context from Completed Workflow Artifacts
+### 3. Load Context from Completed Workflow Artifacts
 
 Check `{bgr_artifacts}/` for previously completed BGreat workflow outputs:
 
@@ -69,7 +61,15 @@ For each completed plan found:
 - Surface these as context during the workflow (e.g., "The Observability Plan defines burn-rate alerts at 2% and 10% thresholds — we should align severity classification with these alert levels")
 - Track loaded plans in frontmatter `crossWorkflowContext` array
 
-### 3. Fresh Workflow Setup (If No Document)
+### 4. Handle Continuation (If Document Exists)
+
+If the document from step 1 exists and has frontmatter with `stepsCompleted`:
+
+- **STOP here** and load `./step-01b-continue.md` immediately
+- Do not proceed with any initialization tasks
+- Let step-01b handle the continuation logic
+
+### 5. Fresh Workflow Setup (If No Document)
 
 If no document exists or no `stepsCompleted` in frontmatter:
 
