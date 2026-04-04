@@ -136,6 +136,11 @@ lastUpdated: ""
 - **Blocking policy**: Always block on detected secrets
 - **Remediation**: Rotate exposed secret + revoke
 
+### 7.6 Security Scan Summary Matrix
+
+| Scan Type | Tool | Stage | Blocking | Owner | Notes |
+|-----------|------|-------|----------|-------|-------|
+
 ## 8. Developer Experience Considerations
 
 ### 8.1 Local Development Parity
