@@ -38,6 +38,7 @@ First, check if the output document already exists:
 
 - First, check for `{bgr_artifacts}/security-plan.md` (exact path)
 - If not found at exact path, fall back to glob: `{bgr_artifacts}/*security-plan*.md`
+- If multiple files match, present the list to the user and ask them to select the correct one.
 - If exists, read the complete file(s) including frontmatter
 - If not exists, this is a fresh workflow
 
@@ -81,7 +82,7 @@ Try to discover the following:
 - Observability Plan (`*observability*.md`)
 - Project Context (`**/project-context.md`)
 
-<critical>Confirm what you have found with the user, along with asking if the user wants to provide anything else. Only after this confirmation will you proceed to follow the loading rules</critical>
+> **CRITICAL:** Confirm what you have found with the user, along with asking if the user wants to provide anything else. Only after this confirmation will you proceed to follow the loading rules.
 
 **Loading Rules:**
 
@@ -89,6 +90,7 @@ Try to discover the following:
 - If there is a project context, whatever is relevant should try to be biased in the remainder of this whole workflow process
 - For sharded folders, load ALL files to get complete picture, using the index first to potentially know the potential of each document
 - index.md is a guide to what's relevant whenever available
+- If any file fails to load (permission denied, corrupted, or exceeds 50KB), log a warning and skip it — do not halt initialization. Report skipped files in the initialization summary.
 - Track all successfully loaded files in frontmatter `inputDocuments` array
 
 #### B. Validate Required Inputs
@@ -109,6 +111,8 @@ Before proceeding, verify we have the essential inputs:
 
 Copy the template from `../templates/security-plan-template.md` to `{bgr_artifacts}/security-plan.md`
 
+Immediately update the frontmatter: set `createdDate` to today's date, `lastUpdated` to today's date, and `status` to `draft`.
+
 #### D. Complete Initialization and Report
 
 Complete setup and report to user:
@@ -128,7 +132,7 @@ Report what was found:
 - PRD: {PRD files loaded or "None found - recommended"}
 - Infrastructure: {infrastructure files loaded or "None found"}
 - Observability: {observability files loaded or "None found"}
-- Project context: {project_context_rules count of rules for AI agents found}
+- Project context: {project_context_rules: number of directive sections found in project-context.md (e.g., headers, rule blocks)}
 
 **Files loaded:** {list of specific file names or "No additional documents found"}
 
@@ -163,5 +167,7 @@ Ready to begin security planning. Do you have any other documents you'd like me 
 ## NEXT STEP:
 
 After user selects [C] to continue, only after ensuring all the template output has been created, then load `./step-02-threat-modeling.md` to begin threat analysis.
+
+Verify that the document frontmatter has been properly initialized (createdDate, status: draft, stepsCompleted: [1]) before proceeding.
 
 Remember: Do NOT proceed to step-02 until user explicitly selects [C] from the menu and setup is confirmed!
