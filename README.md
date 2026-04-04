@@ -1,6 +1,6 @@
 # BMad BGreat Suite
 
-SRE and DevOps agents and workflows for the [BMad Method](https://github.com/bmad-code-org/BMAD-METHOD) ecosystem.
+Additional agents to extend the [BMad Method](https://github.com/bmad-code-org/BMAD-METHOD) ecosystem.
 
 Two specialized agents — **Morgan** (SRE Lead) and **Riley** (DevOps Lead) — with four guided workflows that produce production-readiness artifacts alongside your architecture planning.
 
