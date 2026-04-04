@@ -205,7 +205,7 @@ Does this inventory look complete? Any controls I missed or got wrong?"
 
 ### 7. Generate Control Mapping Content
 
-Prepare the content to append to the document:
+Prepare the content to replace the existing placeholder sections 3 and 4 in the document:
 
 #### Content Structure:
 
@@ -273,13 +273,13 @@ Show the generated content and present choices:
 
 #### If 'C' (Continue):
 
-- Append the final content to `{bgr_artifacts}/compliance-map.md`
+- Replace the existing placeholder sections 3 and 4 in `{bgr_artifacts}/compliance-map.md` with the final content
 - Update frontmatter: `stepsCompleted: [1, 2, 3]`
 - Load `./step-04-gap-analysis.md`
 
-## APPEND TO DOCUMENT:
+## UPDATE DOCUMENT:
 
-When user selects 'C', append the content directly to the document using the structure from step 7.
+When user selects 'C', replace the existing placeholder sections 3 and 4 in the document with the content from step 7.
 
 ## SUCCESS METRICS:
 
@@ -291,7 +291,7 @@ When user selects 'C', append the content directly to the document using the str
 ✅ Coverage gaps surfaced for gap analysis step
 ✅ User confirmation of control inventory completeness
 ✅ C/R menu presented and handled correctly
-✅ Content properly appended to document when C selected
+✅ Content properly replaces placeholder sections in document when C selected
 
 ## FAILURE MODES:
 

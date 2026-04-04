@@ -180,7 +180,7 @@ Connect each control back to the threats it mitigates:
 |-----------|--------|-----------|----------|---------------|
 | | | | Full/Partial | |
 
-Ensure every Critical and High risk threat from step 2 has at least one control mapped.
+Ensure every threat rated Critical or High risk from step 2 has at least one control mapped.
 
 ### 6. Present Security Controls Design
 
