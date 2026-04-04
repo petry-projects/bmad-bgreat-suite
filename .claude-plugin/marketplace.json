@@ -1,0 +1,29 @@
+{
+  "name": "bmad-ops-suite",
+  "owner": {
+    "name": "Don Petry"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/don-petry/bmad-ops-suite",
+  "repository": "https://github.com/don-petry/bmad-ops-suite",
+  "keywords": ["bmad", "sre", "devops", "observability", "incident-response", "infrastructure", "ci-cd", "reliability"],
+  "plugins": [
+    {
+      "name": "bmad-ops-suite",
+      "source": "./",
+      "description": "Operations Suite -- SRE and DevOps agents (Morgan, Riley) with phased workflows for observability, incident response, infrastructure, and CI/CD pipeline design. Part of the BMad Method ecosystem.",
+      "version": "0.1.0",
+      "author": {
+        "name": "Don Petry"
+      },
+      "skills": [
+        "./src/agents/ops-agent-morgan-sre",
+        "./src/agents/ops-agent-riley-devops",
+        "./src/workflows/ops-3-create-observability",
+        "./src/workflows/ops-3-create-incident-response",
+        "./src/workflows/ops-3-create-infrastructure",
+        "./src/workflows/ops-3-create-pipeline"
+      ]
+    }
+  ]
+}

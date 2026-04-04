@@ -1,0 +1,7 @@
+node_modules/
+.DS_Store
+*.log
+_bmad/
+_bmad-output/
+.claude/skills/
+.cursor/skills/

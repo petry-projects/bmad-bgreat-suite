@@ -1,0 +1,22 @@
+{
+  "name": "bmad-ops-suite",
+  "version": "0.1.0",
+  "description": "BMad Operations Suite — SRE and DevOps agents and workflows for the BMad Method ecosystem",
+  "author": "Don Petry",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/don-petry/bmad-ops-suite"
+  },
+  "keywords": [
+    "bmad",
+    "bmad-method",
+    "sre",
+    "devops",
+    "observability",
+    "incident-response",
+    "infrastructure",
+    "ci-cd",
+    "reliability"
+  ]
+}
