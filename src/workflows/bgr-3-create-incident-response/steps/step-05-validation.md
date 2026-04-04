@@ -193,7 +193,31 @@ Show the generated content and present choices:
 - Update frontmatter: `lastUpdated` to current date
 - Save the final document
 
-### 8. Finalization Report
+### 8. Update Production Readiness Checklist
+
+After saving the incident response plan, update the cross-workflow production readiness checklist:
+
+1. Load `{bgr_artifacts}/production-readiness-checklist.md`
+   - If it does not exist, create it from `../../templates/bgr-production-readiness-checklist-template.md`
+2. Update the **Incident Response Plan** row in the Workflow Completion Status table:
+   - Status: `Complete`
+   - Completion Date: `{{current_date}}`
+   - Output Document: `{bgr_artifacts}/incident-response.md`
+3. Update section **2.2 Incident Response Plan** with key decisions:
+   - Severity levels defined (SEV1-SEV4 summary)
+   - On-call rotation model chosen
+   - Postmortem process established
+   - Communication templates created
+4. Check for cross-plan dependency gaps:
+   - If Observability Plan exists: Verify severity classification aligns with alerting thresholds and burn-rate windows
+   - If Infrastructure Plan exists: Verify runbook procedures reference correct environment topology and access paths
+   - If Pipeline Plan exists: Verify escalation procedures account for deployment rollback capabilities
+   - Record any inconsistencies in section **4.3 Consistency Issues**
+5. Update the `completedWorkflows` array in checklist frontmatter to include `incident-response`
+6. If all 4 workflows are now complete, update **Overall Status** to `READY` (if no critical gaps remain)
+7. Save the updated checklist
+
+### 9. Finalization Report
 
 After saving, present the completion summary:
 
@@ -233,6 +257,8 @@ Thank you for building this plan together, {{user_name}}! A well-practiced incid
 ✅ Actionable next steps provided
 ✅ [C]/[R] menu presented and handled correctly
 ✅ Content properly appended to document when C selected
+✅ Production readiness checklist updated with completion status and key decisions
+✅ Cross-plan dependency gaps identified and recorded in checklist
 
 ## FAILURE MODES:
 

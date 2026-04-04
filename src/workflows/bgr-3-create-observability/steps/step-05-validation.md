@@ -268,7 +268,31 @@ Show the generated content and present choices:
 - Update frontmatter to mark workflow as complete
 - Present completion summary and next steps
 
-### 9. Completion Summary
+### 9. Update Production Readiness Checklist
+
+After saving the observability plan, update the cross-workflow production readiness checklist:
+
+1. Load `{bgr_artifacts}/production-readiness-checklist.md`
+   - If it does not exist, create it from `../../templates/bgr-production-readiness-checklist-template.md`
+2. Update the **Observability Plan** row in the Workflow Completion Status table:
+   - Status: `Complete`
+   - Completion Date: `{{current_date}}`
+   - Output Document: `{bgr_artifacts}/observability.md`
+3. Update section **2.1 Observability Plan** with key decisions:
+   - Metrics backend chosen
+   - Logging backend chosen
+   - Tracing approach
+   - SLO targets defined (count and summary)
+4. Check for cross-plan dependency gaps:
+   - If Incident Response Plan exists: Verify alerting thresholds align with severity classification
+   - If Infrastructure Plan exists: Verify monitoring targets match environment topology
+   - If Pipeline Plan exists: Verify health check metrics align with post-deploy verification
+   - Record any inconsistencies in section **4.3 Consistency Issues**
+5. Update the `completedWorkflows` array in checklist frontmatter to include `observability`
+6. If all 4 workflows are now complete, update **Overall Status** to `READY` (if no critical gaps remain)
+7. Save the updated checklist
+
+### 10. Completion Summary
 
 After saving, present the final summary:
 
@@ -299,6 +323,8 @@ When user selects 'C', append the content directly to the document using the str
 ✅ User presented with clear next steps
 ✅ C/R menu presented and handled correctly
 ✅ Workflow marked as complete
+✅ Production readiness checklist updated with completion status and key decisions
+✅ Cross-plan dependency gaps identified and recorded in checklist
 
 ## FAILURE MODES:
 

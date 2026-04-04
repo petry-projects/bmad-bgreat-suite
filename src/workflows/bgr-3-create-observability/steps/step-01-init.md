@@ -48,6 +48,27 @@ If the document exists and has frontmatter with `stepsCompleted`:
 - Do not proceed with any initialization tasks
 - Let step-01b handle the continuation logic
 
+### 2b. Check Production Readiness Checklist
+
+Look for `{bgr_artifacts}/production-readiness-checklist.md`:
+
+- If it exists, read it to understand which other workflows have been completed
+- Note any completed workflow plans — their key decisions and cross-references will be loaded in the discovery phase
+- If it does not exist, create it from the shared template at `../../templates/bgr-production-readiness-checklist-template.md` and save to `{bgr_artifacts}/production-readiness-checklist.md`
+
+### 2c. Load Context from Completed Workflow Artifacts
+
+Check `{bgr_artifacts}/` for previously completed BGreat workflow outputs:
+
+- `*incident-response*.md` — If completed, note severity classification and alerting thresholds that observability should align with
+- `*infrastructure*.md` — If completed, note environment topology and monitoring targets for instrumentation planning
+- `*pipeline*.md` — If completed, note deployment strategy and post-deploy verification needs
+
+For each completed plan found:
+- Load the document and extract key decisions relevant to observability planning
+- Surface these as context during the workflow (e.g., "The Infrastructure Plan specifies Kubernetes on AWS — this informs our metrics collection approach")
+- Track loaded plans in frontmatter `crossWorkflowContext` array
+
 ### 3. Fresh Workflow Setup (If No Document)
 
 If no document exists or no `stepsCompleted` in frontmatter:
@@ -129,6 +150,8 @@ Ready to begin observability planning. Do you have any other documents you'd lik
 ✅ All discovered files tracked in frontmatter `inputDocuments`
 ✅ Architecture requirement validated and communicated
 ✅ User confirmed document setup and can proceed
+✅ Production readiness checklist found or created
+✅ Previously completed workflow artifacts discovered and context loaded
 
 ## FAILURE MODES:
 

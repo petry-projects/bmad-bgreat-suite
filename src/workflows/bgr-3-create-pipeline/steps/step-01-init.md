@@ -15,6 +15,27 @@ Scan `{bgr_artifacts}` for any file matching `*pipeline*.md`.
 - **If found:** Load `./step-01b-continue.md` instead and follow its instructions. STOP here.
 - **If not found:** Continue to 1.2.
 
+## 1.1b Check Production Readiness Checklist
+
+Look for `{bgr_artifacts}/production-readiness-checklist.md`:
+
+- If it exists, read it to understand which other workflows have been completed
+- Note any completed workflow plans -- their key decisions and cross-references will be loaded in the discovery phase
+- If it does not exist, create it from the shared template at `../../templates/bgr-production-readiness-checklist-template.md` and save to `{bgr_artifacts}/production-readiness-checklist.md`
+
+## 1.1c Load Context from Completed Workflow Artifacts
+
+Check `{bgr_artifacts}/` for previously completed BGreat workflow outputs:
+
+- `*observability*.md` -- If completed, load SLO definitions and health check metrics to inform post-deploy verification gates and canary analysis criteria
+- `*incident-response*.md` -- If completed, load severity classification and rollback triggers to align pipeline rollback automation with incident escalation thresholds
+- `*infrastructure*.md` -- If completed, load environment topology, container platform, and secrets management to inform deployment targets, runner strategy, and credential injection
+
+For each completed plan found:
+- Load the document and extract key decisions relevant to pipeline design
+- Surface these as context during the workflow (e.g., "The Infrastructure Plan defines 3 environments with Kubernetes on EKS -- pipeline deployment stages should target these environments")
+- Track loaded plans in frontmatter `crossWorkflowContext` array
+
 ## 1.2 Discover Input Documents
 
 Scan `{bgr_artifacts}` and `{project_knowledge}` for these input documents:

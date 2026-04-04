@@ -48,6 +48,27 @@ If the document exists and has frontmatter with `stepsCompleted`:
 - Do not proceed with any initialization tasks
 - Let step-01b handle the continuation logic
 
+### 2b. Check Production Readiness Checklist
+
+Look for `{bgr_artifacts}/production-readiness-checklist.md`:
+
+- If it exists, read it to understand which other workflows have been completed
+- Note any completed workflow plans — their key decisions and cross-references will be loaded in the discovery phase
+- If it does not exist, create it from the shared template at `../../templates/bgr-production-readiness-checklist-template.md` and save to `{bgr_artifacts}/production-readiness-checklist.md`
+
+### 2c. Load Context from Completed Workflow Artifacts
+
+Check `{bgr_artifacts}/` for previously completed BGreat workflow outputs:
+
+- `*observability*.md` — If completed, load alerting strategy and SLO thresholds to align severity classification with existing alert definitions
+- `*infrastructure*.md` — If completed, load environment topology and service architecture to inform runbook scope and failure mode identification
+- `*pipeline*.md` — If completed, load deployment strategy and rollback procedures to align incident response escalation with deployment rollback capabilities
+
+For each completed plan found:
+- Load the document and extract key decisions relevant to incident response planning
+- Surface these as context during the workflow (e.g., "The Observability Plan defines burn-rate alerts at 2% and 10% thresholds — we should align severity classification with these alert levels")
+- Track loaded plans in frontmatter `crossWorkflowContext` array
+
 ### 3. Fresh Workflow Setup (If No Document)
 
 If no document exists or no `stepsCompleted` in frontmatter:
@@ -129,6 +150,8 @@ Ready to begin incident response planning. Do you have any other documents you'd
 ✅ All discovered files tracked in frontmatter `inputDocuments`
 ✅ Architecture and observability document recommendations communicated
 ✅ User confirmed document setup and can proceed
+✅ Production readiness checklist found or created
+✅ Previously completed workflow artifacts discovered and context loaded
 
 ## FAILURE MODES:
 

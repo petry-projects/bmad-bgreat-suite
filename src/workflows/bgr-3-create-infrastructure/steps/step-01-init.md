@@ -48,6 +48,27 @@ If the document exists and has frontmatter with `stepsCompleted`:
 - Do not proceed with any initialization tasks
 - Let step-01b handle the continuation logic
 
+### 2b. Check Production Readiness Checklist
+
+Look for `{bgr_artifacts}/production-readiness-checklist.md`:
+
+- If it exists, read it to understand which other workflows have been completed
+- Note any completed workflow plans — their key decisions and cross-references will be loaded in the discovery phase
+- If it does not exist, create it from the shared template at `../../templates/bgr-production-readiness-checklist-template.md` and save to `{bgr_artifacts}/production-readiness-checklist.md`
+
+### 2c. Load Context from Completed Workflow Artifacts
+
+Check `{bgr_artifacts}/` for previously completed BGreat workflow outputs:
+
+- `*observability*.md` — If completed, load metrics strategy and SLO definitions to inform monitoring targets, agent deployment requirements, and network egress for telemetry data
+- `*incident-response*.md` — If completed, load severity classification and on-call procedures to inform environment isolation requirements and access control decisions
+- `*pipeline*.md` — If completed, load CI/CD platform and deployment strategy to inform runner infrastructure, registry placement, and environment provisioning needs
+
+For each completed plan found:
+- Load the document and extract key decisions relevant to infrastructure planning
+- Surface these as context during the workflow (e.g., "The Observability Plan specifies OpenTelemetry collectors — infrastructure should provision collector sidecar/daemonset resources")
+- Track loaded plans in frontmatter `crossWorkflowContext` array
+
 ### 3. Fresh Workflow Setup (If No Document)
 
 If no document exists or no `stepsCompleted` in frontmatter:
@@ -129,6 +150,8 @@ Ready to begin infrastructure decision making. Do you have any other documents y
 ✅ All discovered files tracked in frontmatter `inputDocuments`
 ✅ Architecture document requirement validated and communicated
 ✅ User confirmed document setup and can proceed
+✅ Production readiness checklist found or created
+✅ Previously completed workflow artifacts discovered and context loaded
 
 ## FAILURE MODES:
 
