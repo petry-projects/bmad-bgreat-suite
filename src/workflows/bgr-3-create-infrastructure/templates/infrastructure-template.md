@@ -53,7 +53,112 @@ lastUpdated: ""
 ### 5.4 Security
 ### 5.5 Service Mesh
 
-## 6. Implementation Sequence
+## 6. Cost Estimation per Environment
+
+| Environment | Compute | Storage | Network | Managed Services | Total Monthly (Est.) |
+|-------------|---------|---------|---------|-------------------|---------------------|
+
+### 6.1 Cost Breakdown
+
+- **Production**:
+- **Staging**:
+- **Development**:
+- **Shared services (CI runners, registries, DNS)**:
+- **Total estimated monthly cost**:
+- **Total estimated annual cost**:
+
+### 6.2 Cost Optimization Strategies
+
+- Reserved instances / savings plans:
+- Auto-scaling to zero for non-prod:
+- Spot / preemptible instances for workloads:
+- Right-sizing review cadence:
+
+## 7. Migration Strategy
+
+> Complete this section if migrating from existing infrastructure (brownfield). Remove if greenfield.
+
+### 7.1 Current State Inventory
+
+| Resource | Current Platform | Current Config | Migration Complexity | Notes |
+|----------|-----------------|---------------|---------------------|-------|
+
+### 7.2 Migration Approach
+
+- **Strategy**: Lift-and-shift / Re-platform / Re-architect / Hybrid
+- **Migration tooling**:
+- **Data migration plan**:
+- **DNS / traffic cutover plan**:
+
+### 7.3 Migration Phases
+
+| Phase | Scope | Rollback Plan | Validation Criteria | Target Date |
+|-------|-------|--------------|--------------------| ------------|
+
+### 7.4 Risk Mitigation
+
+| Risk | Likelihood | Impact | Mitigation |
+|------|-----------|--------|-----------|
+
+## 8. Decision Rationale for IaC Tool Selection
+
+### 8.1 Tool Evaluation Matrix
+
+| Criterion | Weight | {Tool A} | {Tool B} | {Tool C} | Notes |
+|-----------|--------|----------|----------|----------|-------|
+| Multi-cloud support | | | | | |
+| Team familiarity | | | | | |
+| Ecosystem & modules | | | | | |
+| State management | | | | | |
+| Testing & validation | | | | | |
+| Community & support | | | | | |
+| Cost | | | | | |
+
+### 8.2 Architecture Decision Record
+
+- **Decision**: Use {chosen_tool} as primary IaC tool
+- **Context**: What problem does this solve?
+- **Alternatives considered**:
+- **Consequences**: What trade-offs are accepted?
+- **Review date**:
+
+## 9. Security Baseline Requirements
+
+### 9.1 Identity & Access
+
+- **IAM strategy**: Least privilege / role-based
+- **Service account management**:
+- **Credential rotation policy**:
+- **MFA requirements**:
+
+### 9.2 Network Security
+
+- **Default deny posture**: yes / no
+- **Ingress/egress rules**:
+- **WAF / DDoS protection**:
+- **Private connectivity (VPN / PrivateLink)**:
+
+### 9.3 Data Protection
+
+- **Encryption at rest**: Required for all environments / production only
+- **Encryption in transit**: TLS version minimum
+- **Key management**: KMS / Vault / provider-native
+- **Backup encryption**:
+
+### 9.4 Compliance & Governance
+
+- **Compliance frameworks**: (SOC 2, HIPAA, PCI-DSS, etc.)
+- **Tagging policy enforcement**:
+- **Audit logging**: CloudTrail / Activity Log / equivalent
+- **Policy-as-code enforcement**:
+
+### 9.5 Vulnerability Management
+
+- **Image scanning**: Pre-deploy / runtime
+- **OS patching cadence**:
+- **Dependency scanning**:
+
+## 10. Implementation Sequence
 
 | Phase | Description | Dependencies | Owner |
 |-------|-------------|-------------|-------|
