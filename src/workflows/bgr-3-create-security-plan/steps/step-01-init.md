@@ -123,11 +123,11 @@ Report what was found:
 Ready to begin security planning. Here's what we'll build together:
 
 **The 5-Step Security Planning Process:**
-1. **Threat Modeling** — Identify assets, trust boundaries, data flows, and apply STRIDE analysis to uncover threats
-2. **Security Controls** — Design zero-trust architecture, network segmentation, application security, and API protection
-3. **Identity & Data Protection** — Define IAM strategy, secret management, data classification, and encryption standards
-4. **Supply Chain Security** — Establish dependency management, SBOM generation, container security, and CI/CD pipeline hardening
-5. **Validation** — Run quality gates, generate implementation backlog, and finalize the security plan
+1. **Initialize** — Discover project context, load input documents, and set up the security plan (this step)
+2. **Threat Modeling** — Identify assets, trust boundaries, data flows, and apply STRIDE analysis to uncover threats
+3. **Security Controls** — Design zero-trust architecture, network segmentation, application security, and API protection
+4. **Identity & Data Protection** — Define IAM strategy, secret management, data classification, and encryption standards
+5. **Validation** — Supply chain security, security testing, quality gates, and implementation roadmap
 
 Do you have any other documents you'd like me to include?
 

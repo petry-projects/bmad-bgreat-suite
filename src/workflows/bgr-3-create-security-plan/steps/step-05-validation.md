@@ -310,44 +310,44 @@ Prepare the content to append to the document:
 
 ### Security Completeness Checklist
 
-**✅ Threat Model**
+**Threat Model**
 
-- [x] STRIDE analysis for all components and trust boundaries
-- [x] Risk scoring with likelihood and impact
-- [x] Attack trees for critical paths
+- [ ] STRIDE analysis for all components and trust boundaries
+- [ ] Risk scoring with likelihood and impact
+- [ ] Attack trees for critical paths
 
-**✅ Security Controls**
+**Security Controls**
 
-- [x] Zero-trust architecture with microsegmentation
-- [x] Network security with WAF, DDoS, and egress controls
-- [x] Application security addressing OWASP Top 10
-- [x] API security with authentication, rate limiting, and validation
+- [ ] Zero-trust architecture with microsegmentation
+- [ ] Network security with WAF, DDoS, and egress controls
+- [ ] Application security addressing OWASP Top 10
+- [ ] API security with authentication, rate limiting, and validation
 
-**✅ Identity & Access Management**
+**Identity & Access Management**
 
-- [x] RBAC/ABAC model with least privilege
-- [x] MFA for all human users
-- [x] Service account governance with rotation
+- [ ] RBAC/ABAC model with least privilege
+- [ ] MFA for all human users
+- [ ] Service account governance with rotation
 
-**✅ Secrets & Encryption**
+**Secrets & Encryption**
 
-- [x] Centralized vault with automated rotation
-- [x] Secret scanning in pre-commit and CI
-- [x] Encryption at rest and in transit
-- [x] Key management lifecycle defined
+- [ ] Centralized vault with automated rotation
+- [ ] Secret scanning in pre-commit and CI
+- [ ] Encryption at rest and in transit
+- [ ] Key management lifecycle defined
 
-**✅ Data Protection**
+**Data Protection**
 
-- [x] Data classification with handling requirements
-- [x] Field-level encryption for Restricted data
-- [x] DLP strategy with monitoring
+- [ ] Data classification with handling requirements
+- [ ] Field-level encryption for Restricted data
+- [ ] DLP strategy with monitoring
 
-**✅ Supply Chain & Testing**
+**Supply Chain & Testing**
 
-- [x] Dependency scanning and SBOM generation
-- [x] Container security with image signing
-- [x] SAST, DAST, SCA integrated
-- [x] Penetration testing schedule established
+- [ ] Dependency scanning and SBOM generation
+- [ ] Container security with image signing
+- [ ] SAST, DAST, SCA integrated
+- [ ] Penetration testing schedule established
 
 ## 10. Cost Estimation
 
@@ -418,15 +418,7 @@ Prepare the content to append to the document:
 {{maturity_tasks}}
 ```
 
-### 9. Save Final Document
-
-- Append the validation and implementation content to `{bgr_artifacts}/security-plan.md`
-- Update frontmatter:
-  - `stepsCompleted: [1, 2, 3, 4, 5]`
-  - `status: complete`
-  - `lastUpdated: {{current_date}}`
-
-### 10. Present Content and Menu
+### 9. Present Content and Menu
 
 Show the generated content and present choices:
 
@@ -451,8 +443,11 @@ Show the generated content and present choices:
 
 #### If 'C' (Continue):
 
-- Save the final content to `{bgr_artifacts}/security-plan.md`
-- Update frontmatter to mark workflow as complete
+- Append the validation and implementation content to `{bgr_artifacts}/security-plan.md`
+- Update frontmatter:
+  - `stepsCompleted: [1, 2, 3, 4, 5]`
+  - `status: complete`
+  - `lastUpdated: {{current_date}}`
 - Present completion summary and next steps
 
 ### 12. Completion Summary

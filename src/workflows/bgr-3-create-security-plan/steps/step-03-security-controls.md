@@ -155,7 +155,7 @@ Collaborate on API-specific controls:
 - Per-endpoint rate limits (protect expensive operations)
 - Global rate limits (protect infrastructure capacity)
 - Graduated response: throttle before block
-- Rate limit headers in responses (X-RateLimit-Limit, Remaining, Reset)
+- Rate limit headers in responses (X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset)
 
 **Input Validation for APIs:**
 - Schema validation against OpenAPI specification

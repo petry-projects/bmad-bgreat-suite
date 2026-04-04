@@ -121,11 +121,11 @@ Report what was found:
 **Files loaded:** {list of specific file names or "No additional documents found"}
 
 We'll work through 5 steps to build your compliance map:
-1. **Framework Selection** — Identify applicable regulatory frameworks and scope
-2. **Control Inventory** — Map existing security controls to framework requirements
-3. **Gap Analysis** — Identify unmet requirements and risk-score each gap
-4. **Remediation Roadmap** — Design prioritized remediation actions with owners and timelines
-5. **Validation** — Verify completeness and generate implementation backlog
+1. **Initialize** — Discover project context, load input documents, and set up the compliance map (this step)
+2. **Framework Selection & Scoping** — Identify applicable regulatory frameworks and scope
+3. **Control Inventory & Mapping** — Map existing security controls to framework requirements
+4. **Gap Analysis & Remediation Planning** — Identify unmet requirements, risk-score each gap, and design prioritized remediation actions
+5. **Validation & Finalization** — Verify completeness, run quality gates, and generate implementation backlog
 
 Ready to begin compliance mapping. Do you have any other documents you'd like me to include?
 

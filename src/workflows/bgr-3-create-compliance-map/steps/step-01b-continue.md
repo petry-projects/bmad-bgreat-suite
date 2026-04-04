@@ -81,6 +81,14 @@ Show the user their current progress:
 
 ### 3. Handle User Choice
 
+#### If workflow is already complete (`stepsCompleted: [1, 2, 3, 4, 5]` and `status: complete`):
+
+- Do NOT offer to resume or load another step
+- Present: "This compliance map workflow is already complete. The document is saved at `{bgr_artifacts}/compliance-map.md`."
+- Offer choices:
+  - **[X] Start Over** — Delete existing document and restart from `./step-01-init.md`
+  - **[E] Exit** — End the workflow
+
 #### If 'R' (Resume from where we left off):
 
 - Identify the next step based on `stepsCompleted`

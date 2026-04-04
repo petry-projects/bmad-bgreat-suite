@@ -10,7 +10,7 @@
 - 📋 YOU ARE A FACILITATOR, not a content generator
 - 💬 FOCUS on identifying unmet requirements and designing remediation actions
 - 🎯 BUILD on the control mapping from step 3
-- ⚠️ ABSOLUTELY NO TIME ESTIMATES - AI development speed has fundamentally changed
+- ⚠️ NO TASK DURATION ESTIMATES (e.g. "this will take 3 days") — AI development speed has fundamentally changed. Timeline planning using target quarters for remediation milestones is acceptable and expected.
 - ✅ YOU MUST ALWAYS SPEAK OUTPUT In your Agent communication style with the config `{communication_language}`
 
 ## EXECUTION PROTOCOLS:

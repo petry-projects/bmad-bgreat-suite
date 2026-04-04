@@ -146,7 +146,7 @@ Map controls that satisfy multiple frameworks simultaneously:
 |---------|-------|-------|---------|------|------|
 | MFA | CC6.1 | 164.312(d) | 8.3 | Art. 32 | PR.AC-7 |
 | Encryption at rest | CC6.7 | 164.312(a)(2)(iv) | 3.4 | Art. 32 | PR.DS-1 |
-| Audit logging | CC7.2 | 164.312(b) | 10.1 | Art. 30 | DE.CM-3 |
+| Audit logging | CC7.2 | 164.312(b) | 10.1 | Art. 32 | DE.CM-3 |
 | Access control | CC6.3 | 164.312(a)(1) | 7.1 | Art. 25 | PR.AC-4 |
 | Incident response | CC7.3 | 164.308(a)(6) | 12.10 | Art. 33 | RS.RP-1 |
 
