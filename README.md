@@ -1,4 +1,4 @@
-# BMad Operations Suite
+# BMad BGreat Suite
 
 SRE and DevOps agents and workflows for the [BMad Method](https://github.com/bmad-code-org/BMAD-METHOD) ecosystem.
 
@@ -36,23 +36,23 @@ Both tracks can run in parallel after the architecture is defined.
 ### As a custom module (local path)
 
 ```bash
-npx bmad-method install --custom-content /path/to/bmad-ops-suite/src
+npx bmad-method install --custom-content /path/to/bmad-bgreat-suite/src
 ```
 
 ### As an npm package (once published)
 
 ```bash
-npm install bmad-ops-suite
+npm install bmad-bgreat-suite
 npx bmad-method install
-# Select "BMad Operations Suite" from the module list
+# Select "BMad BGreat Suite" from the module list
 ```
 
 ## Configuration
 
 During installation, the module will ask:
 
-- **ops_artifacts** — Where to store operations planning artifacts (default: `_bmad-output/ops-artifacts`)
-- **ops_maturity** — Your current operations maturity level (greenfield through advanced)
+- **bgr_artifacts** — Where to store operations planning artifacts (default: `_bmad-output/bgr-artifacts`)
+- **bgr_maturity** — Your current operations maturity level (greenfield through advanced)
 - **cloud_preference** — Primary cloud provider
 - **container_orchestration** — Container platform (Kubernetes, ECS, Cloud Run, etc.)
 
@@ -85,13 +85,13 @@ src/
   module.yaml              # Module configuration and install prompts
   module-help.csv          # Capability registry
   agents/
-    ops-agent-morgan-sre/  # SRE Lead persona
-    ops-agent-riley-devops/# DevOps Lead persona
+    bgr-agent-morgan-sre/  # SRE Lead persona
+    bgr-agent-riley-devops/# DevOps Lead persona
   workflows/
-    ops-3-create-observability/
-    ops-3-create-incident-response/
-    ops-3-create-infrastructure/
-    ops-3-create-pipeline/
+    bgr-3-create-observability/
+    bgr-3-create-incident-response/
+    bgr-3-create-infrastructure/
+    bgr-3-create-pipeline/
 ```
 
 Each workflow follows BMAD's micro-file architecture: a `workflow.md` orchestrator, sequential `steps/` for guided discovery, and `templates/` for output documents.

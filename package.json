@@ -1,12 +1,12 @@
 {
-  "name": "bmad-ops-suite",
+  "name": "bmad-bgreat-suite",
   "version": "0.1.0",
-  "description": "BMad Operations Suite — SRE and DevOps agents and workflows for the BMad Method ecosystem",
+  "description": "BMad BGreat Suite — SRE and DevOps agents and workflows for the BMad Method ecosystem",
   "author": "Don Petry",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/petry-projects/bmad-ops-suite"
+    "url": "https://github.com/petry-projects/bmad-bgreat-suite"
   },
   "keywords": [
     "bmad",

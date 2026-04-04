@@ -1,6 +1,6 @@
-code: ops
-name: "BMad Operations Suite"
-header: "Operations Suite — SRE & DevOps for Production Readiness"
+code: bgr
+name: "BMad BGreat Suite"
+header: "BGreat Suite — SRE & DevOps for Production Readiness"
 subheader: "Configure reliability engineering, observability, infrastructure, and CI/CD workflows.\nAdds two specialized agents (Morgan the SRE Lead, Riley the DevOps Lead) and four guided workflows."
 description: "SRE and DevOps agents with workflows for observability, incident response, infrastructure, and CI/CD pipeline design"
 module_version: 0.1.0
@@ -15,12 +15,12 @@ requiredModules: [core]
 ## output_folder
 ## project_knowledge
 
-ops_artifacts:
+bgr_artifacts:
   prompt: "Where should operations artifacts be stored? (Observability plans, incident response, infrastructure decisions, pipeline specs)"
-  default: "{output_folder}/ops-artifacts"
+  default: "{output_folder}/bgr-artifacts"
   result: "{project-root}/{value}"
 
-ops_maturity:
+bgr_maturity:
   prompt: "What is your current operations maturity level?"
   default: "growing"
   result: "{value}"
@@ -71,10 +71,10 @@ container_orchestration:
       label: "Undecided"
 
 directories:
-  - "{ops_artifacts}"
+  - "{bgr_artifacts}"
 
 post-install-notes: |
-  Operations Suite installed successfully!
+  BGreat Suite installed successfully!
 
   Your agents:
     Morgan (SRE Lead) — observability, incident response, SLO/SLI, reliability
@@ -83,5 +83,5 @@ post-install-notes: |
   Getting started:
     Wake Morgan or Riley from the agent menu, or invoke workflows directly.
 
-  For support: https://github.com/petry-projects/bmad-ops-suite/issues
+  For support: https://github.com/petry-projects/bmad-bgreat-suite/issues
   License: MIT

@@ -1,4 +1,4 @@
-# Contributing to BMad Operations Suite
+# Contributing to BMad BGreat Suite
 
 Thanks for your interest in contributing! This module is designed to grow — new agents, workflows, and templates are welcome.
 
@@ -11,7 +11,7 @@ Thanks for your interest in contributing! This module is designed to grow — ne
 
 ## Adding a New Agent
 
-Create a directory under `src/agents/` following the naming pattern `ops-agent-{name}/` with:
+Create a directory under `src/agents/` following the naming pattern `bgr-agent-{name}/` with:
 
 - `SKILL.md` — Agent persona, expertise, capabilities table, and activation sequence
 - `bmad-skill-manifest.yaml` — Agent metadata (`type: agent`, name, displayName, title, icon, etc.)
@@ -20,7 +20,7 @@ Register the agent in `src/module-help.csv` with a unique 2-letter menu code.
 
 ## Adding a New Workflow
 
-Create a directory under `src/workflows/` following the pattern `ops-{phase}-{name}/` with:
+Create a directory under `src/workflows/` following the pattern `bgr-{phase}-{name}/` with:
 
 - `SKILL.md` — Frontmatter with name and description, body delegates to `./workflow.md`
 - `bmad-skill-manifest.yaml` — Just `type: skill`
@@ -33,8 +33,8 @@ Register the workflow in `src/module-help.csv` and update `.claude-plugin/market
 ## Conventions
 
 - Follow the existing step file structure: `# Step N: Title`, MANDATORY EXECUTION RULES, EXECUTION PROTOCOLS, CONTEXT BOUNDARIES, task content, and `[C]ontinue / [R]evise` menus
-- Use `{ops_artifacts}` for output paths
-- Config loads from `{project-root}/_bmad/ops/config.yaml`
+- Use `{bgr_artifacts}` for output paths
+- Config loads from `{project-root}/_bmad/bgr/config.yaml`
 - Steps update `stepsCompleted` in document frontmatter before loading the next step
 - Templates use YAML frontmatter for state tracking (`status`, `stepsCompleted`, `inputDocuments`, dates)
 
