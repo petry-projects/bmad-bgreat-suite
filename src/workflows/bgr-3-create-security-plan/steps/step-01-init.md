@@ -48,9 +48,21 @@ If the document exists and has frontmatter with `stepsCompleted`:
 - Do not proceed with any initialization tasks
 - Let step-01b handle the continuation logic
 
-### 3. Fresh Workflow Setup (If No Document)
+### 2b. Handle Existing Document Without Valid Frontmatter
 
-If no document exists or no `stepsCompleted` in frontmatter:
+If the document exists but has **no** `stepsCompleted` in frontmatter (missing, empty, or malformed):
+
+- **Do NOT overwrite the file automatically**
+- Warn the user: "I found an existing `security-plan.md` but it has no valid workflow state (missing `stepsCompleted` frontmatter). This could be a manually created file or a partially completed workflow."
+- Present options:
+  - **[O] Overwrite** — Start fresh and replace the existing file with a clean template
+  - **[R] Recovery** — Load `./step-01b-continue.md` to attempt continuation from the existing content
+  - **[A] Abort** — Stop and let the user manually inspect or back up the file first
+- **Only proceed with fresh initialization if the user explicitly selects [O]**
+
+### 3. Fresh Workflow Setup (If No Document Exists)
+
+If no document exists at all:
 
 #### A. Input Document Discovery
 
@@ -126,6 +138,7 @@ Ready to begin security planning. Do you have any other documents you'd like me 
 ## SUCCESS METRICS:
 
 ✅ Existing workflow detected and handed off to step-01b correctly
+✅ Existing document without valid frontmatter detected and user prompted before overwrite
 ✅ Fresh workflow initialized with template and frontmatter
 ✅ Input documents discovered and loaded using sharded-first logic
 ✅ All discovered files tracked in frontmatter `inputDocuments`
@@ -135,6 +148,7 @@ Ready to begin security planning. Do you have any other documents you'd like me 
 ## FAILURE MODES:
 
 ❌ Proceeding with fresh initialization when existing workflow exists
+❌ Overwriting an existing security-plan.md without explicit user confirmation
 ❌ Not updating frontmatter with discovered input documents
 ❌ Creating document without proper template
 ❌ Not checking sharded folders first before whole files

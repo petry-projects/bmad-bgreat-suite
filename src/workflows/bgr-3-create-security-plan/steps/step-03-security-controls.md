@@ -194,6 +194,7 @@ Define security testing gates:
 - Bug bounty program (for mature organizations)
 
 **Security Review Gates:**
+
 | Change Type | Review Required |
 |------------|----------------|
 | New authentication/authorization flow | Mandatory security review |
