@@ -59,7 +59,7 @@ Check `{bgr_artifacts}/` for previously completed BGreat workflow outputs:
 For each completed plan found:
 - Load the document and extract key decisions relevant to incident response planning
 - Surface these as context during the workflow (e.g., "The Observability Plan defines burn-rate alerts at 2% and 10% thresholds — we should align severity classification with these alert levels")
-- Track loaded plans in frontmatter `crossWorkflowContext` array. If this workflow already has an entry in `crossWorkflowContext`, update it rather than adding a duplicate (upsert semantics).
+- Track loaded plans in frontmatter `crossWorkflowContext` array. If this workflow already has an entry in `crossWorkflowContext`, update it rather than adding a duplicate (upsert semantics). Match existing entries by workflow name (e.g., 'observability', 'infrastructure', 'pipeline').
 
 ### 4. Handle Continuation (If Document Exists)
 
