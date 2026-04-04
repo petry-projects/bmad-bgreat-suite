@@ -194,7 +194,7 @@ After saving the infrastructure plan, update the cross-workflow production readi
    - If Incident Response Plan exists: Verify environment access controls support on-call responder access and war room procedures
    - If Pipeline Plan exists: Verify environment topology matches pipeline deployment targets and runner infrastructure needs
    - Record any inconsistencies in section **4.3 Consistency Issues**
-5. Update the `completedWorkflows` array in checklist frontmatter to include `infrastructure`
+5. Update the `completedWorkflows` array in checklist frontmatter to include `infrastructure`. Add this workflow only if it is not already present (use set-style uniqueness to prevent duplicate entries on re-run).
 6. If all 4 workflows are now complete, update **Overall Status** to `READY` (if no critical gaps remain). A **critical gap** is a missing workflow artifact, an unresolved cross-plan dependency, or a key decision conflict between plans that would block production readiness (e.g., mismatched environment topologies, missing rollback alignment, or undefined alerting-to-severity mappings).
 7. Save the updated checklist
 
