@@ -87,7 +87,7 @@ lastUpdated: ""
 
 #### 5.3.1 Severity Escalation Flowchart
 
-```
+```text
 Incident Detected
   |
   v

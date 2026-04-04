@@ -41,8 +41,8 @@ lastUpdated: ""
 
 ### 3.4 Security Scanning
 
-| Scan Type | Tool | Stage | Blocking | Notes |
-|-----------|------|-------|----------|-------|
+| Scan Type | Tool | Stage | Blocking | Owner | Notes |
+|-----------|------|-------|----------|-------|-------|
 
 ### 3.5 Package
 
@@ -135,11 +135,6 @@ lastUpdated: ""
 - **Pipeline stage**: Pre-commit / pre-merge
 - **Blocking policy**: Always block on detected secrets
 - **Remediation**: Rotate exposed secret + revoke
-
-### 7.6 Security Scan Summary Matrix
-
-| Scan Type | Tool | Stage | Blocking | Owner | Notes |
-|-----------|------|-------|----------|-------|-------|
 
 ## 8. Developer Experience Considerations
 

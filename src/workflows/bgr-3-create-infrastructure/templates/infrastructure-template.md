@@ -93,7 +93,7 @@ lastUpdated: ""
 ### 7.3 Migration Phases
 
 | Phase | Scope | Rollback Plan | Validation Criteria | Target Date |
-|-------|-------|--------------|--------------------| ------------|
+|-------|-------|--------------|---------------------|-------------|
 
 ### 7.4 Risk Mitigation
 
