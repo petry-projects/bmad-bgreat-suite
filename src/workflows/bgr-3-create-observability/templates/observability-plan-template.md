@@ -61,7 +61,7 @@ lastUpdated: ""
 ## 9. Cost Estimation
 
 | Component | Tool/Service | Tier | Monthly Cost (Est.) | Annual Cost (Est.) | Notes |
-|-----------|-------------|------|---------------------|--------------------|-------|
+|-----------|-------------|------|---------------------|--------------------| ------|
 
 ### 9.1 Cost Breakdown by Category
 
@@ -148,7 +148,7 @@ lastUpdated: ""
 
 ### Common Troubleshooting Commands
 
-```text
+```
 # Placeholder — fill in with environment-specific commands
 ```
 
