@@ -191,7 +191,7 @@ Does this match your understanding? Any frameworks I missed or should be exclude
 
 ### 7. Generate Framework Selection Content
 
-Prepare the content to append to the document:
+Prepare the content to replace the existing placeholder section 2 in the document:
 
 #### Content Structure:
 
@@ -251,13 +251,13 @@ Show the generated content and present choices:
 
 #### If 'C' (Continue):
 
-- Append the final content to `{bgr_artifacts}/compliance-map.md`
+- Replace the existing placeholder section 2 in `{bgr_artifacts}/compliance-map.md` with the final content
 - Update frontmatter: `stepsCompleted: [1, 2]`
 - Load `./step-03-control-mapping.md`
 
-## APPEND TO DOCUMENT:
+## UPDATE DOCUMENT:
 
-When user selects 'C', append the content directly to the document using the structure from step 7.
+When user selects 'C', replace the existing placeholder section 2 in the document with the content from step 7.
 
 ## SUCCESS METRICS:
 
@@ -268,7 +268,7 @@ When user selects 'C', append the content directly to the document using the str
 ✅ Frameworks prioritized by risk, business impact, and timeline
 ✅ User confirmation of framework selection and scoping
 ✅ C/R menu presented and handled correctly
-✅ Content properly appended to document when C selected
+✅ Content properly replaces placeholder section in document when C selected
 
 ## FAILURE MODES:
 

@@ -157,7 +157,7 @@ Create a prioritized list of implementation tasks:
 
 ### 5. Generate Validation Content
 
-Prepare the content to append to the document:
+Prepare the content to replace the existing placeholder sections 8 through 12 in the document:
 
 #### Content Structure:
 
@@ -301,7 +301,7 @@ Prepare the content to append to the document:
 
 ### 6. Save Final Document
 
-- Append the validation and implementation content to `{bgr_artifacts}/compliance-map.md`
+- Replace the existing placeholder sections 8 through 12 in `{bgr_artifacts}/compliance-map.md` with the final content
 - Update frontmatter:
   - `stepsCompleted: [1, 2, 3, 4, 5]`
   - `status: complete`
@@ -357,9 +357,9 @@ After saving, present the final summary:
 
 Thank you for collaborating on this, {{user_name}}. Your compliance posture is mapped and actionable."
 
-## APPEND TO DOCUMENT:
+## UPDATE DOCUMENT:
 
-When user selects 'C', append the content directly to the document using the structure from step 5.
+When user selects 'C', replace the existing placeholder sections 8 through 12 in the document with the content from step 5.
 
 ## SUCCESS METRICS:
 

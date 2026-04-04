@@ -229,7 +229,7 @@ Does this strategy cover your identity and data protection needs? Anything to ad
 
 ### 7. Generate Identity & Data Protection Content
 
-Prepare the content to append to the document:
+Prepare the content to replace the existing placeholder sections 4, 5, and 6 in the document:
 
 #### Content Structure:
 
@@ -321,13 +321,13 @@ Show the generated content and present choices:
 
 #### If 'C' (Continue):
 
-- Append the final content to `{bgr_artifacts}/security-plan.md`
+- Replace the existing placeholder sections 4, 5, and 6 in `{bgr_artifacts}/security-plan.md` with the final content
 - Update frontmatter: `stepsCompleted: [1, 2, 3, 4]`
 - Load `./step-05-validation.md`
 
-## APPEND TO DOCUMENT:
+## UPDATE DOCUMENT:
 
-When user selects 'C', append the content directly to the document using the structure from step 7.
+When user selects 'C', replace the existing placeholder sections 4, 5, and 6 in the document with the content from step 7.
 
 ## SUCCESS METRICS:
 
@@ -341,7 +341,7 @@ When user selects 'C', append the content directly to the document using the str
 ✅ Key management lifecycle covers generation through destruction
 ✅ User confirmation of identity and data protection strategy
 ✅ C/R menu presented and handled correctly
-✅ Content properly appended to document when C selected
+✅ Content properly replaces placeholder sections in document when C selected
 
 ## FAILURE MODES:
 

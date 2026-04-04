@@ -245,7 +245,7 @@ Create a prioritized list of implementation tasks:
 
 ### 8. Generate Validation Content
 
-Prepare the content to append to the document:
+Prepare the content to replace the existing placeholder sections 7 through 12 in the document:
 
 #### Content Structure:
 
@@ -443,7 +443,7 @@ Show the generated content and present choices:
 
 #### If 'C' (Continue):
 
-- Append the validation and implementation content to `{bgr_artifacts}/security-plan.md`
+- Replace the existing placeholder sections 7 through 12 in `{bgr_artifacts}/security-plan.md` with the final content
 - Update frontmatter:
   - `stepsCompleted: [1, 2, 3, 4, 5]`
   - `status: complete`
@@ -473,9 +473,9 @@ After saving, present the final summary:
 
 Thank you for collaborating on this, {{user_name}}. Your system will be well-defended."
 
-## APPEND TO DOCUMENT:
+## UPDATE DOCUMENT:
 
-When user selects 'C', append the content directly to the document using the structure from step 8.
+When user selects 'C', replace the existing placeholder sections 7 through 12 in the document with the content from step 8.
 
 ## SUCCESS METRICS:
 

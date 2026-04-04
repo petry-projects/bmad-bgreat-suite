@@ -191,7 +191,7 @@ Does this threat model capture your concerns? Anything I missed or got wrong?"
 
 ### 7. Generate Threat Model Content
 
-Prepare the content to append to the document:
+Prepare the content to replace the existing placeholder section 2 in the document:
 
 #### Content Structure:
 
@@ -255,13 +255,13 @@ Show the generated content and present choices:
 
 #### If 'C' (Continue):
 
-- Append the final content to `{bgr_artifacts}/security-plan.md`
+- Replace the existing placeholder section 2 in `{bgr_artifacts}/security-plan.md` with the final content
 - Update frontmatter: `stepsCompleted: [1, 2]`
 - Load `./step-03-security-controls.md`
 
-## APPEND TO DOCUMENT:
+## UPDATE DOCUMENT:
 
-When user selects 'C', append the content directly to the document using the structure from step 7.
+When user selects 'C', replace the existing placeholder section 2 in the document with the content from step 7.
 
 ## SUCCESS METRICS:
 
@@ -273,7 +273,7 @@ When user selects 'C', append the content directly to the document using the str
 ✅ Risk scores calculated with likelihood and impact factors
 ✅ User confirmation of threat model completeness
 ✅ C/R menu presented and handled correctly
-✅ Content properly appended to document when C selected
+✅ Content properly replaces placeholder section in document when C selected
 
 ## FAILURE MODES:
 

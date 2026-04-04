@@ -217,7 +217,7 @@ Does this cover your security needs? Anything to adjust or add?"
 
 ### 7. Generate Security Controls Content
 
-Prepare the content to append to the document:
+Prepare the content to replace the existing placeholder section 3 in the document:
 
 #### Content Structure:
 
@@ -319,13 +319,13 @@ Show the generated content and present choices:
 
 #### If 'C' (Continue):
 
-- Append the final content to `{bgr_artifacts}/security-plan.md`
+- Replace the existing placeholder section 3 in `{bgr_artifacts}/security-plan.md` with the final content
 - Update frontmatter: `stepsCompleted: [1, 2, 3]`
 - Load `./step-04-identity-data.md`
 
-## APPEND TO DOCUMENT:
+## UPDATE DOCUMENT:
 
-When user selects 'C', append the content directly to the document using the structure from step 7.
+When user selects 'C', replace the existing placeholder section 3 in the document with the content from step 7.
 
 ## SUCCESS METRICS:
 
@@ -337,7 +337,7 @@ When user selects 'C', append the content directly to the document using the str
 ✅ Every Critical and High threat has at least one mapped control
 ✅ User confirmation of security controls design
 ✅ C/R menu presented and handled correctly
-✅ Content properly appended to document when C selected
+✅ Content properly replaces placeholder section in document when C selected
 
 ## FAILURE MODES:
 
