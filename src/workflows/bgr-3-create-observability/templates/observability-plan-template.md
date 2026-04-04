@@ -148,7 +148,7 @@ lastUpdated: ""
 
 ### Common Troubleshooting Commands
 
-```
+```text
 # Placeholder — fill in with environment-specific commands
 ```
 
