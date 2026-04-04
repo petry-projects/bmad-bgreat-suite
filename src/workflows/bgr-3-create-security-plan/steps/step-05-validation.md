@@ -11,7 +11,7 @@
 - 💬 FOCUS on validating security completeness, supply chain security, and generating implementation backlog
 - ✅ VALIDATE all critical threats have controls, all data has classification, all identities are governed
 - ⚠️ Do not estimate task durations or LOE — but do help the user set target dates and milestone timelines for planning purposes
-- ✅ YOU MUST ALWAYS SPEAK OUTPUT In your Agent communication style with the config `{communication_language}`
+- ✅ YOU MUST ALWAYS SPEAK OUTPUT in your Agent communication style with the config `{communication_language}`
 
 ## EXECUTION PROTOCOLS:
 
@@ -300,7 +300,7 @@ Prepare the content to replace the existing placeholder sections 7 through 12 in
 
 {{siem_sources_correlation_rules_playbooks}}
 
-## Validation Results
+## 10. Validation Results
 
 ### Quality Gates
 
@@ -475,7 +475,7 @@ Thank you for collaborating on this, {{user_name}}. Your system will be well-def
 
 ## UPDATE DOCUMENT:
 
-When user selects 'C', replace the existing placeholder sections 7 through 12 in the document with the content from step 8.
+When user selects 'C', replace the existing placeholder sections 7 through 12 in the document with the content from the Supply Chain Security section above.
 
 ## SUCCESS METRICS:
 

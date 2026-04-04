@@ -100,6 +100,8 @@ Show the user their current progress:
 - Let user choose which step to work on
 - Don't assume sequential progression is always best
 
+**Important:** Steps must be completed sequentially. If a previous step is not in `stepsCompleted`, route the user to that step first.
+
 #### If 'X' (Start over):
 
 - Confirm: "This will delete all existing security plan work. Are you sure? (y/n)"
