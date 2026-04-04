@@ -13,7 +13,7 @@
 Scan `{bgr_artifacts}` for any file matching `*pipeline*.md`.
 
 - **If found:** Load `./step-01b-continue.md` instead and follow its instructions. STOP here.
-- **If not found:** Continue to 1.2.
+- **If not found:** Continue to 1.1b.
 
 ## 1.1b Check Production Readiness Checklist
 
@@ -21,7 +21,7 @@ Look for `{bgr_artifacts}/production-readiness-checklist.md`:
 
 - If it exists, read it to understand which other workflows have been completed
 - Note any completed workflow plans -- their key decisions and cross-references will be loaded in the discovery phase
-- If it does not exist, create it from the shared template at `../../templates/bgr-production-readiness-checklist-template.md` and save to `{bgr_artifacts}/production-readiness-checklist.md`
+- If it does not exist, create it from the shared template at `../../../templates/bgr-production-readiness-checklist-template.md` and save to `{bgr_artifacts}/production-readiness-checklist.md`
 
 ## 1.1c Load Context from Completed Workflow Artifacts
 

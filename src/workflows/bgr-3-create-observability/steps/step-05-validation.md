@@ -273,23 +273,27 @@ Show the generated content and present choices:
 After saving the observability plan, update the cross-workflow production readiness checklist:
 
 1. Load `{bgr_artifacts}/production-readiness-checklist.md`
-   - If it does not exist, create it from `../../templates/bgr-production-readiness-checklist-template.md`
+   - If it does not exist, create it from `../../../templates/bgr-production-readiness-checklist-template.md`
 2. Update the **Observability Plan** row in the Workflow Completion Status table:
    - Status: `Complete`
    - Completion Date: `{{current_date}}`
    - Output Document: `{bgr_artifacts}/observability.md`
-3. Update section **2.1 Observability Plan** with key decisions:
+3. Update section **2.1 Observability Plan** detail fields and key decisions:
+   - Set **Status** to `Complete`
+   - Set **Completion Date** to `{{current_date}}`
+   - Set **Output Document** to `{bgr_artifacts}/observability.md`
    - Metrics backend chosen
    - Logging backend chosen
    - Tracing approach
    - SLO targets defined (count and summary)
+   - Update checklist `lastUpdated` in both frontmatter and the Overview section
 4. Check for cross-plan dependency gaps:
    - If Incident Response Plan exists: Verify alerting thresholds align with severity classification
    - If Infrastructure Plan exists: Verify monitoring targets match environment topology
    - If Pipeline Plan exists: Verify health check metrics align with post-deploy verification
    - Record any inconsistencies in section **4.3 Consistency Issues**
 5. Update the `completedWorkflows` array in checklist frontmatter to include `observability`
-6. If all 4 workflows are now complete, update **Overall Status** to `READY` (if no critical gaps remain)
+6. If all 4 workflows are now complete, update **Overall Status** to `READY` (if no critical gaps remain). A **critical gap** is any unresolved cross-plan consistency issue in section 4.3 that would block production deployment — e.g., mismatched environment topologies, missing rollback alignment, or undefined alerting-to-severity mappings.
 7. Save the updated checklist
 
 ### 10. Completion Summary
