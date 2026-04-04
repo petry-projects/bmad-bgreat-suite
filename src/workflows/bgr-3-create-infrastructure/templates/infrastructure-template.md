@@ -31,36 +31,13 @@ lastUpdated: ""
 
 ### 3.1 Environment Topology
 
-| Environment | Purpose | Scale | Data | Auto-Shutdown | Cloud Account/Subscription |
-|-------------|---------|-------|------|---------------|---------------------------|
+| Environment | Purpose | Scale | Data | Auto-Shutdown |
+|-------------|---------|-------|------|---------------|
 
-### 3.2 Environment Isolation
-
-**Account Separation:**
-
-**Network Isolation:**
-
-**Secrets Isolation:**
-
-**IAM Isolation:**
-
-**State Isolation:**
-
-### 3.3 Environment Parity Rules
-### 3.4 Configuration Management
-### 3.5 Secrets Management
-
-### 3.6 Promotion Gates & Change Control
-
-**Environment Promotion Flow:**
-
-**Gate Requirements per Boundary:**
-
-**Signoff Requirements:**
-
-**No-Bypass Enforcement:**
-
-### 3.7 Cost Management
+### 3.2 Environment Parity Rules
+### 3.3 Configuration Management
+### 3.4 Secrets Management
+### 3.5 Cost Management
 
 ## 4. Network Architecture
 
@@ -116,7 +93,7 @@ lastUpdated: ""
 ### 7.3 Migration Phases
 
 | Phase | Scope | Rollback Plan | Validation Criteria | Target Date |
-|-------|-------|--------------|---------------------|-------------|
+|-------|-------|--------------|--------------------| ------------|
 
 ### 7.4 Risk Mitigation
 
