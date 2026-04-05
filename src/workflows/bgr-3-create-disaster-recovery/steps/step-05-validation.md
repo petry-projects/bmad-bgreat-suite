@@ -5,7 +5,7 @@
 - 🛑 NEVER generate content without user input
 
 - 📖 CRITICAL: ALWAYS read the complete step file before taking any action - partial understanding leads to incomplete decisions
-- 🔄 CRITICAL: Before finalizing with 'C', ensure this entire file is read and understood
+- 🔄 CRITICAL: Before finalizing with 'C', ensure the entire file is read and understood before proceeding
 - ✅ ALWAYS treat this as collaborative discovery between reliability peers
 - 📋 YOU ARE A FACILITATOR, not a content generator
 - 💬 FOCUS on validating DR plan completeness and generating implementation sequence
@@ -15,7 +15,7 @@
 
 ## EXECUTION PROTOCOLS:
 
-- 🎯 Share a concise rationale (assumptions, key trade-offs, and decisions) before taking any action
+- 🎯 Show your analysis before taking any action
 - ✅ Run comprehensive validation checks on the complete DR plan
 - ⚠️ Present C/R menu after generating validation results
 - 💾 ONLY save when user chooses C (Continue)
@@ -190,7 +190,7 @@ Create a prioritized list of implementation tasks:
 
 **Priority 3 — Validation (implement third):**
 - Conduct first point-in-time restore test
-- Run first full-service restore drill
+- Run first full service restore drill
 - Validate communication procedures with tabletop exercise
 - Test DNS failover procedures
 - Document findings and update procedures
@@ -294,7 +294,7 @@ Prepare the content to append to the document:
 
 ### 8. Save Final Document
 
-- Append the validation and implementation content to `{bgr_artifacts}/disaster-recovery-plan.md`
+- Append the validation and implementation content to `{bgr_artifacts}/disaster-recovery.md`
 - Update frontmatter:
   - `stepsCompleted: [1, 2, 3, 4, 5]`
   - `status: complete`
@@ -325,7 +325,7 @@ Show the generated content and present choices:
 
 #### If 'C' (Continue):
 
-- Save the final content to `{bgr_artifacts}/disaster-recovery-plan.md`
+- Save the final content to `{bgr_artifacts}/disaster-recovery.md`
 - Update frontmatter to mark workflow as complete
 - Present completion summary and next steps
 
@@ -334,22 +334,15 @@ Show the generated content and present choices:
 After saving the disaster recovery plan, update the cross-workflow production readiness checklist:
 
 1. Load `{bgr_artifacts}/production-readiness-checklist.md`
-   - If it does not exist, create it in place with the minimum required structure for this workflow:
-     - Frontmatter including:
-       - `lastUpdated: {{current_date}}`
-       - `completedWorkflows: []`
-     - An `# Overview` section that includes the checklist `lastUpdated`
-     - A `## Workflow Completion Status` table with a row for **Disaster Recovery Plan**
-     - A disaster recovery plan detail section with fields for **Status**, **Completion Date**, and **Output Document**
-     - A `### 4.3 Consistency Issues` section for cross-plan dependency findings
+   - If it does not exist and the production readiness checklist template exists at `../../../templates/bgr-production-readiness-checklist-template.md`, create it from that template. If the template is not found, skip this step — the checklist is managed by the cross-workflow tracking feature.
 2. Update the **Disaster Recovery Plan** row in the Workflow Completion Status table:
    - Status: `Complete`
    - Completion Date: `{{current_date}}`
-   - Output Document: `{bgr_artifacts}/disaster-recovery-plan.md`
+   - Output Document: `{bgr_artifacts}/disaster-recovery.md`
 3. Update the disaster recovery plan detail section with key decisions:
    - Set **Status** to `Complete`
    - Set **Completion Date** to `{{current_date}}`
-   - Set **Output Document** to `{bgr_artifacts}/disaster-recovery-plan.md`
+   - Set **Output Document** to `{bgr_artifacts}/disaster-recovery.md`
    - DR topology chosen (active-active, active-passive, pilot light)
    - Number of criticality tiers and services per tier
    - RTO/RPO targets summary
@@ -370,7 +363,7 @@ After saving the disaster recovery plan, update the cross-workflow production re
 
 After saving, present the final summary:
 
-"The Disaster Recovery Plan for {{project_name}} is complete and saved to `{bgr_artifacts}/disaster-recovery-plan.md`.
+"The Disaster Recovery Plan for {{project_name}} is complete and saved to `{bgr_artifacts}/disaster-recovery.md`.
 
 **Summary:**
 - {N} services classified across {N} criticality tiers
@@ -424,7 +417,7 @@ When user selects 'C', append the content directly to the document using the str
 ❌ Not updating production readiness checklist
 
 ❌ **CRITICAL**: Reading only partial step file - leads to incomplete understanding and poor decisions
-❌ **CRITICAL**: Proceeding with 'C' without fully reading and understanding this finalization step
+❌ **CRITICAL**: Proceeding with 'C' without fully reading and understanding the next step file
 ❌ **CRITICAL**: Making decisions without complete understanding of step requirements and protocols
 
 ## WORKFLOW COMPLETE:
