@@ -1,8 +1,8 @@
 code: bgr
 name: "BMad BGreat Suite"
-header: "BGreat Suite — SRE & DevOps for Production Readiness"
-subheader: "Configure reliability engineering, observability, infrastructure, and CI/CD workflows.\nAdds two specialized agents (Morgan the SRE Lead, Riley the DevOps Lead) and five guided workflows."
-description: "SRE and DevOps agents with workflows for observability, incident response, disaster recovery, infrastructure, and CI/CD pipeline design"
+header: "BGreat Suite — SRE, DevOps & Security for Production Readiness"
+subheader: "Configure reliability engineering, observability, infrastructure, security, and CI/CD workflows.\nAdds three specialized agents (Morgan the SRE Lead, Riley the DevOps Lead, Sam the Security Lead) and seven guided workflows."
+description: "SRE, DevOps, and Security agents with workflows for observability, incident response, disaster recovery, infrastructure, capacity planning, CI/CD pipeline design, and security planning"
 module_version: 0.1.0
 default_selected: false
 recommendedModules: [bmm]
@@ -78,12 +78,11 @@ post-install-notes: |
 
   Your agents:
     Morgan (SRE Lead) — observability, incident response, disaster recovery, SLO/SLI, reliability
-    Riley (DevOps Lead) — infrastructure, CI/CD pipelines, deployment strategy
-    Morgan (SRE Lead) — observability, incident response, SLO/SLI, reliability
     Riley (DevOps Lead) — infrastructure, CI/CD pipelines, capacity planning, deployment strategy
+    Sam (Security Lead) — threat modeling, compliance mapping, security architecture
 
   Getting started:
-    Wake Morgan or Riley from the agent menu, or invoke workflows directly.
+    Wake Morgan, Riley, or Sam from the agent menu, or invoke workflows directly.
 
   For support: https://github.com/petry-projects/bmad-bgreat-suite/issues
   License: MIT
