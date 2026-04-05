@@ -60,7 +60,56 @@ Look for `{bgr_artifacts}/production-readiness-checklist.md`:
 
 - If it exists, read it as-is to understand which other workflows have been completed
 - Note any completed workflow plans — their key decisions and cross-references will be loaded in the discovery phase
-- If it does not exist, skip checklist creation — the checklist is managed by the cross-workflow tracking feature (PR #5)
+- If it does not exist, create `{bgr_artifacts}/production-readiness-checklist.md` using the following initial content:
+
+  ```md
+  ---
+  lastUpdated: {{current_date}}
+  completedWorkflows: []
+  ---
+
+  # Production Readiness Checklist
+
+  ## Overview
+
+  Last updated: {{current_date}}
+
+  ## Workflow Completion Status
+
+  | Workflow | Status | Completion Date | Output Document |
+  |----------|--------|-----------------|-----------------|
+  | Observability | Not Started | | |
+  | Incident Response | Not Started | | |
+  | Infrastructure | Not Started | | |
+  | Pipeline | Not Started | | |
+  | Capacity Planning | Not Started | | |
+
+  ## Workflow Details
+
+  ### Observability
+
+  - **Status:** Not Started
+
+  ### Incident Response
+
+  - **Status:** Not Started
+
+  ### Infrastructure
+
+  - **Status:** Not Started
+
+  ### Pipeline
+
+  - **Status:** Not Started
+
+  ### Capacity Planning
+
+  - **Status:** Not Started
+
+  ### 4.3 Consistency Issues
+
+  No cross-plan consistency issues identified yet.
+  ```
 
 ### 4. Load Context from Completed Workflow Artifacts
 
