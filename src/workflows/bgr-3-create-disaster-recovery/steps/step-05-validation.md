@@ -5,7 +5,7 @@
 - 🛑 NEVER generate content without user input
 
 - 📖 CRITICAL: ALWAYS read the complete step file before taking any action - partial understanding leads to incomplete decisions
-- 🔄 CRITICAL: Before finalizing with 'C', ensure the entire file is read and understood before proceeding
+- 🔄 CRITICAL: Before finalizing with 'C', ensure this entire file is read and understood
 - ✅ ALWAYS treat this as collaborative discovery between reliability peers
 - 📋 YOU ARE A FACILITATOR, not a content generator
 - 💬 FOCUS on validating DR plan completeness and generating implementation sequence
@@ -190,7 +190,7 @@ Create a prioritized list of implementation tasks:
 
 **Priority 3 — Validation (implement third):**
 - Conduct first point-in-time restore test
-- Run first full service restore drill
+- Run first full-service restore drill
 - Validate communication procedures with tabletop exercise
 - Test DNS failover procedures
 - Document findings and update procedures
@@ -334,7 +334,14 @@ Show the generated content and present choices:
 After saving the disaster recovery plan, update the cross-workflow production readiness checklist:
 
 1. Load `{bgr_artifacts}/production-readiness-checklist.md`
-   - If it does not exist and the production readiness checklist template exists at `../../../templates/bgr-production-readiness-checklist-template.md`, create it from that template. If the template is not found, skip this step — the checklist is managed by the cross-workflow tracking feature.
+   - If it does not exist, create it in place with the minimum required structure for this workflow:
+     - Frontmatter including:
+       - `lastUpdated: {{current_date}}`
+       - `completedWorkflows: []`
+     - An `# Overview` section that includes the checklist `lastUpdated`
+     - A `## Workflow Completion Status` table with a row for **Disaster Recovery Plan**
+     - A disaster recovery plan detail section with fields for **Status**, **Completion Date**, and **Output Document**
+     - A `### 4.3 Consistency Issues` section for cross-plan dependency findings
 2. Update the **Disaster Recovery Plan** row in the Workflow Completion Status table:
    - Status: `Complete`
    - Completion Date: `{{current_date}}`
@@ -417,7 +424,7 @@ When user selects 'C', append the content directly to the document using the str
 ❌ Not updating production readiness checklist
 
 ❌ **CRITICAL**: Reading only partial step file - leads to incomplete understanding and poor decisions
-❌ **CRITICAL**: Proceeding with 'C' without fully reading and understanding the next step file
+❌ **CRITICAL**: Proceeding with 'C' without fully reading and understanding this finalization step
 ❌ **CRITICAL**: Making decisions without complete understanding of step requirements and protocols
 
 ## WORKFLOW COMPLETE:

@@ -198,7 +198,7 @@ Reflect the backup and restore strategy back to the user:
 **Restore Testing:**
 - Daily automated verification
 - Monthly point-in-time restore tests
-- Quarterly full service restore
+- Quarterly full-service restore
 - Annual full DR drill
 
 **Data Protection:**
