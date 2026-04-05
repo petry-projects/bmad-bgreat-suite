@@ -91,36 +91,27 @@ Run through each quality gate systematically:
 
 ### Maturity-Level Gate Calibration
 
-Read `{bgr_maturity}` from config. Apply the following gate classification when evaluating quality gates:
+Read `{bgr_maturity}` from config. When evaluating the quality gates above, apply the following maturity-based expectations:
 
-**Required at ALL maturity levels (greenfield+):**
-- Metrics defined for critical services
-- Basic logging with correlation IDs
-- At least one SLO per critical journey
-- Basic alerting on error rates
+| Gate | greenfield | growing | established | advanced |
+|------|-----------|---------|-------------|----------|
+| Gate 1: Critical User Journey Coverage (basic metrics, at least one SLO, basic burn-rate alerts) | PASS | PASS | PASS | PASS |
+| Gate 2: Logging Standards (structured format, required fields, PII handling, retention, correlation IDs) | PASS | PASS | PASS | PASS |
+| Gate 1+5: Golden Signals coverage, multi-burn-rate alerting, alert routing | DEFERRED | PASS | PASS | PASS |
+| Gate 6: On-call triage dashboard | DEFERRED | PASS | PASS | PASS |
+| Gate 3: Tracing Coverage (distributed tracing, span naming, sampling, cardinality) | DEFERRED | DEFERRED | PASS | PASS |
+| Gate 4: SLO & Error Budget Rigor (error budget policies, baseline-driven targets) | DEFERRED | DEFERRED | PASS | PASS |
+| Gate 6: Executive dashboards | DEFERRED | DEFERRED | PASS | PASS |
+| Gate 5: Noise reduction strategies | DEFERRED | DEFERRED | PASS | PASS |
+| Gate 3: Adaptive sampling | DEFERRED | DEFERRED | DEFERRED | PASS |
+| Gate 6: Business KPI dashboards | DEFERRED | DEFERRED | DEFERRED | PASS |
+| Gate 4: Quarterly SLO reviews | DEFERRED | DEFERRED | DEFERRED | PASS |
 
-**Required at growing+ maturity:**
-- Full Golden Signals coverage
-- Structured JSON logging with PII handling
-- Multi-burn-rate alerting
-- On-call triage dashboard
+**How to interpret:**
+- **PASS** — Gate must pass. Flag failures as blocking.
+- **DEFERRED** — Gate is aspirational at this maturity level. Note it as a future improvement area but do not block. If the team has partially addressed it, acknowledge the progress.
 
-**Required at established+ maturity:**
-- Distributed tracing with OpenTelemetry
-- SLO error budget policies
-- Executive dashboards
-- Alert noise reduction
-
-**Required at advanced maturity:**
-- Adaptive sampling
-- Business KPI correlation
-- Quarterly SLO reviews
-- Chaos observability validation
-
-**Guidance:**
-- Gates below the team's maturity level are REQUIRED — flag failures as blocking
-- Gates at the team's maturity level are RECOMMENDED — flag failures as warnings with improvement path
-- Gates above the team's maturity level are INFORMATIONAL — mention as future growth areas but do not block
+When presenting validation results, report each gate's status as PASS, FAIL, or DEFERRED based on the team's maturity level.
 
 ### 2. Present Validation Summary
 

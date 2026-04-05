@@ -69,36 +69,32 @@ Run through each quality gate and report pass/fail:
 
 ### Maturity-Level Gate Calibration
 
-Read `{bgr_maturity}` from config. Apply the following gate classification when evaluating quality gates:
+Read `{bgr_maturity}` from config. When evaluating the quality gates above, apply the following maturity-based expectations:
 
-**Required at ALL maturity levels (greenfield+):**
-- IaC tool selected
-- At least one environment defined
-- Basic secrets management
-- Configuration strategy
+| Gate Group / Gate | greenfield | growing | established | advanced |
+|-------------------|-----------|---------|-------------|----------|
+| IaC Strategy: IaC tool selected with rationale | PASS | PASS | PASS | PASS |
+| IaC Strategy: State management strategy defined | PASS | PASS | PASS | PASS |
+| Environment Strategy: At least one environment defined with purpose | PASS | PASS | PASS | PASS |
+| Environment Strategy: Secrets management strategy defined | PASS | PASS | PASS | PASS |
+| Environment Strategy: Configuration management strategy | PASS | PASS | PASS | PASS |
+| IaC Strategy: State management per-environment separation | DEFERRED | PASS | PASS | PASS |
+| Environment Strategy: Environment parity rules defined | DEFERRED | PASS | PASS | PASS |
+| IaC Strategy: Policy-as-code approach defined | DEFERRED | PASS | PASS | PASS |
+| IaC Strategy: Drift detection and remediation strategy | DEFERRED | PASS | PASS | PASS |
+| Environment Strategy: Separate cloud accounts per environment | DEFERRED | DEFERRED | PASS | PASS |
+| Network Architecture: Network isolation and security strategy | DEFERRED | DEFERRED | PASS | PASS |
+| Environment Strategy: Full secrets rotation | DEFERRED | DEFERRED | PASS | PASS |
+| Environment Strategy: Promotion gates with signoff at every boundary | DEFERRED | DEFERRED | PASS | PASS |
+| Network Architecture: Zero-trust IAM with break-glass procedures | DEFERRED | DEFERRED | DEFERRED | PASS |
+| IaC Strategy: Automated compliance scanning (full change control) | DEFERRED | DEFERRED | DEFERRED | PASS |
+| Container Strategy: Anti-pattern scans and security hardening | DEFERRED | DEFERRED | DEFERRED | PASS |
 
-**Required at growing+ maturity:**
-- Separate state per environment
-- Environment parity rules
-- Policy-as-code
-- Drift detection planned
+**How to interpret:**
+- **PASS** — Gate must pass. Flag failures as blocking.
+- **DEFERRED** — Gate is aspirational at this maturity level. Note it as a future improvement area but do not block. If the team has partially addressed it, acknowledge the progress.
 
-**Required at established+ maturity:**
-- Separate cloud accounts per environment
-- Network isolation
-- Full secrets rotation
-- Promotion gates at every boundary
-
-**Required at advanced maturity:**
-- Zero-trust IAM
-- Break-glass procedures audited
-- Automated compliance scanning
-- Cost optimization governance
-
-**Guidance:**
-- Gates below the team's maturity level are REQUIRED — flag failures as blocking
-- Gates at the team's maturity level are RECOMMENDED — flag failures as warnings with improvement path
-- Gates above the team's maturity level are INFORMATIONAL — mention as future growth areas but do not block
+When presenting validation results, report each gate's status as PASS, FAIL, or DEFERRED based on the team's maturity level.
 
 ### 2. Coherence Validation
 

@@ -82,34 +82,30 @@ Run through each quality gate systematically:
 
 ### Maturity-Level Gate Calibration
 
-Read `{bgr_maturity}` from config. Apply the following gate classification when evaluating quality gates:
+Read `{bgr_maturity}` from config. When evaluating the quality gates above, apply the following maturity-based expectations:
 
-**Required at ALL maturity levels (greenfield+):**
-- Current baseline documented
-- Basic auto-scaling configured
-- Cost awareness
+| Gate | greenfield | growing | established | advanced |
+|------|-----------|---------|-------------|----------|
+| Gate 1: Growth Model (current traffic baseline, resource demand mapped) | PASS | PASS | PASS | PASS |
+| Gate 2: Scaling Strategy (basic auto-scaling for key services) | PASS | PASS | PASS | PASS |
+| Gate 3: Cost-Performance (cost awareness, baseline cost model) | PASS | PASS | PASS | PASS |
+| Gate 1: Growth scenarios (conservative, expected, aggressive) | DEFERRED | PASS | PASS | PASS |
+| Gate 2: Scaling policies with thresholds, cooldowns, min/max | DEFERRED | PASS | PASS | PASS |
+| Gate 4: Load Testing (tools selected, test scenarios planned) | DEFERRED | PASS | PASS | PASS |
+| Gate 2: Predictive and scheduled scaling triggers | DEFERRED | DEFERRED | PASS | PASS |
+| Gate 4: Comprehensive load testing suite tied to SLOs | DEFERRED | DEFERRED | PASS | PASS |
+| Gate 3: Cost guardrails with thresholds and actions | DEFERRED | DEFERRED | PASS | PASS |
+| Gate 5: Capacity alerts with thresholds and owners | DEFERRED | DEFERRED | PASS | PASS |
+| Gate 2: ML-driven predictive auto-scaling | DEFERRED | DEFERRED | DEFERRED | PASS |
+| Gate 1: Cross-region capacity planning | DEFERRED | DEFERRED | DEFERRED | PASS |
+| Gate 5: Automated capacity validation | DEFERRED | DEFERRED | DEFERRED | PASS |
+| Gate 5: Quarterly capacity reviews established | DEFERRED | DEFERRED | DEFERRED | PASS |
 
-**Required at growing+ maturity:**
-- Growth scenarios defined
-- Scaling policies with thresholds
-- Load testing planned
+**How to interpret:**
+- **PASS** — Gate must pass. Flag failures as blocking.
+- **DEFERRED** — Gate is aspirational at this maturity level. Note it as a future improvement area but do not block. If the team has partially addressed it, acknowledge the progress.
 
-**Required at established+ maturity:**
-- Predictive scaling
-- Comprehensive load testing suite
-- Cost guardrails
-- Capacity alerts
-
-**Required at advanced maturity:**
-- ML-driven auto-scaling
-- Cross-region capacity planning
-- Automated capacity validation
-- Quarterly reviews
-
-**Guidance:**
-- Gates below the team's maturity level are REQUIRED — flag failures as blocking
-- Gates at the team's maturity level are RECOMMENDED — flag failures as warnings with improvement path
-- Gates above the team's maturity level are INFORMATIONAL — mention as future growth areas but do not block
+When presenting validation results, report each gate's status as PASS, FAIL, or DEFERRED based on the team's maturity level.
 
 ### 2. Cross-Workflow Coherence Validation
 

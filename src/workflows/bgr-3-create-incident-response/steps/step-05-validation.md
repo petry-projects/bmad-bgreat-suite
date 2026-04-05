@@ -82,36 +82,31 @@ Run through each quality gate and assess pass/fail:
 
 ### Maturity-Level Gate Calibration
 
-Read `{bgr_maturity}` from config. Apply the following gate classification when evaluating quality gates:
+Read `{bgr_maturity}` from config. When evaluating the quality gates above, apply the following maturity-based expectations:
 
-**Required at ALL maturity levels (greenfield+):**
-- Severity levels defined (at least SEV1/SEV2)
-- Basic escalation path
-- One emergency runbook
-- Postmortem template exists
+| Gate | greenfield | growing | established | advanced |
+|------|-----------|---------|-------------|----------|
+| Severity Classification (severity levels defined, at least SEV1/SEV2) | PASS | PASS | PASS | PASS |
+| Escalation (basic escalation path) | PASS | PASS | PASS | PASS |
+| Runbooks (one emergency runbook, runbook template) | PASS | PASS | PASS | PASS |
+| Postmortems (postmortem template exists) | PASS | PASS | PASS | PASS |
+| Severity Classification (response SLAs for all levels) | DEFERRED | PASS | PASS | PASS |
+| On-Call & Response (on-call rotation, incident commander) | DEFERRED | PASS | PASS | PASS |
+| Communication (templates for internal, customer, stakeholder) | DEFERRED | PASS | PASS | PASS |
+| Runbooks (runbook inventory with owners) | DEFERRED | PASS | PASS | PASS |
+| On-Call & Response (full procedures, fatigue management, handoff) | DEFERRED | DEFERRED | PASS | PASS |
+| War Room (activation criteria, roles, procedures) | DEFERRED | DEFERRED | PASS | PASS |
+| Postmortems (blameless culture principles, action item tracking) | DEFERRED | DEFERRED | PASS | PASS |
+| On-Call & Response (regular training drills) | DEFERRED | DEFERRED | PASS | PASS |
+| Severity Classification (automated severity classification) | DEFERRED | DEFERRED | DEFERRED | PASS |
+| Runbooks (chaos-driven runbook validation) | DEFERRED | DEFERRED | DEFERRED | PASS |
+| Escalation (cross-team incident coordination) | DEFERRED | DEFERRED | DEFERRED | PASS |
 
-**Required at growing+ maturity:**
-- All severity levels with response SLAs
-- On-call rotation documented
-- Communication templates
-- Runbook inventory started
+**How to interpret:**
+- **PASS** — Gate must pass. Flag failures as blocking.
+- **DEFERRED** — Gate is aspirational at this maturity level. Note it as a future improvement area but do not block. If the team has partially addressed it, acknowledge the progress.
 
-**Required at established+ maturity:**
-- Full on-call procedures with handoff/fatigue management
-- War room procedures
-- Blameless postmortem culture
-- Regular training drills
-
-**Required at advanced maturity:**
-- Automated severity classification
-- Chaos-driven runbook validation
-- Cross-team incident coordination
-- Incident metrics (MTTD/MTTR tracking)
-
-**Guidance:**
-- Gates below the team's maturity level are REQUIRED — flag failures as blocking
-- Gates at the team's maturity level are RECOMMENDED — flag failures as warnings with improvement path
-- Gates above the team's maturity level are INFORMATIONAL — mention as future growth areas but do not block
+When presenting validation results, report each gate's status as PASS, FAIL, or DEFERRED based on the team's maturity level.
 
 ### 2. Coherence Validation
 
