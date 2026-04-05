@@ -55,6 +55,7 @@ Check `{bgr_artifacts}/` for previously completed BGreat workflow outputs:
 - `*observability*.md` — If completed, note SLO targets, metrics definitions, and alerting thresholds that resilience testing should validate
 - `*incident-response*.md` — If completed, note severity classification and runbook procedures that game days should exercise
 - `*infrastructure*.md` — If completed, note environment topology and failure domains for experiment design
+- `*pipeline*.md` — If completed, note rollback mechanisms, canary strategy, and deployment gates that experiments should validate
 
 For each completed plan found:
 - Load the document and extract key decisions relevant to resilience planning
@@ -87,6 +88,7 @@ Try to discover the following:
 - Observability Plan (`*observability*.md`) — Recommended
 - Incident Response Plan (`*incident-response*.md`) — Recommended
 - Infrastructure Plan (`*infrastructure*.md`) — Recommended
+- Pipeline Plan (`*pipeline*.md`) — Recommended
 
 <critical>Confirm what you have found with the user, along with asking if the user wants to provide anything else. Only after this confirmation will you proceed to follow the loading rules</critical>
 
