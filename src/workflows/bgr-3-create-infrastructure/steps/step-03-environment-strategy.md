@@ -61,7 +61,46 @@ Present a recommendation based on the architecture:
 
 What environments does your team currently use or plan to use?"
 
-### 2. Environment Parity Rules
+### 2. Environment Isolation (MANDATORY)
+
+Before discussing parity, establish hard isolation boundaries. These are non-negotiable:
+
+**Account/Subscription Isolation:**
+
+- Each SDLC environment MUST reside in its own cloud account (AWS), subscription (Azure), or project (GCP)
+- No shared accounts between environments — blast radius and compliance require hard boundaries
+- A dedicated shared-services account (for CI/CD runners, artifact registries, DNS) is acceptable but must have no direct network path to workload environments
+
+**Network Isolation:**
+
+- No VPC/VNet peering, transit gateway routes, or any network connectivity between SDLC environments
+- Environments must be network-unreachable from each other
+- Data flows between environments (e.g., database seeding for staging) use explicit, audited, offline export/import — never live connections
+
+**Secrets Isolation:**
+
+- Each environment has its own secrets store (separate Vault namespace, separate Secrets Manager in its own account, etc.)
+- No secret ARN, key path, or credential is shared across environment boundaries
+- Rotation schedules are per-environment and independently managed
+
+**IAM Isolation:**
+
+- Service accounts, roles, and policies are scoped to a single environment
+- No cross-account role assumptions between SDLC environments except through a dedicated, audited break-glass process
+- Human access to production is read-only, time-bound, and audit-logged
+
+**State Isolation:**
+
+- Terraform/IaC state backends are per-environment in separate accounts
+- State files for one environment are inaccessible from another
+
+**Key Questions to Discuss:**
+
+- How will you separate cloud accounts per environment?
+- Are there any legacy shared resources that need migration to isolated boundaries?
+- What break-glass procedure do you need for emergency cross-environment access?
+
+### 3. Environment Parity Rules
 
 Define what differs between environments and what must remain identical:
 
@@ -72,6 +111,7 @@ Define what differs between environments and what must remain identical:
 - Security policies (same rules, same enforcement)
 - Deployment process (same pipeline, different targets)
 - Monitoring and alerting patterns (same instrumentation)
+- IaC module versions (same modules, parameterized per environment)
 
 **Expected Differences Between Environments:**
 
@@ -80,6 +120,7 @@ Define what differs between environments and what must remain identical:
 - External integrations (sandbox/mock APIs in non-prod)
 - Cost controls (aggressive in non-prod, reliability-focused in prod)
 - Access controls (broader in dev, strict in prod)
+- Cloud account/subscription (separate per environment)
 
 ### 3. Configuration Management
 
@@ -127,7 +168,31 @@ Define cost controls for infrastructure:
 - **Cost Visibility:** Tagging strategy, cost allocation, budgets and alerts
 - **Resource Cleanup:** Orphaned resource detection, TTL on temporary resources
 
-### 6. Network Architecture
+### 6. Promotion Gates & Change Control
+
+Define the gates that govern how changes flow between environments:
+
+**Promotion Gate Requirements:**
+
+- **Dev → Staging**: Automated tests pass, security scans clean, IaC plan reviewed
+- **Staging → Production**: All of the above PLUS manual signoff from a reviewer who did not author the change, SLO compliance verified, rollback plan confirmed
+- **Hotfix Path**: Expedited pipeline with minimum smoke tests + security scan + signoff, followed by mandatory post-deploy review within 24 hours
+
+**Key Decisions:**
+
+- **Signoff mechanism**: Pipeline approval gates (GitHub Environments, GitLab approvals, etc.)
+- **Signoff requirements**: Minimum reviewer count, role requirements (e.g., must include SRE)
+- **Automated gate criteria**: Test coverage thresholds, scan severity thresholds, policy compliance
+- **Audit trail**: All promotions and approvals recorded with timestamp, approver, and artifact version
+- **No-bypass enforcement**: Pipeline configuration prevents skipping gates, even for admins
+
+**Anti-Pattern Check:**
+
+- Are there ANY paths to production that bypass the pipeline? Flag and eliminate them.
+- Can anyone deploy directly via console, CLI, or SSH? If yes, this must be blocked.
+- Are there shared credentials that could be used to push changes outside the pipeline? Remediate.
+
+### 7. Network Architecture
 
 Define the networking foundation:
 
@@ -151,11 +216,28 @@ Prepare the content to append to the document:
 
 ### 3.1 Environment Topology
 
-| Environment | Purpose | Scale | Data | Auto-Shutdown |
-|-------------|---------|-------|------|---------------|
-| {{env}} | {{purpose}} | {{scale}} | {{data_type}} | {{auto_shutdown}} |
+| Environment | Purpose | Scale | Data | Auto-Shutdown | Cloud Account/Subscription |
+|-------------|---------|-------|------|---------------|---------------------------|
+| {{env}} | {{purpose}} | {{scale}} | {{data_type}} | {{auto_shutdown}} | {{account_id}} |
 
-### 3.2 Environment Parity Rules
+### 3.2 Environment Isolation
+
+**Account Separation:**
+{{account_isolation_strategy}}
+
+**Network Isolation:**
+{{network_isolation_strategy}}
+
+**Secrets Isolation:**
+{{secrets_isolation_strategy}}
+
+**IAM Isolation:**
+{{iam_isolation_strategy}}
+
+**State Isolation:**
+{{state_isolation_strategy}}
+
+### 3.3 Environment Parity Rules
 
 **Identical Across All Environments:**
 {{parity_identical_list}}
@@ -163,7 +245,7 @@ Prepare the content to append to the document:
 **Expected Differences:**
 {{parity_differences_list}}
 
-### 3.3 Configuration Management
+### 3.4 Configuration Management
 
 **Injection Pattern:** {{config_injection_pattern}}
 **Source of Truth:** {{config_source}}
@@ -171,14 +253,28 @@ Prepare the content to append to the document:
 **Validation:** {{config_validation_approach}}
 **Feature Flags:** {{feature_flag_strategy}}
 
-### 3.4 Secrets Management
+### 3.5 Secrets Management
 
 **Backend:** {{secrets_backend}}
 **Rotation Strategy:** {{rotation_approach}}
 **Injection Pattern:** {{secret_injection_pattern}}
 **Audit:** {{secret_audit_approach}}
 
-### 3.5 Cost Management
+### 3.6 Promotion Gates & Change Control
+
+**Environment Promotion Flow:**
+{{promotion_flow}}
+
+**Gate Requirements per Boundary:**
+{{gate_requirements}}
+
+**Signoff Requirements:**
+{{signoff_requirements}}
+
+**No-Bypass Enforcement:**
+{{bypass_prevention}}
+
+### 3.7 Cost Management
 
 **Non-Production Controls:**
 {{non_prod_cost_controls}}
@@ -242,9 +338,13 @@ When user selects 'C', append the content directly to the document using the str
 ## SUCCESS METRICS:
 
 ✅ Environment topology documented with clear purpose for each environment
+✅ Environment isolation enforced — separate accounts, networks, secrets, IAM, and state per environment
+✅ No cross-environment resource sharing identified or all shared resources flagged for remediation
 ✅ Parity rules defined — what's identical vs what differs
 ✅ Configuration management strategy documented with injection patterns
-✅ Secrets management strategy defined with rotation approach
+✅ Secrets management strategy defined with rotation approach per environment
+✅ Promotion gates defined at every environment boundary with signoff requirements
+✅ No-bypass enforcement documented — no path to production outside the pipeline
 ✅ Cost management approach documented with non-prod controls
 ✅ Network architecture documented with VPC, subnets, DNS, and LB
 ✅ User confirmed all decisions through discussion
@@ -252,12 +352,16 @@ When user selects 'C', append the content directly to the document using the str
 
 ## FAILURE MODES:
 
+❌ Not enforcing environment isolation (shared accounts, networks, secrets, or IAM across environments)
+❌ Allowing any manual change path to production
+❌ Missing promotion gates or signoff requirements between environments
 ❌ Not considering cost implications of environment strategy
 ❌ Missing secrets management or rotation strategy
 ❌ Not defining parity rules between environments
 ❌ Ignoring network security in architecture
 ❌ Generating content without real discussion with user
 ❌ Not presenting [C] / [R] menu after content generation
+❌ Cross-environment network connectivity without explicit justification and compensating controls
 
 ❌ **CRITICAL**: Reading only partial step file - leads to incomplete understanding and poor decisions
 ❌ **CRITICAL**: Proceeding with 'C' without fully reading and understanding the next step file

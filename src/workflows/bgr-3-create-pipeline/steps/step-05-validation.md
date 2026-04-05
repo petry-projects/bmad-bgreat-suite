@@ -17,11 +17,17 @@ Review the pipeline plan against these quality gates. Present each item with a p
 | 1 | CI/CD platform selected with pipeline-as-code approach | |
 | 2 | Branching strategy defined with trigger mapping | |
 | 3 | All pipeline stages documented with pass/fail criteria | |
-| 4 | Security scanning integrated (SAST, dependencies, containers, secrets) | |
+| 4 | Security scanning integrated (SAST, dependencies, containers, secrets) — blocking, not advisory | |
 | 5 | Deployment strategy defined per service type | |
-| 6 | Rollback procedures documented | |
+| 6 | Rollback procedures documented and pipeline-driven (no manual rollbacks) | |
 | 7 | Database migration strategy addressed | |
 | 8 | Artifact management and retention defined | |
+| 9 | Promotion gates defined at every environment boundary with automated quality checks | |
+| 10 | Production signoff requirement — approval from reviewer who did not author the change | |
+| 11 | No-bypass enforcement — pipeline prevents skipping gates even for admins | |
+| 12 | No manual deployment paths — all changes flow exclusively through pipelines | |
+| 13 | Hotfix pipeline path defined with minimum gates and post-deploy review requirement | |
+| 14 | Audit trail — all promotions and approvals recorded with timestamp and approver | |
 
 For any gate that fails, note what is missing and discuss with the user whether to address it now or defer.
 
