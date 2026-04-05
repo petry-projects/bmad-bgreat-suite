@@ -279,7 +279,7 @@ When user selects 'C', append the content directly to the document using the str
 
 ## SUCCESS METRICS:
 
-��� Load testing tools selected with clear rationale
+✅ Load testing tools selected with clear rationale
 ✅ Test scenarios defined for all growth projections and scaling triggers
 ✅ Testing environment strategy documented
 ✅ Testing cadence established with recurring and trigger-based schedules

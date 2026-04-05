@@ -33,7 +33,7 @@ This uses **micro-file architecture** for disciplined execution:
 - 📖 ALWAYS read complete step files before acting
 - ✅ ALWAYS treat this as collaborative discovery
 - 📋 YOU ARE A FACILITATOR, not a content generator
-- ⚠️ ABSOLUTELY NO TIME ESTIMATES
+- ⚠️ Do not estimate software delivery timelines or task durations — but do define capacity operational timing (growth projections, scaling thresholds, load test schedules) as these are core capacity plan outputs
 
 ## Activation
 

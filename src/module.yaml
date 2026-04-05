@@ -1,8 +1,8 @@
 code: bgr
 name: "BMad BGreat Suite"
 header: "BGreat Suite — SRE & DevOps for Production Readiness"
-subheader: "Configure reliability engineering, observability, infrastructure, and CI/CD workflows.\nAdds two specialized agents (Morgan the SRE Lead, Riley the DevOps Lead) and six guided workflows."
-description: "SRE and DevOps agents with workflows for observability, incident response, disaster recovery, infrastructure, CI/CD pipeline design, and capacity planning"
+subheader: "Configure reliability engineering, observability, infrastructure, and CI/CD workflows.\nAdds two specialized agents (Morgan the SRE Lead, Riley the DevOps Lead) and five guided workflows."
+description: "SRE and DevOps agents with workflows for observability, incident response, infrastructure, CI/CD pipeline design, and capacity planning"
 module_version: 0.1.0
 default_selected: false
 recommendedModules: [bmm]

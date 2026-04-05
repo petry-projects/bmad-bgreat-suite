@@ -335,14 +335,8 @@ Show the generated content and present choices:
 After saving the capacity plan, update the cross-workflow production readiness checklist:
 
 1. Load `{bgr_artifacts}/production-readiness-checklist.md`
-   - If it does not exist, create it in place with the minimum required structure for this workflow:
-     - Frontmatter including:
-       - `lastUpdated: {{current_date}}`
-       - `completedWorkflows: []`
-     - An `# Overview` section that includes the checklist `lastUpdated`
-     - A `## Workflow Completion Status` table with a row for **Capacity Plan**
-     - A capacity plan detail section with fields for **Status**, **Completion Date**, and **Output Document**
-     - A `### 4.3 Consistency Issues` section for cross-plan dependency findings
+   - If it does not exist, skip the checklist update — the checklist is managed by the cross-workflow tracking feature (PR #5). Proceed to step 12.
+   - If it exists but does not have the expected structure (e.g., missing `Workflow Completion Status` table or `4.3 Consistency Issues` section), skip the checklist update and proceed to step 12.
 2. Update the **Capacity Plan** row in the Workflow Completion Status table:
    - Status: `Complete`
    - Completion Date: `{{current_date}}`

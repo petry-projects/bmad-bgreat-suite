@@ -83,9 +83,18 @@ Show the user their current progress:
 
 #### If 'R' (Resume from where we left off):
 
-- Identify the next step based on `stepsCompleted`
+- Identify the next step based on `stepsCompleted` using the routing table:
+
+  | `stepsCompleted` | Next Step |
+  |------------------|-----------|
+  | `[]` (empty) | `./step-02-growth-modeling.md` |
+  | `[1]` | `./step-02-growth-modeling.md` |
+  | `[1, 2]` | `./step-03-scaling-strategy.md` |
+  | `[1, 2, 3]` | `./step-04-validation-testing.md` |
+  | `[1, 2, 3, 4]` | `./step-05-validation.md` |
+  | `[1, 2, 3, 4, 5]` | Workflow complete — present completion summary |
+
 - Load the appropriate step file to continue
-- Example: If `stepsCompleted: [1, 2, 3]`, load `./step-04-validation-testing.md`
 
 #### If 'C' (Continue to next logical step):
 
