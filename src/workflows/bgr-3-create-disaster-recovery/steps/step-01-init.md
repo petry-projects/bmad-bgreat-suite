@@ -36,9 +36,11 @@ Initialize the Disaster Recovery workflow by detecting continuation state, disco
 
 First, check if the output document already exists:
 
-- Look for existing {bgr_artifacts}/`*disaster-recovery*.md`
-- If exists, read the complete file(s) including frontmatter
-- If not exists, this is a fresh workflow
+- Look for existing `{bgr_artifacts}/disaster-recovery-plan.md` (exact path first)
+- If not found, fall back to glob `{bgr_artifacts}/*disaster-recovery*.md`
+- If multiple files match the glob, present the list to the user and ask them to select the correct one before proceeding
+- If a file is found, read the complete file including frontmatter
+- If no file is found, this is a fresh workflow
 
 <critical>
 **FILE OVERWRITE PROTECTION:** If an existing disaster recovery plan is found, you MUST NOT overwrite it without explicit user confirmation. Always present the existing file and ask whether to resume, start fresh (with confirmation), or abort.
@@ -102,7 +104,7 @@ Discover and load context documents using smart discovery. Documents can be in t
 - {project_knowledge}/**
 - {project-root}/docs/**
 
-Also - when searching - documents can be a single markdown file, or a folder with an index and multiple files. For example, if searching for `*foo*.md` and not found, also search for a folder called *foo*/index.md (which indicates sharded content)
+Discovery order for each document type: try the exact path in `{bgr_artifacts}/` first (e.g., `{bgr_artifacts}/architecture.md`), then fall back to a glob pattern (e.g., `*architecture*.md`) across the search locations, then check for a sharded folder (e.g., `*architecture*/index.md` which indicates sharded content across multiple files).
 
 Try to discover the following:
 - Architecture Document (`*architecture*.md`)
@@ -169,7 +171,7 @@ Report what was found:
 - Observability: {observability files loaded or "None found"}
 - Incident Response: {incident response files loaded or "None found"}
 - PRD: {PRD files loaded or "None found"}
-- Project context: {project_context_rules count of rules for AI agents found}
+- Project context: {project_context_rules_count} rules for AI agents found
 
 **Files loaded:** {list of specific file names or "No additional documents found"}
 
@@ -181,7 +183,7 @@ Ready to begin disaster recovery planning. Do you have any other documents you'd
 
 ✅ Existing workflow detected and handed off to step-01b correctly
 ✅ Fresh workflow initialized with template and frontmatter
-✅ Input documents discovered and loaded using sharded-first logic
+✅ Input documents discovered using exact-path-first, then glob fallback, then sharded folder check
 ✅ All discovered files tracked in frontmatter `inputDocuments`
 ✅ Architecture requirement validated and communicated
 ✅ Infrastructure recommendation communicated
@@ -195,7 +197,7 @@ Ready to begin disaster recovery planning. Do you have any other documents you'd
 ❌ Proceeding with fresh initialization when existing workflow exists
 ❌ Not updating frontmatter with discovered input documents
 ❌ Creating document without proper template
-❌ Not checking sharded folders first before whole files
+❌ Not following the discovery order: exact path first, then glob fallback, then sharded folder check
 ❌ Not reporting what documents were found to user
 ❌ Proceeding without validating Architecture requirement
 ❌ Overwriting an existing disaster recovery plan without user confirmation

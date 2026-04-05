@@ -111,7 +111,7 @@ Create standardized DR runbook structure:
 
 **DR Runbook Standard Structure:**
 
-```
+```text
 # DR Runbook: {Service/Scenario Name}
 
 ## Summary
