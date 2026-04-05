@@ -48,7 +48,35 @@ If any quality gates failed:
 - Update `lastUpdated` to today's date
 - Save the final document to `{bgr_artifacts}/pipeline.md`
 
-## 5.5 Recommend Next Steps
+## 5.5 Update Production Readiness Checklist
+
+After saving the pipeline plan, update the cross-workflow production readiness checklist:
+
+1. Load `{bgr_artifacts}/production-readiness-checklist.md`
+   - If it does not exist, create it from `../../../templates/bgr-production-readiness-checklist-template.md`
+2. Update the **CI/CD Pipeline Plan** row in the Workflow Completion Status table:
+   - Status: `Complete`
+   - Completion Date: today's date
+   - Output Document: `{bgr_artifacts}/pipeline.md`
+3. Update section **2.4 CI/CD Pipeline Plan** detail fields and key decisions:
+   - Set **Status** to `Complete`
+   - Set **Completion Date** to today's date
+   - Set **Output Document** to `{bgr_artifacts}/pipeline.md`
+   - CI/CD platform selected
+   - Branching strategy chosen
+   - Deployment strategy per service type
+   - Security scanning approach
+   - Update checklist `lastUpdated` in both frontmatter and the Overview section
+4. Check for cross-plan dependency gaps (verify each plan's `status` field before validating):
+   - If Observability Plan exists and status is `complete`: Verify post-deploy verification gates reference the correct health check metrics and SLO thresholds. If status is `draft`, defer validation until plan is finalized.
+   - If Incident Response Plan exists and status is `complete`: Verify rollback automation triggers align with incident severity classification and escalation procedures. If status is `draft`, defer validation until plan is finalized.
+   - If Infrastructure Plan exists and status is `complete` or `approved`: Verify pipeline deployment targets match the defined environment topology, and runner infrastructure is provisioned. If status is `draft`, defer validation until plan is finalized.
+   - Record any inconsistencies or deferred validations in section **4.3 Consistency Issues**
+5. Update the `completedWorkflows` array in checklist frontmatter to include `pipeline`. Add this workflow only if it is not already present (use set-style uniqueness to prevent duplicate entries on re-run).
+6. If all 4 workflows are now complete, update **Overall Status** to `READY` (if no critical gaps remain). A **critical gap** is a missing workflow artifact, an unresolved cross-plan dependency, or a key decision conflict between plans that would block production readiness (e.g., mismatched environment topologies, missing rollback alignment, or undefined alerting-to-severity mappings).
+7. Save the updated checklist
+
+## 5.6 Recommend Next Steps
 
 Suggest logical follow-up actions:
 
@@ -68,4 +96,6 @@ Suggest logical follow-up actions:
 
 🔄 **Before completing:** Update `stepsCompleted` in frontmatter to include `"step-05-validation"`.
 
-✅ **Workflow complete.** The pipeline plan has been saved to `{bgr_artifacts}/pipeline.md`.
+🔄 **Before completing:** Update the production readiness checklist per step 5.5.
+
+✅ **Workflow complete.** The pipeline plan has been saved to `{bgr_artifacts}/pipeline.md`. The production readiness checklist has been updated with completion status and cross-plan dependency analysis.

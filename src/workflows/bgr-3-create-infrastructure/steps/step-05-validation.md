@@ -170,7 +170,35 @@ Present the complete validation to the user:
 - Update the Overview section (section 1) with project details gathered during the workflow
 - Save the final document
 
-### 8. Completion Message
+### 8. Update Production Readiness Checklist
+
+After saving the infrastructure plan, update the cross-workflow production readiness checklist:
+
+1. Load `{bgr_artifacts}/production-readiness-checklist.md`
+   - If it does not exist, create it from `../../../templates/bgr-production-readiness-checklist-template.md`
+2. Update the **Infrastructure Plan** row in the Workflow Completion Status table:
+   - Status: `Complete`
+   - Completion Date: `{{current_date}}`
+   - Output Document: `{bgr_artifacts}/infrastructure.md`
+3. Update section **2.3 Infrastructure Plan** detail fields and key decisions:
+   - Set **Status** to `Complete`
+   - Set **Completion Date** to `{{current_date}}`
+   - Set **Output Document** to `{bgr_artifacts}/infrastructure.md`
+   - IaC tool selected
+   - Cloud provider
+   - Container orchestration platform
+   - Environment topology summary
+   - Update checklist `lastUpdated` in both frontmatter and the Overview section
+4. Check for cross-plan dependency gaps (verify each plan's `status` field before validating):
+   - If Observability Plan exists and status is `complete`: Verify infrastructure provisions resources for monitoring agents, collectors, and telemetry data egress. If status is `draft`, note validation is deferred pending finalization.
+   - If Incident Response Plan exists and status is `complete`: Verify environment access controls support on-call responder access and war room procedures. If status is `draft`, note validation is deferred pending finalization.
+   - If Pipeline Plan exists and status is `complete`: Verify environment topology matches pipeline deployment targets and runner infrastructure needs. If status is `draft`, note validation is deferred pending finalization.
+   - Record any inconsistencies or deferred validations in section **4.3 Consistency Issues**
+5. Update the `completedWorkflows` array in checklist frontmatter to include `infrastructure`. Add this workflow only if it is not already present (use set-style uniqueness to prevent duplicate entries on re-run).
+6. If all 4 workflows are now complete, update **Overall Status** to `READY` (if no critical gaps remain). A **critical gap** is a missing workflow artifact, an unresolved cross-plan dependency, or a key decision conflict between plans that would block production readiness (e.g., mismatched environment topologies, missing rollback alignment, or undefined alerting-to-severity mappings).
+7. Save the updated checklist
+
+### 9. Completion Message
 
 After saving:
 
@@ -202,6 +230,8 @@ When user selects 'C', append the validation results and implementation sequence
 ✅ Implementation sequence defined
 ✅ Final document saved with approved status
 ✅ Next workflow recommended to user
+✅ Production readiness checklist updated with completion status and key decisions
+✅ Cross-plan dependency gaps identified and recorded in checklist
 
 ## FAILURE MODES:
 
