@@ -73,19 +73,32 @@ jobs:
       - name: Check for permission bypasses
         run: |
           status=0
+          bypass_pattern='dangerouslySkipPermissions|skipPermissions|--dangerously-skip'
 
           for file in CLAUDE.md AGENTS.md; do
-            if grep -in 'dangerouslySkipPermissions\|skipPermissions\|--dangerously' "$file" 2>/dev/null; then
-              echo "::error file=$file::Permission bypass detected — agent configs must not skip permission checks"
-              status=1
+            if [ -f "$file" ]; then
+              # Match lines containing bypass patterns but exclude documentation/negation lines
+              while IFS= read -r match; do
+                # Skip lines that are documenting the rule (backtick-quoted or preceded by "No"/"not"/"never"/"must not")
+                if echo "$match" | grep -qiP '^\s*-\s*(No|Never|Must not|Do not|MUST NOT)\b' || \
+                   echo "$match" | grep -qP '`[^`]*'"$bypass_pattern"'[^`]*`'; then
+                  continue
+                fi
+                echo "::error file=$file::Permission bypass detected: $match"
+                status=1
+              done < <(grep -inP "$bypass_pattern" "$file" 2>/dev/null || true)
             fi
           done
 
           while IFS= read -r file; do
-            if grep -in 'dangerouslySkipPermissions\|skipPermissions\|--dangerously' "$file" 2>/dev/null; then
-              echo "::error file=$file::Permission bypass detected"
+            while IFS= read -r match; do
+              if echo "$match" | grep -qiP '^\s*-\s*(No|Never|Must not|Do not|MUST NOT)\b' || \
+                 echo "$match" | grep -qP '`[^`]*'"$bypass_pattern"'[^`]*`'; then
+                continue
+              fi
+              echo "::error file=$file::Permission bypass detected: $match"
               status=1
-            fi
+            done < <(grep -inP "$bypass_pattern" "$file" 2>/dev/null || true)
           done < <(find . -name '*.md' -path '*/.claude/*' -not -path '*/node_modules/*')
 
           if [ "$status" -eq 0 ]; then

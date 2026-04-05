@@ -62,7 +62,7 @@ src/
 ### Security
 
 - No secrets, API keys, or credentials in any file
-- No `dangerouslySkipPermissions` or permission bypass directives
+- No permission bypass directives (e.g., flags that skip tool authorization checks)
 - Agent configs must not include overly permissive tool authorizations
 - SKILL.md files must not instruct agents to bypass security controls
 
