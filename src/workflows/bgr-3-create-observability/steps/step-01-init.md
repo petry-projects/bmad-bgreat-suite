@@ -55,6 +55,9 @@ Check `{bgr_artifacts}/` for previously completed BGreat workflow outputs:
 - `*incident-response*.md` — If completed, note severity classification and alerting thresholds that observability should align with
 - `*infrastructure*.md` — If completed, note environment topology and monitoring targets for instrumentation planning
 - `*pipeline*.md` — If completed, note deployment strategy and post-deploy verification needs
+- `*security-plan*.md` — If completed, note security monitoring requirements, compliance audit logging needs, and authentication event tracking that observability must support
+- `*disaster-recovery*.md` — If completed, note RTO/RPO targets that inform SLO definitions, and failover scenarios that need monitoring coverage
+- `*capacity-plan*.md` — If completed, note scaling triggers and metrics that observability must track, and load testing verification requirements
 
 For each completed plan found:
 - Load the document and extract key decisions relevant to observability planning
