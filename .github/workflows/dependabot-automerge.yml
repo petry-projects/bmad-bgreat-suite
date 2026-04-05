@@ -25,14 +25,13 @@ jobs:
         id: eligible
         run: |
           UPDATE_TYPE="${{ steps.metadata.outputs.update-type }}"
-          DEP_TYPE="${{ steps.metadata.outputs.dependency-type }}"
           ECOSYSTEM="${{ steps.metadata.outputs.package-ecosystem }}"
 
+          # Auto-merge only patch and minor updates; major updates require human review
           if [[ "$UPDATE_TYPE" != "version-update:semver-patch" && \
-                "$UPDATE_TYPE" != "version-update:semver-minor" && \
-                "$DEP_TYPE" != "indirect" ]]; then
+                "$UPDATE_TYPE" != "version-update:semver-minor" ]]; then
             echo "eligible=false" >> "$GITHUB_OUTPUT"
-            echo "Skipping: major update requires human review"
+            echo "Skipping: only patch/minor updates are auto-merge eligible"
             exit 0
           fi
 

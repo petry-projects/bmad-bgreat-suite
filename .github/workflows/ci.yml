@@ -24,7 +24,7 @@ jobs:
         run: |
           status=0
           while IFS= read -r file; do
-            if ! python3 -c "import yaml; yaml.safe_load(open('$file'))" 2>/dev/null; then
+            if ! yq eval '.' "$file" > /dev/null 2>&1; then
               echo "::error file=$file::Invalid YAML syntax"
               status=1
             fi
@@ -87,7 +87,7 @@ jobs:
           # Check that every agent directory is registered in module-help.csv
           for dir in src/agents/*/; do
             skill_name=$(basename "$dir")
-            if ! grep -q "$skill_name" src/module-help.csv; then
+            if ! awk -F',' '{print $2}' src/module-help.csv | grep -q "^${skill_name}$"; then
               echo "::error::Agent $skill_name not registered in module-help.csv"
               status=1
             fi
@@ -96,7 +96,7 @@ jobs:
           # Check that every workflow directory is registered in module-help.csv
           for dir in src/workflows/*/; do
             skill_name=$(basename "$dir")
-            if ! grep -q "$skill_name" src/module-help.csv; then
+            if ! awk -F',' '{print $2}' src/module-help.csv | grep -q "^${skill_name}$"; then
               echo "::error::Workflow $skill_name not registered in module-help.csv"
               status=1
             fi
