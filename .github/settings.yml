@@ -1,0 +1,9 @@
+# Repository settings managed as code
+# Applied automatically if the Probot Settings app is installed
+# See: https://github.com/apps/settings
+#
+# Standard reference: https://github.com/petry-projects/.github/blob/main/standards/github-settings.md
+
+repository:
+  # Automatically delete head branches after pull requests are merged
+  delete_branch_on_merge: true
