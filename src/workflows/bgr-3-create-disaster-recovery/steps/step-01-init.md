@@ -48,7 +48,7 @@ First, check if the output document already exists:
 
 ### 2. Handle Continuation (If Document Exists)
 
-If the document from step 1 exists and has frontmatter with `stepsCompleted`:
+If the document from section 1 above exists and has frontmatter with `stepsCompleted`:
 
 - **STOP here** and load `./step-01b-continue.md` immediately
 - Do not proceed with any initialization tasks
