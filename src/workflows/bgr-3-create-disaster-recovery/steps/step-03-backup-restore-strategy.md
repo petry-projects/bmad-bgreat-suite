@@ -15,7 +15,7 @@
 
 ## EXECUTION PROTOCOLS:
 
-- 🎯 Share a concise rationale (assumptions, key trade-offs, and decisions) before taking any action
+- 🎯 Show your analysis before taking any action
 - ⚠️ Present C/R menu after generating backup and restore strategy
 - 💾 ONLY save when user chooses C (Continue)
 - 📖 Update frontmatter `stepsCompleted: [1, 2, 3]` before loading next step
@@ -136,12 +136,12 @@ Establish a regular restore testing schedule:
 
 **Testing Types:**
 
-| Test Type | Frequency | Scope | Success Criteria | Owner |
-|-----------|-----------|-------|------------------|-------|
-| Backup verification | Daily (automated) | All backups | Backup completed, checksum valid, size within expected range | {SRE on-call} |
-| Point-in-time restore | Monthly | Tier 1 & 2 databases | Data restored to target timestamp, application validates successfully | {DB Platform Team} |
-| Full-service restore | Quarterly | One Tier 1 service end-to-end | Service operational within RTO, data loss within RPO | {Service Owner + SRE} |
-| Full DR drill | Annually | Complete DR region activation | All Tier 1 & 2 services operational in DR region within targets | {Incident Commander} |
+| Test Type | Frequency | Scope | Success Criteria |
+|-----------|-----------|-------|------------------|
+| Backup verification | Daily (automated) | All backups | Backup completed, checksum valid, size within expected range |
+| Point-in-time restore | Monthly | Tier 1 & 2 databases | Data restored to target timestamp, application validates successfully |
+| Full-service restore | Quarterly | One Tier 1 service end-to-end | Service operational within RTO, data loss within RPO |
+| Full DR drill | Annually | Complete DR region activation | All Tier 1 & 2 services operational in DR region within targets |
 
 **Testing Procedures:**
 - Restore to isolated environment (never to production)
@@ -198,7 +198,7 @@ Reflect the backup and restore strategy back to the user:
 **Restore Testing:**
 - Daily automated verification
 - Monthly point-in-time restore tests
-- Quarterly full-service restore
+- Quarterly full service restore
 - Annual full DR drill
 
 **Data Protection:**
@@ -296,7 +296,7 @@ Show the generated content and present choices:
 
 #### If 'C' (Continue):
 
-- Append the final content to `{bgr_artifacts}/disaster-recovery-plan.md`
+- Append the final content to `{bgr_artifacts}/disaster-recovery.md`
 - Update frontmatter: `stepsCompleted: [1, 2, 3]`
 - Load `./step-04-failover-procedures.md`
 

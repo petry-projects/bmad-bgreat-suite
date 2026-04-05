@@ -14,7 +14,7 @@
 
 ## EXECUTION PROTOCOLS:
 
-- 🎯 Share a concise rationale (assumptions, key trade-offs, and decisions) before taking any action
+- 🎯 Show your analysis before taking any action
 - 💾 Initialize document and update frontmatter
 - 📖 Set up frontmatter `stepsCompleted: [1]` before loading next step
 - 🚫 FORBIDDEN to load next step until setup is complete
@@ -36,11 +36,9 @@ Initialize the Disaster Recovery workflow by detecting continuation state, disco
 
 First, check if the output document already exists:
 
-- Look for existing `{bgr_artifacts}/disaster-recovery-plan.md` (canonical path first)
-- If not found, fall back to `{bgr_artifacts}/*disaster-recovery*.md` glob
-- If multiple files match, STOP and ask the user which file to resume from (or whether to start fresh)
-- If a match is found, read the selected file completely including frontmatter
-- If no match is found, this is a fresh workflow
+- Look for existing {bgr_artifacts}/`*disaster-recovery*.md`
+- If exists, read the complete file(s) including frontmatter
+- If not exists, this is a fresh workflow
 
 <critical>
 **FILE OVERWRITE PROTECTION:** If an existing disaster recovery plan is found, you MUST NOT overwrite it without explicit user confirmation. Always present the existing file and ask whether to resume, start fresh (with confirmation), or abort.
@@ -48,7 +46,7 @@ First, check if the output document already exists:
 
 ### 2. Handle Continuation (If Document Exists)
 
-If the document found above exists and has frontmatter with `stepsCompleted`:
+If the document from step 1 exists and has frontmatter with `stepsCompleted`:
 
 - **STOP here** and load `./step-01b-continue.md` immediately
 - Do not proceed with any initialization tasks
@@ -60,8 +58,7 @@ Look for `{bgr_artifacts}/production-readiness-checklist.md`:
 
 - If it exists, read it to understand which other workflows have been completed
 - Note any completed workflow plans — their key decisions and cross-references will be loaded in the discovery phase
-- If it does not exist:
-  - Create from `../../../templates/bgr-production-readiness-checklist-template.md`
+- If it does not exist and the production readiness checklist template exists at `../../../templates/bgr-production-readiness-checklist-template.md`, create it from that template and save to `{bgr_artifacts}/production-readiness-checklist.md`. If the template is not found, skip this step — the checklist is managed by the cross-workflow tracking feature.
 
 ### 4. Load Context from Completed Workflow Artifacts
 
@@ -88,7 +85,7 @@ Discover and load context documents using smart discovery. Documents can be in t
 - {project_knowledge}/**
 - {project-root}/docs/**
 
-Discovery order for each document type: try the exact path in `{bgr_artifacts}/` first (e.g., `{bgr_artifacts}/architecture.md`), then fall back to a glob pattern (e.g., `*architecture*.md`) across the search locations, then check for a sharded folder (e.g., `*architecture*/index.md` which indicates sharded content across multiple files).
+Also - when searching - documents can be a single markdown file, or a folder with an index and multiple files. For example, if searching for `*foo*.md` and not found, also search for a folder called *foo*/index.md (which indicates sharded content)
 
 Try to discover the following:
 - Architecture Document (`*architecture*.md`)
@@ -130,10 +127,10 @@ Before proceeding, verify we have the essential inputs:
 #### C. Create Initial Document
 
 <critical>
-**FILE OVERWRITE PROTECTION:** Before creating the document, perform a final check that `{bgr_artifacts}/disaster-recovery-plan.md` does not already exist. If it does, STOP and ask the user for confirmation before overwriting.
+**FILE OVERWRITE PROTECTION:** Before creating the document, perform a final check that `{bgr_artifacts}/disaster-recovery.md` does not already exist. If it does, STOP and ask the user for confirmation before overwriting.
 </critical>
 
-Copy the template from `../templates/disaster-recovery-plan-template.md` to `{bgr_artifacts}/disaster-recovery-plan.md`
+Copy the template from `../templates/disaster-recovery-plan-template.md` to `{bgr_artifacts}/disaster-recovery.md`
 
 #### D. Complete Initialization and Report
 
@@ -141,7 +138,7 @@ Complete setup and report to user:
 
 **Document Setup:**
 
-- Created: `{bgr_artifacts}/disaster-recovery-plan.md` from template
+- Created: `{bgr_artifacts}/disaster-recovery.md` from template
 - Initialized frontmatter with workflow state
 
 **Input Documents Discovered:**
@@ -155,7 +152,7 @@ Report what was found:
 - Observability: {observability files loaded or "None found"}
 - Incident Response: {incident response files loaded or "None found"}
 - PRD: {PRD files loaded or "None found"}
-- Project context: {project_context_rules_count or "None found"}
+- Project context: {project_context_rules count of rules for AI agents found}
 
 **Files loaded:** {list of specific file names or "No additional documents found"}
 
@@ -167,7 +164,7 @@ Ready to begin disaster recovery planning. Do you have any other documents you'd
 
 ✅ Existing workflow detected and handed off to step-01b correctly
 ✅ Fresh workflow initialized with template and frontmatter
-✅ Input documents discovered using exact-path-first, then glob fallback, then sharded folder check
+✅ Input documents discovered and loaded using sharded-first logic
 ✅ All discovered files tracked in frontmatter `inputDocuments`
 ✅ Architecture requirement validated and communicated
 ✅ Infrastructure recommendation communicated
@@ -181,7 +178,7 @@ Ready to begin disaster recovery planning. Do you have any other documents you'd
 ❌ Proceeding with fresh initialization when existing workflow exists
 ❌ Not updating frontmatter with discovered input documents
 ❌ Creating document without proper template
-❌ Not following the discovery order: exact path first, then glob fallback, then sharded folder check
+❌ Not checking sharded folders first before whole files
 ❌ Not reporting what documents were found to user
 ❌ Proceeding without validating Architecture requirement
 ❌ Overwriting an existing disaster recovery plan without user confirmation
