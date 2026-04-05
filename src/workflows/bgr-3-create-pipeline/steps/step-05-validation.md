@@ -19,7 +19,7 @@ Review the pipeline plan against these quality gates. Present each item with a p
 | 3 | All pipeline stages documented with pass/fail criteria | |
 | 4 | Security scanning integrated (SAST, dependencies, containers, secrets) — blocking, not advisory | |
 | 5 | Deployment strategy defined per service type | |
-| 6 | Rollback procedures documented and pipeline-driven (no manual rollbacks) | |
+| 6 | Rollback procedures documented and pipeline-driven (no manual rollback execution; manual approval may trigger an automated/pipeline rollback) | |
 | 7 | Database migration strategy addressed | |
 | 8 | Artifact management and retention defined | |
 | 9 | Promotion gates defined at every environment boundary with automated quality checks | |

@@ -73,9 +73,9 @@ Before discussing parity, establish hard isolation boundaries. These are non-neg
 
 **Network Isolation:**
 
-- No VPC/VNet peering, transit gateway routes, or any network connectivity between SDLC environments
-- Environments must be network-unreachable from each other
-- Data flows between environments (e.g., database seeding for staging) use explicit, audited, offline export/import — never live connections
+- No cross-environment VPC/VNet peering, transit gateway attachments/routes, private connectivity, or any other network path is permitted between SDLC environments
+- Each SDLC environment must be network-unreachable from every other SDLC environment; peering, transit, and routing decisions may only be considered within a single environment boundary or for separately governed on-prem/shared-services connectivity that does not create environment-to-environment paths
+- Data flows between environments (e.g., database seeding for staging) use explicit, audited, offline export/import — never live connections or routed network access between environments
 
 **Secrets Isolation:**
 

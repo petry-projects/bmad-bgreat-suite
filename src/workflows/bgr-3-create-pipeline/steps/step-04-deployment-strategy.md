@@ -69,8 +69,8 @@ Define mandatory gates at each environment boundary:
 Before finalizing, explicitly verify:
 - There is NO path to production that bypasses the pipeline
 - There is NO mechanism to skip quality gates
-- Rollbacks are executed through the pipeline, not manually
-- Emergency changes use the hotfix pipeline, not console/SSH access
+- Rollbacks are operator-initiated only via approved pipeline actions; the rollback itself is executed by the pipeline, not through manual infra/app changes
+- Emergency changes use the hotfix pipeline with recorded approval/signoff, not console/SSH access or ad hoc manual changes
 
 ## 4.6 Release Management
 
