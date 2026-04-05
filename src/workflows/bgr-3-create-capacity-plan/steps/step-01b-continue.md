@@ -94,6 +94,7 @@ Show the user their current progress:
   | `[1, 2, 3, 4]` | `./step-05-validation.md` |
   | `[1, 2, 3, 4, 5]` | Workflow complete — present completion summary |
 
+- If `stepsCompleted` contains an unexpected or malformed array, default to `./step-02-growth-modeling.md` and inform the user of the reset
 - Load the appropriate step file to continue
 
 #### If 'C' (Continue to next logical step):
