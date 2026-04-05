@@ -38,7 +38,8 @@ First, check if the output document already exists:
 
 - First, check for `{bgr_artifacts}/security-plan.md` (exact path)
 - If not found at exact path, fall back to glob: `{bgr_artifacts}/*security-plan*.md`
-- If multiple files match, present the list to the user and ask them to select the correct one.
+  - If glob matches exactly one file, proceed with that file automatically
+  - If multiple files match, present the list to the user and ask them to select the correct one
 - If exists, read the complete file(s) including frontmatter
 - If not exists, this is a fresh workflow
 
@@ -90,7 +91,7 @@ Try to discover the following:
 - If there is a project context, whatever is relevant should try to be biased in the remainder of this whole workflow process
 - For sharded folders, load ALL files to get complete picture, using the index first to potentially know the potential of each document
 - index.md is a guide to what's relevant whenever available
-- If any file fails to load (permission denied, corrupted, or exceeds 50KB), log a warning and skip it — do not halt initialization. Report skipped files in the initialization summary.
+- If any file fails to load (permission denied, corrupted, or exceeds 500KB), log a warning and skip it — do not halt initialization. Report skipped files in the initialization summary.
 - Track all successfully loaded files in frontmatter `inputDocuments` array
 
 #### B. Validate Required Inputs
@@ -111,7 +112,12 @@ Before proceeding, verify we have the essential inputs:
 
 Copy the template from `../templates/security-plan-template.md` to `{bgr_artifacts}/security-plan.md`
 
-Immediately update the frontmatter: set `createdDate` to today's date, `lastUpdated` to today's date, and `status` to `draft`.
+Immediately update the frontmatter:
+- Set `createdDate` to today's date
+- Set `lastUpdated` to today's date
+- Set `status` to `draft`
+- Set `stepsCompleted: [1]` to mark Step 1 complete
+- Set `inputDocuments` to the array of successfully loaded file paths from step A
 
 #### D. Complete Initialization and Report
 
@@ -132,7 +138,7 @@ Report what was found:
 - PRD: {PRD files loaded or "None found - recommended"}
 - Infrastructure: {infrastructure files loaded or "None found"}
 - Observability: {observability files loaded or "None found"}
-- Project context: {project_context_rules: number of directive sections found in project-context.md (e.g., headers, rule blocks)}
+- Project context: {project_context_rules} directive sections found in project-context.md
 
 **Files loaded:** {list of specific file names or "No additional documents found"}
 
