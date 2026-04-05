@@ -1,0 +1,50 @@
+name: Dependency audit
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  detect:
+    name: Detect ecosystems
+    runs-on: ubuntu-latest
+    outputs:
+      npm: ${{ steps.check.outputs.npm }}
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Detect package ecosystems
+        id: check
+        run: |
+          if find . -name 'package-lock.json' -not -path '*/node_modules/*' | grep -q .; then
+            echo "npm=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "npm=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  audit-npm:
+    name: npm audit
+    needs: detect
+    if: needs.detect.outputs.npm == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
+        with:
+          node-version: "lts/*"
+      - name: Audit npm dependencies
+        run: |
+          status=0
+          while IFS= read -r dir; do
+            echo "::group::npm audit $dir"
+            if ! (cd "$dir" && npm audit --audit-level=low); then
+              status=1
+            fi
+            echo "::endgroup::"
+          done < <(find . -name 'package-lock.json' -not -path '*/node_modules/*' -exec dirname {} \;)
+          exit $status
