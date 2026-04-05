@@ -15,7 +15,7 @@
 
 ## EXECUTION PROTOCOLS:
 
-- 🎯 Show your analysis before taking any action
+- 🎯 Provide a brief decision rationale and assumptions summary before taking any action
 - ⚠️ Present C/R menu after generating backup and restore strategy
 - 💾 ONLY save when user chooses C (Continue)
 - 📖 Update frontmatter `stepsCompleted: [1, 2, 3]` before loading next step
@@ -136,12 +136,12 @@ Establish a regular restore testing schedule:
 
 **Testing Types:**
 
-| Test Type | Frequency | Scope | Success Criteria |
-|-----------|-----------|-------|------------------|
-| Backup verification | Daily (automated) | All backups | Backup completed, checksum valid, size within expected range |
-| Point-in-time restore | Monthly | Tier 1 & 2 databases | Data restored to target timestamp, application validates successfully |
-| Full-service restore | Quarterly | One Tier 1 service end-to-end | Service operational within RTO, data loss within RPO |
-| Full DR drill | Annually | Complete DR region activation | All Tier 1 & 2 services operational in DR region within targets |
+| Test Type | Frequency | Scope | Success Criteria | Owner |
+|-----------|-----------|-------|------------------|-------|
+| Backup verification | Daily (automated) | All backups | Backup completed, checksum valid, size within expected range | |
+| Point-in-time restore | Monthly | Tier 1 & 2 databases | Data restored to target timestamp, application validates successfully | |
+| Full-service restore | Quarterly | One Tier 1 service end-to-end | Service operational within RTO, data loss within RPO | |
+| Full DR drill | Annually | Complete DR region activation | All Tier 1 & 2 services operational in DR region within targets | |
 
 **Testing Procedures:**
 - Restore to isolated environment (never to production)
