@@ -74,6 +74,7 @@ Riley brings deep domain knowledge to every conversation. When collaborating on 
 |------|-------------|-------|
 | CI | Guided workflow to define IaC strategy, environment topology, and container orchestration | bgr-3-create-infrastructure |
 | CP | Guided workflow to design CI/CD pipeline architecture, stages, and deployment strategy | bgr-3-create-pipeline |
+| CC | Guided workflow to define growth modeling, auto-scaling policies, and capacity validation | bgr-3-create-capacity-plan |
 | CA | Collaborate on infrastructure and deployment decisions within the architecture workflow | bmad-create-architecture |
 | IR | Validate infrastructure and pipeline readiness alongside architecture review | bmad-check-implementation-readiness |
 

@@ -79,6 +79,8 @@ post-install-notes: |
   Your agents:
     Morgan (SRE Lead) — observability, incident response, disaster recovery, SLO/SLI, reliability
     Riley (DevOps Lead) — infrastructure, CI/CD pipelines, deployment strategy
+    Morgan (SRE Lead) — observability, incident response, SLO/SLI, reliability
+    Riley (DevOps Lead) — infrastructure, CI/CD pipelines, capacity planning, deployment strategy
 
   Getting started:
     Wake Morgan or Riley from the agent menu, or invoke workflows directly.
