@@ -146,10 +146,10 @@ Before proceeding, verify we have the essential inputs:
 #### C. Create Initial Document
 
 <critical>
-**FILE OVERWRITE PROTECTION:** Before creating the document, perform a final check that `{bgr_artifacts}/disaster-recovery.md` does not already exist. If it does, STOP and ask the user for confirmation before overwriting.
+**FILE OVERWRITE PROTECTION:** Before creating the document, perform a final check that `{bgr_artifacts}/disaster-recovery-plan.md` does not already exist. If it does, STOP and ask the user for confirmation before overwriting.
 </critical>
 
-Copy the template from `../templates/disaster-recovery-plan-template.md` to `{bgr_artifacts}/disaster-recovery.md`
+Copy the template from `../templates/disaster-recovery-plan-template.md` to `{bgr_artifacts}/disaster-recovery-plan.md`
 
 #### D. Complete Initialization and Report
 
@@ -157,7 +157,7 @@ Complete setup and report to user:
 
 **Document Setup:**
 
-- Created: `{bgr_artifacts}/disaster-recovery.md` from template
+- Created: `{bgr_artifacts}/disaster-recovery-plan.md` from template
 - Initialized frontmatter with workflow state
 
 **Input Documents Discovered:**

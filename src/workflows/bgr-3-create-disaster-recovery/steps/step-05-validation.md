@@ -294,7 +294,7 @@ Prepare the content to append to the document:
 
 ### 8. Save Final Document
 
-- Append the validation and implementation content to `{bgr_artifacts}/disaster-recovery.md`
+- Append the validation and implementation content to `{bgr_artifacts}/disaster-recovery-plan.md`
 - Update frontmatter:
   - `stepsCompleted: [1, 2, 3, 4, 5]`
   - `status: complete`
@@ -325,7 +325,7 @@ Show the generated content and present choices:
 
 #### If 'C' (Continue):
 
-- Save the final content to `{bgr_artifacts}/disaster-recovery.md`
+- Save the final content to `{bgr_artifacts}/disaster-recovery-plan.md`
 - Update frontmatter to mark workflow as complete
 - Present completion summary and next steps
 
@@ -345,11 +345,11 @@ After saving the disaster recovery plan, update the cross-workflow production re
 2. Update the **Disaster Recovery Plan** row in the Workflow Completion Status table:
    - Status: `Complete`
    - Completion Date: `{{current_date}}`
-   - Output Document: `{bgr_artifacts}/disaster-recovery.md`
+   - Output Document: `{bgr_artifacts}/disaster-recovery-plan.md`
 3. Update the disaster recovery plan detail section with key decisions:
    - Set **Status** to `Complete`
    - Set **Completion Date** to `{{current_date}}`
-   - Set **Output Document** to `{bgr_artifacts}/disaster-recovery.md`
+   - Set **Output Document** to `{bgr_artifacts}/disaster-recovery-plan.md`
    - DR topology chosen (active-active, active-passive, pilot light)
    - Number of criticality tiers and services per tier
    - RTO/RPO targets summary
@@ -370,7 +370,7 @@ After saving the disaster recovery plan, update the cross-workflow production re
 
 After saving, present the final summary:
 
-"The Disaster Recovery Plan for {{project_name}} is complete and saved to `{bgr_artifacts}/disaster-recovery.md`.
+"The Disaster Recovery Plan for {{project_name}} is complete and saved to `{bgr_artifacts}/disaster-recovery-plan.md`.
 
 **Summary:**
 - {N} services classified across {N} criticality tiers

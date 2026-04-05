@@ -254,7 +254,7 @@ Show the generated content and present choices:
 
 #### If 'C' (Continue):
 
-- Append the final content to `{bgr_artifacts}/disaster-recovery.md`
+- Append the final content to `{bgr_artifacts}/disaster-recovery-plan.md`
 - Update frontmatter: `stepsCompleted: [1, 2]`
 - Load `./step-03-backup-restore-strategy.md`
 
