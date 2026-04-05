@@ -40,15 +40,36 @@ First, check if the output document already exists:
 - If exists, read the complete file(s) including frontmatter
 - If not exists, this is a fresh workflow
 
-### 2. Handle Continuation (If Document Exists)
+### 2. Check Production Readiness Checklist
 
-If the document exists and has frontmatter with `stepsCompleted`:
+Look for `{bgr_artifacts}/production-readiness-checklist.md`:
+
+- If it exists, read it to understand which other workflows have been completed
+- Note any completed workflow plans — their key decisions and cross-references will be loaded in the discovery phase
+- If it does not exist, create it from the shared template at `../../../templates/bgr-production-readiness-checklist-template.md` and save to `{bgr_artifacts}/production-readiness-checklist.md`
+
+### 3. Load Context from Completed Workflow Artifacts
+
+Check `{bgr_artifacts}/` for previously completed BGreat workflow outputs:
+
+- `*observability*.md` — If completed, load metrics strategy and SLO definitions to inform monitoring targets, agent deployment requirements, and network egress for telemetry data
+- `*incident-response*.md` — If completed, load severity classification and on-call procedures to inform environment isolation requirements and access control decisions
+- `*pipeline*.md` — If completed, load CI/CD platform and deployment strategy to inform runner infrastructure, registry placement, and environment provisioning needs
+
+For each completed plan found:
+- Load the document and extract key decisions relevant to infrastructure planning
+- Surface these as context during the workflow (e.g., "The Observability Plan specifies OpenTelemetry collectors — infrastructure should provision collector sidecar/daemonset resources")
+- Track loaded plans in frontmatter `crossWorkflowContext` array. Each entry should include a `workflow` field identifying the source (e.g., 'observability', 'infrastructure', 'pipeline'). Before adding an entry, check if `crossWorkflowContext` already contains an entry with the same `workflow` field value -- if found, update it with the latest decisions; if not found, append a new entry (upsert by `workflow` field).
+
+### 4. Handle Continuation (If Document Exists)
+
+If the document from step 1 exists and has frontmatter with `stepsCompleted`:
 
 - **STOP here** and load `./step-01b-continue.md` immediately
 - Do not proceed with any initialization tasks
 - Let step-01b handle the continuation logic
 
-### 3. Fresh Workflow Setup (If No Document)
+### 5. Fresh Workflow Setup (If No Document)
 
 If no document exists or no `stepsCompleted` in frontmatter:
 
@@ -129,6 +150,8 @@ Ready to begin infrastructure decision making. Do you have any other documents y
 ✅ All discovered files tracked in frontmatter `inputDocuments`
 ✅ Architecture document requirement validated and communicated
 ✅ User confirmed document setup and can proceed
+✅ Production readiness checklist found or created
+✅ Previously completed workflow artifacts discovered and context loaded
 
 ## FAILURE MODES:
 
