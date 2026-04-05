@@ -63,7 +63,7 @@ Greet the user by `{user_name}` and present:
 
 ## 1.6 Create Document from Template
 
-Create the pipeline plan document from `./templates/pipeline-template.md`:
+Create the pipeline plan document from `../templates/pipeline-template.md`:
 
 - Set `createdDate` and `lastUpdated` to today's date
 - Set `status: draft`
