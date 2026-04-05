@@ -212,11 +212,11 @@ After saving the incident response plan, update the cross-workflow production re
    - Postmortem process established
    - Communication templates created
    - Update checklist `lastUpdated` in both frontmatter and the Overview section
-4. Check for cross-plan dependency gaps:
-   - If Observability Plan exists: Verify severity classification aligns with alerting thresholds and burn-rate windows
-   - If Infrastructure Plan exists: Verify runbook procedures reference correct environment topology and access paths
-   - If Pipeline Plan exists: Verify escalation procedures account for deployment rollback capabilities
-   - Record any inconsistencies in section **4.3 Consistency Issues**
+4. Check for cross-plan dependency gaps (verify each plan's `status` field before validating):
+   - If Observability Plan exists and status is `complete`: Verify severity classification aligns with alerting thresholds and burn-rate windows. If status is `draft`, note validation is deferred pending finalization.
+   - If Infrastructure Plan exists and status is `complete` or `approved`: Verify runbook procedures reference correct environment topology and access paths. If status is `draft`, note validation is deferred pending finalization.
+   - If Pipeline Plan exists and status is `complete`: Verify escalation procedures account for deployment rollback capabilities. If status is `draft`, note validation is deferred pending finalization.
+   - Record any inconsistencies or deferred validations in section **4.3 Consistency Issues**
 5. Update the `completedWorkflows` array in checklist frontmatter to include `incident-response`. Add this workflow only if it is not already present (use set-style uniqueness to prevent duplicate entries on re-run).
 6. If all 4 workflows are now complete, update **Overall Status** to `READY` (if no critical gaps remain). A **critical gap** is a missing workflow artifact, an unresolved cross-plan dependency, or a key decision conflict between plans that would block production readiness (e.g., mismatched environment topologies, missing rollback alignment, or undefined alerting-to-severity mappings).
 7. Save the updated checklist

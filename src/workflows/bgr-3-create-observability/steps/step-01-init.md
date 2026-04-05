@@ -59,7 +59,7 @@ Check `{bgr_artifacts}/` for previously completed BGreat workflow outputs:
 For each completed plan found:
 - Load the document and extract key decisions relevant to observability planning
 - Surface these as context during the workflow (e.g., "The Infrastructure Plan specifies Kubernetes on AWS — this informs our metrics collection approach")
-- Track loaded plans in frontmatter `crossWorkflowContext` array. If this workflow already has an entry in `crossWorkflowContext`, update it rather than adding a duplicate (upsert semantics). Match existing entries by workflow name (e.g., 'observability', 'infrastructure', 'pipeline').
+- Track loaded plans in frontmatter `crossWorkflowContext` array. Each entry should include a `workflow` field identifying the source (e.g., 'observability', 'infrastructure', 'pipeline'). Before adding an entry, check if `crossWorkflowContext` already contains an entry with the same `workflow` field value -- if found, update it with the latest decisions; if not found, append a new entry (upsert by `workflow` field).
 
 ### 4. Handle Continuation (If Document Exists)
 

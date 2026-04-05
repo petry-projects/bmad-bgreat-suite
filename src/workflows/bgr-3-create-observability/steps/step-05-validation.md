@@ -287,11 +287,11 @@ After saving the observability plan, update the cross-workflow production readin
    - Tracing approach
    - SLO targets defined (count and summary)
    - Update checklist `lastUpdated` in both frontmatter and the Overview section
-4. Check for cross-plan dependency gaps:
-   - If Incident Response Plan exists: Verify alerting thresholds align with severity classification
-   - If Infrastructure Plan exists: Verify monitoring targets match environment topology
-   - If Pipeline Plan exists: Verify health check metrics align with post-deploy verification
-   - Record any inconsistencies in section **4.3 Consistency Issues**
+4. Check for cross-plan dependency gaps (verify each plan's `status` field before validating):
+   - If Incident Response Plan exists and status is `complete`: Verify alerting thresholds align with severity classification. If status is `draft`, note validation is deferred pending finalization.
+   - If Infrastructure Plan exists and status is `complete` or `approved`: Verify monitoring targets match environment topology. If status is `draft`, note validation is deferred pending finalization.
+   - If Pipeline Plan exists and status is `complete`: Verify health check metrics align with post-deploy verification. If status is `draft`, note validation is deferred pending finalization.
+   - Record any inconsistencies or deferred validations in section **4.3 Consistency Issues**
 5. Update the `completedWorkflows` array in checklist frontmatter to include `observability`. Add this workflow only if it is not already present (use set-style uniqueness to prevent duplicate entries on re-run).
 6. If all 4 workflows are now complete, update **Overall Status** to `READY` (if no critical gaps remain). A **critical gap** is a missing workflow artifact, an unresolved cross-plan dependency, or a key decision conflict between plans that would block production readiness (e.g., mismatched environment topologies, missing rollback alignment, or undefined alerting-to-severity mappings).
 7. Save the updated checklist
