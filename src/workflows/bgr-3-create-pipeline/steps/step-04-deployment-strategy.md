@@ -27,7 +27,7 @@ Define rollback procedures for each deployment model:
 
 - **Automated triggers** — Error rate spike, latency degradation, failed health checks, SLO breach
 - **Automated rollback** — Conditions under which the system automatically reverts (canary failure, health check timeout)
-- **Manual rollback procedure** — Step-by-step process for operator-initiated rollback
+- **Operator-initiated rollback** — Step-by-step process for triggering rollback through the pipeline UI (redeploy previous artifact). All rollbacks are pipeline-driven — never via SSH, console, or direct infrastructure changes.
 - **Data migration rollback** — How to handle database changes when rolling back application code
 - **Rollback verification** — How to confirm rollback was successful
 

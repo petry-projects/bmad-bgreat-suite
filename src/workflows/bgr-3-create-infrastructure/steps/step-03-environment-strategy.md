@@ -198,12 +198,13 @@ Define the networking foundation:
 
 **Key Decisions:**
 
-- **VPC/VNet Design:** CIDR planning, account/subscription isolation
+- **VPC/VNet Design:** CIDR planning, one VPC/VNet per environment in its own account/subscription
 - **Subnet Strategy:** Public/private/data tiers, availability zone distribution
-- **Peering & Connectivity:** VPC peering, transit gateway, VPN, Direct Connect/ExpressRoute
-- **DNS Strategy:** Public DNS, private DNS zones, service discovery
+- **Within-Environment Connectivity:** Peering and transit gateways are for connecting services within a single environment or to shared-services accounts only — NEVER between SDLC environments
+- **External Connectivity:** VPN, Direct Connect/ExpressRoute for on-premises integration, scoped per environment
+- **DNS Strategy:** Public DNS, private DNS zones per environment, service discovery
 - **Load Balancing:** ALB/NLB/CLB, Ingress controllers, global load balancing
-- **Network Security:** Security groups, NACLs, network policies, WAF
+- **Network Security:** Security groups, NACLs, network policies, WAF, default-deny between environments
 
 ### 7. Generate Environment Strategy Content
 
