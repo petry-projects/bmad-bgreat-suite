@@ -15,7 +15,7 @@
 
 ## EXECUTION PROTOCOLS:
 
-- 🎯 Show your analysis before taking any action
+- 🎯 Share a concise rationale (assumptions, key trade-offs, and decisions) before taking any action
 - ⚠️ Present C/R menu after generating failover procedures
 - 💾 ONLY save when user chooses C (Continue)
 - 📖 Update frontmatter `stepsCompleted: [1, 2, 3, 4]` before loading next step

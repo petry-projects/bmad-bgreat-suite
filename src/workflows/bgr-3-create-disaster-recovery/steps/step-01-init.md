@@ -14,7 +14,7 @@
 
 ## EXECUTION PROTOCOLS:
 
-- 🎯 Show your analysis before taking any action
+- 🎯 Share a concise rationale (assumptions, key trade-offs, and decisions) before taking any action
 - 💾 Initialize document and update frontmatter
 - 📖 Set up frontmatter `stepsCompleted: [1]` before loading next step
 - 🚫 FORBIDDEN to load next step until setup is complete
@@ -36,11 +36,11 @@ Initialize the Disaster Recovery workflow by detecting continuation state, disco
 
 First, check if the output document already exists:
 
-- Look for existing `{bgr_artifacts}/disaster-recovery-plan.md` (exact path first)
-- If not found, fall back to glob `{bgr_artifacts}/*disaster-recovery*.md`
-- If multiple files match the glob, present the list to the user and ask them to select the correct one before proceeding
-- If a file is found, read the complete file including frontmatter
-- If no file is found, this is a fresh workflow
+- Look for existing `{bgr_artifacts}/disaster-recovery-plan.md` (canonical path first)
+- If not found, fall back to `{bgr_artifacts}/*disaster-recovery*.md` glob
+- If multiple files match, STOP and ask the user which file to resume from (or whether to start fresh)
+- If a match is found, read the selected file completely including frontmatter
+- If no match is found, this is a fresh workflow
 
 <critical>
 **FILE OVERWRITE PROTECTION:** If an existing disaster recovery plan is found, you MUST NOT overwrite it without explicit user confirmation. Always present the existing file and ask whether to resume, start fresh (with confirmation), or abort.
@@ -48,7 +48,7 @@ First, check if the output document already exists:
 
 ### 2. Handle Continuation (If Document Exists)
 
-If the document from section 1 above exists and has frontmatter with `stepsCompleted`:
+If the document found above exists and has frontmatter with `stepsCompleted`:
 
 - **STOP here** and load `./step-01b-continue.md` immediately
 - Do not proceed with any initialization tasks
@@ -171,7 +171,7 @@ Report what was found:
 - Observability: {observability files loaded or "None found"}
 - Incident Response: {incident response files loaded or "None found"}
 - PRD: {PRD files loaded or "None found"}
-- Project context: {project_context_rules_count} rules for AI agents found
+- Project context: {project_context_rules_count or "None found"}
 
 **Files loaded:** {list of specific file names or "No additional documents found"}
 
