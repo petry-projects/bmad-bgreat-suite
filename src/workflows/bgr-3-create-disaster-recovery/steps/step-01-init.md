@@ -58,7 +58,24 @@ Look for `{bgr_artifacts}/production-readiness-checklist.md`:
 
 - If it exists, read it to understand which other workflows have been completed
 - Note any completed workflow plans — their key decisions and cross-references will be loaded in the discovery phase
-- If it does not exist and the production readiness checklist template exists at `../../../templates/bgr-production-readiness-checklist-template.md`, create it from that template and save to `{bgr_artifacts}/production-readiness-checklist.md`. If the template is not found, skip this step — the checklist is managed by the cross-workflow tracking feature.
+- If it does not exist, create `{bgr_artifacts}/production-readiness-checklist.md` using the following initial content:
+
+  ```md
+  # Production Readiness Checklist
+
+  ## Workflow Status
+
+  - [ ] Observability
+  - [ ] Incident Response
+  - [ ] Infrastructure
+  - [ ] Pipeline
+  - [ ] Disaster Recovery
+
+  ## Notes
+
+  - Record links to completed workflow artifacts here.
+  - Capture key cross-workflow decisions and dependencies here.
+  ```
 
 ### 4. Load Context from Completed Workflow Artifacts
 
