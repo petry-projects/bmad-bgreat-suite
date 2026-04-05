@@ -63,7 +63,7 @@ jobs:
               echo "::error file=$file::Potential secret or credential detected in agent config"
               status=1
             fi
-          done < <(find . \( -name 'SKILL.md' -o -name 'config.yaml' -o -name '.claude*' \) -not -path '*/node_modules/*' -not -path '*/.git/*')
+          done < <(find . -type f \( -name 'SKILL.md' -o -name 'workflow.md' -o -name 'config.yaml' -o -name '*.json' -o -name '*.yaml' -o -name '*.yml' \) -path '*/src/*' -not -path '*/node_modules/*' -not -path '*/.git/*'; find . -type f -path '*/.claude/*' -not -path '*/node_modules/*' -not -path '*/.git/*')
 
           if [ "$status" -eq 0 ]; then
             echo "No secrets detected in agent configuration files."
@@ -99,7 +99,7 @@ jobs:
               echo "::error file=$file::Permission bypass detected: $match"
               status=1
             done < <(grep -inP "$bypass_pattern" "$file" 2>/dev/null || true)
-          done < <(find . -name '*.md' -path '*/.claude/*' -not -path '*/node_modules/*')
+          done < <(find . -type f \( -name 'SKILL.md' -o -name 'workflow.md' -o -name '*.md' \) \( -path '*/src/*' -o -path '*/.claude/*' \) -not -path '*/node_modules/*' -not -path '*/.git/*'; find . -type f \( -name '*.json' -o -name '*.yaml' -o -name '*.yml' \) -path '*/.claude/*' -not -path '*/node_modules/*' -not -path '*/.git/*')
 
           if [ "$status" -eq 0 ]; then
             echo "No permission bypasses detected."
@@ -117,8 +117,16 @@ jobs:
               continue
             fi
 
+            # Check for closing --- delimiter
+            closing_line=$(tail -n +2 "$file" | grep -n '^---$' | head -1 | cut -d: -f1)
+            if [ -z "$closing_line" ]; then
+              echo "::error file=$file::SKILL.md frontmatter missing closing --- delimiter"
+              status=1
+              continue
+            fi
+
             # Extract frontmatter between first and second ---
-            frontmatter=$(sed -n '2,/^---$/p' "$file" | head -n -1)
+            frontmatter=$(sed -n "2,$((closing_line))p" "$file" | head -n -1)
             if [ -z "$frontmatter" ]; then
               echo "::error file=$file::SKILL.md has empty frontmatter"
               status=1
