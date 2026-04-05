@@ -1,7 +1,7 @@
 # Disaster Recovery Workflow
 
 **main_config:** `{project-root}/_bmad/bgr/config.yaml`
-**outputFile:** `{bgr_artifacts}/disaster-recovery.md`
+**outputFile:** `{bgr_artifacts}/disaster-recovery-plan.md`
 
 **Goal:** Create comprehensive disaster recovery plan through collaborative step-by-step discovery covering RTO/RPO targets, backup and restore procedures, geographic failover strategies, DR runbooks, and business continuity integration.
 
