@@ -21,6 +21,7 @@ completedWorkflows: []
 | Incident Response Plan | Not Started | | | |
 | Infrastructure Plan | Not Started | | | |
 | CI/CD Pipeline Plan | Not Started | | | |
+| Resilience Testing Plan | Not Started | | | |
 
 ### 2.1 Observability Plan
 
@@ -82,13 +83,28 @@ completedWorkflows: []
   - Post-deploy verification uses Observability health checks
   - Rollback procedures align with Incident Response escalation
 
+### 2.5 Resilience Testing Plan
+
+- **Status**: Not Started
+- **Completion Date**:
+- **Output Document**:
+- **Key Decisions**:
+  - Resilience maturity level:
+  - Critical services with steady-state hypotheses:
+  - Number of experiments designed:
+  - Game day format and cadence:
+- **Cross-References**:
+  - Steady-state hypotheses aligned with Observability SLO targets
+  - Abort criteria aligned with Incident Response severity classification
+  - Failure modes cover all layers from Infrastructure topology
+
 ## 3. Overall Readiness Assessment
 
 ### 3.1 Readiness Gate
 
 | Criterion | Met? | Notes |
 |-----------|------|-------|
-| All 4 workflow plans completed | | |
+| All workflow plans completed | | |
 | Cross-plan references are consistent | | |
 | No critical gaps identified | | |
 | Key decisions align across plans | | |
@@ -130,3 +146,4 @@ The following order maximizes context sharing between workflows:
 2. **Incident Response Plan** -- Builds on Observability alerting to define severity, escalation, and runbooks
 3. **Infrastructure Plan** -- References Observability for monitoring targets and Incident Response for operational procedures
 4. **CI/CD Pipeline Plan** -- References Infrastructure for deployment targets and Observability for verification gates
+5. **Resilience Testing Plan** -- Builds on Observability SLOs for steady-state hypotheses and Incident Response for abort criteria
