@@ -1,3 +1,8 @@
+# AgentShield — Agent configuration security validation
+# Two-layer approach:
+#   1. affaan-m/agentshield — deep security scan (102 rules)
+#   2. Org-specific structural checks (required files, frontmatter)
+
 name: AgentShield
 
 on:
@@ -16,112 +21,48 @@ jobs:
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
+      # --- Deep security scan via AgentShield action ---
+      - name: AgentShield Security Scan
+        uses: affaan-m/agentshield@9bbc007cf5afb562c324bbad4ce6c544420f49f6 # v1.4.0
+        with:
+          path: "."
+          min-severity: "high"
+          fail-on-findings: "true"
+          format: "terminal"
+
+      # --- Org-specific structural checks ---
       - name: Check required agent files exist
         run: |
           status=0
 
           if [ ! -f "CLAUDE.md" ]; then
-            echo "::error::Missing CLAUDE.md — required for all repositories"
+            echo "::error::Missing CLAUDE.md"
             status=1
           fi
 
           if [ ! -f "AGENTS.md" ]; then
-            echo "::error::Missing AGENTS.md — required for all repositories"
+            echo "::error::Missing AGENTS.md"
             status=1
           fi
 
           exit $status
 
-      - name: Validate CLAUDE.md references AGENTS.md
-        run: |
-          if ! grep -qi 'AGENTS.md' CLAUDE.md; then
-            echo "::error file=CLAUDE.md::CLAUDE.md must reference AGENTS.md"
-            exit 1
-          fi
-
-      - name: Validate AGENTS.md references org standards
-        run: |
-          if ! grep -qi 'petry-projects/\.github' AGENTS.md; then
-            echo "::error file=AGENTS.md::AGENTS.md must reference org-level standards (petry-projects/.github)"
-            exit 1
-          fi
-
-      - name: Scan for secrets in agent config files
+      - name: Validate cross-references
         run: |
           status=0
-          patterns='(AKIA[0-9A-Z]{16}|sk-[a-zA-Z0-9]{20,}|ghp_[a-zA-Z0-9]{36}|password\s*[:=]\s*["\x27][^"\x27]+["\x27]|api[_-]?key\s*[:=]\s*["\x27][^"\x27]+["\x27])'
 
-          for file in CLAUDE.md AGENTS.md; do
-            if grep -Pn "$patterns" "$file" 2>/dev/null; then
-              echo "::error file=$file::Potential secret or credential detected in agent config"
-              status=1
-            fi
-          done
-
-          while IFS= read -r file; do
-            if grep -Pn "$patterns" "$file" 2>/dev/null; then
-              echo "::error file=$file::Potential secret or credential detected in agent config"
-              status=1
-            fi
-          done < <(find . -type f \
-            \( -name 'SKILL.md' -o -name 'workflow.md' \
-               -o -name 'config.yaml' -o -name '*.json' \
-               -o -name '*.yaml' -o -name '*.yml' \) \
-            -path '*/src/*' \
-            -not -path '*/node_modules/*' \
-            -not -path '*/.git/*'
-          find . -type f -path '*/.claude/*' \
-            -not -path '*/node_modules/*' \
-            -not -path '*/.git/*')
-
-          if [ "$status" -eq 0 ]; then
-            echo "No secrets detected in agent configuration files."
+          if [ -f "CLAUDE.md" ] && \
+             ! grep -qi 'AGENTS.md' CLAUDE.md; then
+            echo "::error file=CLAUDE.md::Must reference AGENTS.md"
+            status=1
           fi
-          exit $status
 
-      - name: Check for permission bypasses
-        run: |
-          status=0
-          bypass_pattern='dangerouslySkipPermissions|skipPermissions|--dangerously-skip'
-
-          for file in CLAUDE.md AGENTS.md; do
-            if [ -f "$file" ]; then
-              # Match lines containing bypass patterns but exclude documentation/negation lines
-              while IFS= read -r match; do
-                # Skip lines that are documenting the rule (backtick-quoted or preceded by "No"/"not"/"never"/"must not")
-                if echo "$match" | grep -qiP '^\s*-\s*(No|Never|Must not|Do not|MUST NOT)\b' || \
-                   echo "$match" | grep -qP '`[^`]*'"$bypass_pattern"'[^`]*`'; then
-                  continue
-                fi
-                echo "::error file=$file::Permission bypass detected: $match"
-                status=1
-              done < <(grep -inP "$bypass_pattern" "$file" 2>/dev/null || true)
-            fi
-          done
-
-          while IFS= read -r file; do
-            while IFS= read -r match; do
-              if echo "$match" | grep -qiP '^\s*-\s*(No|Never|Must not|Do not|MUST NOT)\b' || \
-                 echo "$match" | grep -qP '`[^`]*'"$bypass_pattern"'[^`]*`'; then
-                continue
-              fi
-              echo "::error file=$file::Permission bypass detected: $match"
-              status=1
-            done < <(grep -inP "$bypass_pattern" "$file" 2>/dev/null || true)
-          done < <(find . -type f \
-            \( -name 'SKILL.md' -o -name 'workflow.md' -o -name '*.md' \) \
-            \( -path '*/src/*' -o -path '*/.claude/*' \) \
-            -not -path '*/node_modules/*' \
-            -not -path '*/.git/*'
-          find . -type f \
-            \( -name '*.json' -o -name '*.yaml' -o -name '*.yml' \) \
-            -path '*/.claude/*' \
-            -not -path '*/node_modules/*' \
-            -not -path '*/.git/*')
-
-          if [ "$status" -eq 0 ]; then
-            echo "No permission bypasses detected."
+          if [ -f "AGENTS.md" ] && \
+             ! grep -qi 'petry-projects/\.github' AGENTS.md; then
+            echo "::error file=AGENTS.md::Must reference org standards"
+            status=1
           fi
+
           exit $status
 
       - name: Validate SKILL.md frontmatter
@@ -129,27 +70,30 @@ jobs:
           status=0
 
           while IFS= read -r file; do
-            # Extract frontmatter between first and second --- delimiters
-            frontmatter=$(awk '/^---$/{n++; next} n==1{print} n>=2{exit}' "$file")
+            frontmatter=$(awk \
+              '/^---$/{n++; next} n==1{print} n>=2{exit}' \
+              "$file")
 
             if [ -z "$frontmatter" ]; then
-              echo "::error file=$file::SKILL.md has no valid YAML frontmatter (expected --- delimited block)"
+              echo "::error file=$file::Missing YAML frontmatter"
               status=1
               continue
             fi
 
             if ! echo "$frontmatter" | grep -q '^name:'; then
-              echo "::error file=$file::SKILL.md frontmatter missing required 'name' field"
+              echo "::error file=$file::Missing 'name' field"
               status=1
             fi
             if ! echo "$frontmatter" | grep -q '^description:'; then
-              echo "::error file=$file::SKILL.md frontmatter missing required 'description' field"
+              echo "::error file=$file::Missing 'description' field"
               status=1
             fi
-          done < <(find . -name 'SKILL.md' -not -path '*/node_modules/*' -not -path '*/.git/*')
+          done < <(find . -name 'SKILL.md' \
+            -not -path '*/node_modules/*' \
+            -not -path '*/.git/*')
 
           if [ "$status" -eq 0 ]; then
-            echo "All SKILL.md frontmatter validated successfully."
+            echo "All SKILL.md frontmatter validated."
           fi
           exit $status
 
@@ -158,25 +102,29 @@ jobs:
         run: |
           status=0
 
-          # Check every agent directory is registered
           if [ -d "src/agents" ]; then
             for dir in src/agents/*/; do
               [ -d "$dir" ] || continue
               skill_name=$(basename "$dir")
-              if ! awk -F',' -v name="$skill_name" '{gsub(/^[[:space:]]+|[[:space:]]+$/, "", $2)} $2 == name {found=1; exit} END {exit !found}' src/module-help.csv; then
-                echo "::error::Agent $skill_name not registered in module-help.csv"
+              if ! awk -F',' -v name="$skill_name" \
+                '{gsub(/^[ ]+|[ ]+$/, "", $2)}
+                 $2 == name {found=1; exit}
+                 END {exit !found}' src/module-help.csv; then
+                echo "::error::Agent $skill_name not in module-help.csv"
                 status=1
               fi
             done
           fi
 
-          # Check every workflow directory is registered
           if [ -d "src/workflows" ]; then
             for dir in src/workflows/*/; do
               [ -d "$dir" ] || continue
               skill_name=$(basename "$dir")
-              if ! awk -F',' -v name="$skill_name" '{gsub(/^[[:space:]]+|[[:space:]]+$/, "", $2)} $2 == name {found=1; exit} END {exit !found}' src/module-help.csv; then
-                echo "::error::Workflow $skill_name not registered in module-help.csv"
+              if ! awk -F',' -v name="$skill_name" \
+                '{gsub(/^[ ]+|[ ]+$/, "", $2)}
+                 $2 == name {found=1; exit}
+                 END {exit !found}' src/module-help.csv; then
+                echo "::error::Workflow $skill_name not in module-help.csv"
                 status=1
               fi
             done
