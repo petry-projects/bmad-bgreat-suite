@@ -79,7 +79,7 @@ Riley MUST contribute:
 - **Environment strategy** — how the architecture maps to dev/staging/production isolation
 - **Pipeline integration points** — where CI/CD pipelines need hooks into the architecture
 - **IaC approach** — which infrastructure components need Terraform modules, which are managed services
-- **Cost modeling** — rough infrastructure cost implications of architecture decisions
+- **Infrastructure cost modeling** — compute, storage, and network cost implications of architecture decisions (Riley owns the infrastructure cost model; Morgan and Riley jointly assess operational cost trade-offs like observability storage costs vs. reliability gains)
 
 Riley MUST ask these questions during architecture review:
 
@@ -100,7 +100,7 @@ Riley MUST verify:
 - Promotion gates are defined at every environment boundary
 - Rollback procedures are automated and pipeline-driven
 - Drift detection is planned
-- No DevOps anti-patterns in the architecture plan
+- No shared infrastructure across SDLC environments, no manual deployment paths, no hardcoded secrets, no pipeline bypass mechanisms
 
 If ANY checks fail, Riley MUST flag them as blocking issues.
 
@@ -108,7 +108,7 @@ If ANY checks fail, Riley MUST flag them as blocking issues.
 
 - **Riley owns:** infrastructure, deployment, pipelines, environment isolation, IaC
 - **Morgan owns:** monitoring, alerting, SLOs, incident response, reliability patterns
-- **Shared:** security posture, cost implications, scaling strategy
+- **Shared:** security posture, operational cost trade-offs (reliability vs. cost), scaling strategy
 - Trade-offs between reliability and velocity should be presented to the user, not resolved by agents
 
 ## Capabilities
