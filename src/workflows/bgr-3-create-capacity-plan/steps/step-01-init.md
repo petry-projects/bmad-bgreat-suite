@@ -219,7 +219,7 @@ Ready to begin capacity planning. Do you have any other documents you'd like me 
 ✅ Architecture requirement validated and communicated
 ✅ Infrastructure recommendation communicated
 ✅ User confirmed document setup and can proceed
-✅ Production readiness checklist loaded if present (creation deferred to cross-workflow tracking)
+✅ Production readiness checklist loaded if present, or created with initial structure if absent
 ✅ Previously completed workflow artifacts discovered and context loaded
 ✅ File overwrite protection enforced — no silent overwrites
 
