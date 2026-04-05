@@ -31,7 +31,7 @@ jobs:
               echo "::error file=$file::Invalid YAML syntax"
               status=1
             fi
-          done < <(find . -name '*.yaml' -o -name '*.yml' | grep -v node_modules | grep -v .git/)
+          done < <(find . \( -name '*.yaml' -o -name '*.yml' \) -not -path '*/node_modules/*' -not -path '*/.git/*')
           exit $status
 
       - name: Validate module structure
@@ -46,8 +46,19 @@ jobs:
             fi
           done
 
+          # Check that agent and workflow directories exist
+          if [ ! -d "src/agents" ]; then
+            echo "::error::Missing src/agents/ directory"
+            status=1
+          fi
+          if [ ! -d "src/workflows" ]; then
+            echo "::error::Missing src/workflows/ directory"
+            status=1
+          fi
+
           # Check every agent has SKILL.md and manifest
           for dir in src/agents/*/; do
+            [ -d "$dir" ] || continue
             if [ ! -f "$dir/SKILL.md" ]; then
               echo "::error::Missing SKILL.md in $dir"
               status=1
@@ -60,6 +71,7 @@ jobs:
 
           # Check every workflow has required files
           for dir in src/workflows/*/; do
+            [ -d "$dir" ] || continue
             if [ ! -f "$dir/SKILL.md" ]; then
               echo "::error::Missing SKILL.md in $dir"
               status=1
@@ -89,6 +101,7 @@ jobs:
 
           # Check that every agent directory is registered in module-help.csv
           for dir in src/agents/*/; do
+            [ -d "$dir" ] || continue
             skill_name=$(basename "$dir")
             if ! awk -F',' -v name="$skill_name" 'gsub(/^[[:space:]]+|[[:space:]]+$/, "", $2) == 0 && $2 == name { found=1; exit } END { exit !found }' src/module-help.csv; then
               echo "::error::Agent $skill_name not registered in module-help.csv"
@@ -98,6 +111,7 @@ jobs:
 
           # Check that every workflow directory is registered in module-help.csv
           for dir in src/workflows/*/; do
+            [ -d "$dir" ] || continue
             skill_name=$(basename "$dir")
             if ! awk -F',' -v name="$skill_name" 'gsub(/^[[:space:]]+|[[:space:]]+$/, "", $2) == 0 && $2 == name { found=1; exit } END { exit !found }' src/module-help.csv; then
               echo "::error::Workflow $skill_name not registered in module-help.csv"
