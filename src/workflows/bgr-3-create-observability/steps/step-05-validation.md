@@ -89,6 +89,39 @@ Run through each quality gate systematically:
 - [ ] Each dashboard has a defined refresh rate and owner
 - [ ] Dashboards answer "is the system healthy?" within seconds
 
+### Maturity-Level Gate Calibration
+
+Read `{bgr_maturity}` from config. Apply the following gate classification when evaluating quality gates:
+
+**Required at ALL maturity levels (greenfield+):**
+- Metrics defined for critical services
+- Basic logging with correlation IDs
+- At least one SLO per critical journey
+- Basic alerting on error rates
+
+**Required at growing+ maturity:**
+- Full Golden Signals coverage
+- Structured JSON logging with PII handling
+- Multi-burn-rate alerting
+- On-call triage dashboard
+
+**Required at established+ maturity:**
+- Distributed tracing with OpenTelemetry
+- SLO error budget policies
+- Executive dashboards
+- Alert noise reduction
+
+**Required at advanced maturity:**
+- Adaptive sampling
+- Business KPI correlation
+- Quarterly SLO reviews
+- Chaos observability validation
+
+**Guidance:**
+- Gates below the team's maturity level are REQUIRED — flag failures as blocking
+- Gates at the team's maturity level are RECOMMENDED — flag failures as warnings with improvement path
+- Gates above the team's maturity level are INFORMATIONAL — mention as future growth areas but do not block
+
 ### 2. Present Validation Summary
 
 Report the validation results to the user:

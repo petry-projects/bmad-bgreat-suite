@@ -25,6 +25,37 @@ Review the pipeline plan against these quality gates. Present each item with a p
 
 For any gate that fails, note what is missing and discuss with the user whether to address it now or defer.
 
+### Maturity-Level Gate Calibration
+
+Read `{bgr_maturity}` from config. Apply the following gate classification when evaluating quality gates:
+
+**Required at ALL maturity levels (greenfield+):**
+- CI/CD platform selected
+- Basic build-test-deploy pipeline
+- Artifact versioning
+
+**Required at growing+ maturity:**
+- Security scanning in pipeline (at least SAST + dependency)
+- Automated rollback
+- Branching strategy with trigger mapping
+
+**Required at established+ maturity:**
+- All security scans blocking
+- Promotion gates with signoff
+- No manual deployment paths
+- Hotfix pipeline defined
+
+**Required at advanced maturity:**
+- Pipeline performance optimization
+- Canary analysis automation
+- Full audit trail
+- Error-budget-gated promotion
+
+**Guidance:**
+- Gates below the team's maturity level are REQUIRED — flag failures as blocking
+- Gates at the team's maturity level are RECOMMENDED — flag failures as warnings with improvement path
+- Gates above the team's maturity level are INFORMATIONAL — mention as future growth areas but do not block
+
 ## 5.2 Present Validation Summary
 
 Present a concise summary of the complete pipeline plan:

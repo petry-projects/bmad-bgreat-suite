@@ -80,6 +80,37 @@ Run through each quality gate systematically:
 - [ ] Review process established with cadence and participants
 - [ ] Reporting requirements documented
 
+### Maturity-Level Gate Calibration
+
+Read `{bgr_maturity}` from config. Apply the following gate classification when evaluating quality gates:
+
+**Required at ALL maturity levels (greenfield+):**
+- Current baseline documented
+- Basic auto-scaling configured
+- Cost awareness
+
+**Required at growing+ maturity:**
+- Growth scenarios defined
+- Scaling policies with thresholds
+- Load testing planned
+
+**Required at established+ maturity:**
+- Predictive scaling
+- Comprehensive load testing suite
+- Cost guardrails
+- Capacity alerts
+
+**Required at advanced maturity:**
+- ML-driven auto-scaling
+- Cross-region capacity planning
+- Automated capacity validation
+- Quarterly reviews
+
+**Guidance:**
+- Gates below the team's maturity level are REQUIRED — flag failures as blocking
+- Gates at the team's maturity level are RECOMMENDED — flag failures as warnings with improvement path
+- Gates above the team's maturity level are INFORMATIONAL — mention as future growth areas but do not block
+
 ### 2. Cross-Workflow Coherence Validation
 
 Check alignment with other completed workflow plans:

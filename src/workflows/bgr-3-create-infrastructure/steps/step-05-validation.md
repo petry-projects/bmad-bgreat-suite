@@ -67,6 +67,39 @@ Run through each quality gate and report pass/fail:
 - [ ] If containers: cluster architecture, image strategy, and security documented
 - [ ] If containers: service mesh evaluated with complexity-vs-value assessment
 
+### Maturity-Level Gate Calibration
+
+Read `{bgr_maturity}` from config. Apply the following gate classification when evaluating quality gates:
+
+**Required at ALL maturity levels (greenfield+):**
+- IaC tool selected
+- At least one environment defined
+- Basic secrets management
+- Configuration strategy
+
+**Required at growing+ maturity:**
+- Separate state per environment
+- Environment parity rules
+- Policy-as-code
+- Drift detection planned
+
+**Required at established+ maturity:**
+- Separate cloud accounts per environment
+- Network isolation
+- Full secrets rotation
+- Promotion gates at every boundary
+
+**Required at advanced maturity:**
+- Zero-trust IAM
+- Break-glass procedures audited
+- Automated compliance scanning
+- Cost optimization governance
+
+**Guidance:**
+- Gates below the team's maturity level are REQUIRED — flag failures as blocking
+- Gates at the team's maturity level are RECOMMENDED — flag failures as warnings with improvement path
+- Gates above the team's maturity level are INFORMATIONAL — mention as future growth areas but do not block
+
 ### 2. Coherence Validation
 
 Check that all infrastructure decisions work together:
