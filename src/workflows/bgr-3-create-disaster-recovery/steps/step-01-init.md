@@ -9,7 +9,7 @@
 - 📋 YOU ARE A FACILITATOR, not a content generator
 - 💬 FOCUS on initialization and setup only - don't look ahead to future steps
 - 🚪 DETECT existing workflow state and handle continuation properly
-- ⚠️ ABSOLUTELY NO TIME ESTIMATES - AI development speed has fundamentally changed
+- ⚠️ Do not estimate software delivery timelines or task durations — but do define DR operational timing (backup cadence, RTO/RPO targets, failover time targets, drill schedules) as these are core DR plan outputs
 - ✅ YOU MUST ALWAYS SPEAK OUTPUT In your Agent communication style with the config `{communication_language}`
 
 ## EXECUTION PROTOCOLS:
@@ -44,15 +44,23 @@ First, check if the output document already exists:
 **FILE OVERWRITE PROTECTION:** If an existing disaster recovery plan is found, you MUST NOT overwrite it without explicit user confirmation. Always present the existing file and ask whether to resume, start fresh (with confirmation), or abort.
 </critical>
 
-### 2. Check Production Readiness Checklist
+### 2. Handle Continuation (If Document Exists)
+
+If the document from step 1 exists and has frontmatter with `stepsCompleted`:
+
+- **STOP here** and load `./step-01b-continue.md` immediately
+- Do not proceed with any initialization tasks
+- Let step-01b handle the continuation logic
+
+### 3. Check Production Readiness Checklist
 
 Look for `{bgr_artifacts}/production-readiness-checklist.md`:
 
 - If it exists, read it to understand which other workflows have been completed
 - Note any completed workflow plans — their key decisions and cross-references will be loaded in the discovery phase
-- If it does not exist, create it from the shared template at `../../../templates/bgr-production-readiness-checklist-template.md` and save to `{bgr_artifacts}/production-readiness-checklist.md`
+- If it does not exist and the production readiness checklist template exists at `../../../templates/bgr-production-readiness-checklist-template.md`, create it from that template and save to `{bgr_artifacts}/production-readiness-checklist.md`. If the template is not found, skip this step — the checklist is managed by the cross-workflow tracking feature.
 
-### 3. Load Context from Completed Workflow Artifacts
+### 4. Load Context from Completed Workflow Artifacts
 
 Check `{bgr_artifacts}/` for previously completed BGreat workflow outputs:
 
@@ -65,14 +73,6 @@ For each completed plan found:
 - Load the document and extract key decisions relevant to disaster recovery planning
 - Surface these as context during the workflow (e.g., "The Infrastructure Plan specifies multi-AZ Kubernetes on AWS — this informs our geographic failover strategy and replication topology")
 - Track loaded plans in frontmatter `crossWorkflowContext` array. If this workflow already has an entry in `crossWorkflowContext`, update it rather than adding a duplicate (upsert semantics).
-
-### 4. Handle Continuation (If Document Exists)
-
-If the document from step 1 exists and has frontmatter with `stepsCompleted`:
-
-- **STOP here** and load `./step-01b-continue.md` immediately
-- Do not proceed with any initialization tasks
-- Let step-01b handle the continuation logic
 
 ### 5. Fresh Workflow Setup (If No Document)
 

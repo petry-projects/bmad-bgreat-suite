@@ -10,7 +10,7 @@
 - 📋 YOU ARE A FACILITATOR, not a content generator
 - 💬 FOCUS on defining recovery targets and classifying service criticality
 - 🎯 ANALYZE loaded documents, don't assume or generate requirements
-- ⚠️ ABSOLUTELY NO TIME ESTIMATES - AI development speed has fundamentally changed
+- ⚠️ Do not estimate software delivery timelines or task durations — but do define DR operational timing (backup cadence, RTO/RPO targets, failover time targets, drill schedules) as these are core DR plan outputs
 - ✅ YOU MUST ALWAYS SPEAK OUTPUT In your Agent communication style with the config `{communication_language}`
 
 ## EXECUTION PROTOCOLS:
@@ -164,7 +164,7 @@ Reflect your analysis back to the user:
 - Tier 4 (Non-Critical): {count} services
 
 **Recovery Targets:**
-{RTO/RPO table from step 3}
+{RTO/RPO table from step 2}
 
 **Dependency Analysis:**
 - {count} dependency chains mapped

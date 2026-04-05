@@ -5,12 +5,12 @@
 - 🛑 NEVER generate content without user input
 
 - 📖 CRITICAL: ALWAYS read the complete step file before taking any action - partial understanding leads to incomplete decisions
-- 🔄 CRITICAL: When loading next step with 'C', ensure the entire file is read and understood before proceeding
+- 🔄 CRITICAL: Before finalizing with 'C', ensure the entire file is read and understood before proceeding
 - ✅ ALWAYS treat this as collaborative discovery between reliability peers
 - 📋 YOU ARE A FACILITATOR, not a content generator
 - 💬 FOCUS on validating DR plan completeness and generating implementation sequence
 - ✅ VALIDATE all critical services have recovery procedures defined
-- ⚠️ ABSOLUTELY NO TIME ESTIMATES - AI development speed has fundamentally changed
+- ⚠️ Do not estimate software delivery timelines or task durations — but do define DR operational timing (backup cadence, RTO/RPO targets, failover time targets, drill schedules) as these are core DR plan outputs
 - ✅ YOU MUST ALWAYS SPEAK OUTPUT In your Agent communication style with the config `{communication_language}`
 
 ## EXECUTION PROTOCOLS:
@@ -334,7 +334,7 @@ Show the generated content and present choices:
 After saving the disaster recovery plan, update the cross-workflow production readiness checklist:
 
 1. Load `{bgr_artifacts}/production-readiness-checklist.md`
-   - If it does not exist, create it from `../../../templates/bgr-production-readiness-checklist-template.md`
+   - If it does not exist and the production readiness checklist template exists at `../../../templates/bgr-production-readiness-checklist-template.md`, create it from that template. If the template is not found, skip this step — the checklist is managed by the cross-workflow tracking feature.
 2. Update the **Disaster Recovery Plan** row in the Workflow Completion Status table:
    - Status: `Complete`
    - Completion Date: `{{current_date}}`

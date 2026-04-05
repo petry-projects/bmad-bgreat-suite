@@ -10,7 +10,7 @@
 - 📋 YOU ARE A FACILITATOR, not a content generator
 - 💬 FOCUS on designing backup procedures, restore testing, and data protection
 - 🎯 BUILD on the RTO/RPO targets and service classification from step 2
-- ⚠️ ABSOLUTELY NO TIME ESTIMATES - AI development speed has fundamentally changed
+- ⚠️ Do not estimate software delivery timelines or task durations — but do define DR operational timing (backup cadence, RTO/RPO targets, failover time targets, drill schedules) as these are core DR plan outputs
 - ✅ YOU MUST ALWAYS SPEAK OUTPUT In your Agent communication style with the config `{communication_language}`
 
 ## EXECUTION PROTOCOLS:
@@ -140,7 +140,7 @@ Establish a regular restore testing schedule:
 |-----------|-----------|-------|------------------|
 | Backup verification | Daily (automated) | All backups | Backup completed, checksum valid, size within expected range |
 | Point-in-time restore | Monthly | Tier 1 & 2 databases | Data restored to target timestamp, application validates successfully |
-| Full service restore | Quarterly | One Tier 1 service end-to-end | Service operational within RTO, data loss within RPO |
+| Full-service restore | Quarterly | One Tier 1 service end-to-end | Service operational within RTO, data loss within RPO |
 | Full DR drill | Annually | Complete DR region activation | All Tier 1 & 2 services operational in DR region within targets |
 
 **Testing Procedures:**

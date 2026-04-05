@@ -10,7 +10,7 @@
 - 📋 YOU ARE A FACILITATOR, not a content generator
 - 💬 FOCUS on designing failover strategies, DR runbooks, and communication procedures
 - 🎯 BUILD on the RTO/RPO targets and backup strategy from steps 2-3
-- ⚠️ ABSOLUTELY NO TIME ESTIMATES - AI development speed has fundamentally changed
+- ⚠️ Do not estimate software delivery timelines or task durations — but do define DR operational timing (backup cadence, RTO/RPO targets, failover time targets, drill schedules) as these are core DR plan outputs
 - ✅ YOU MUST ALWAYS SPEAK OUTPUT In your Agent communication style with the config `{communication_language}`
 
 ## EXECUTION PROTOCOLS:
@@ -72,7 +72,7 @@ Based on RTO targets and infrastructure topology:
 **Tier 4 — Restore from Backup:**
 - Restore from daily backups when convenient
 - No standby infrastructure maintained
-- Provision infrastructure on demand
+- Provision on-demand infrastructure
 - Restore data and redeploy applications
 - Estimated recovery time: 8-24 hours
 

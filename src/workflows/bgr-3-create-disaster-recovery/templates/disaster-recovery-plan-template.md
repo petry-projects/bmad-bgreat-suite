@@ -92,7 +92,7 @@ lastUpdated: ""
 |-----------|-----------|-------|------------------|-------|
 | Backup verification | Daily (automated) | All backups | Backup completed, checksum valid | |
 | Point-in-time restore | Monthly | Tier 1 & 2 databases | Data restored within RPO | |
-| Full service restore | Quarterly | One Tier 1 service | Service operational within RTO | |
+| Full-service restore | Quarterly | One Tier 1 service | Service operational within RTO | |
 | Full DR drill | Annually | Complete DR activation | All Tier 1 & 2 services recovered | |
 
 ### Testing Procedures
