@@ -23,6 +23,9 @@ Check `{bgr_artifacts}/` for previously completed BGreat workflow outputs:
 - `*observability*.md` -- If completed, load SLO definitions and health check metrics to inform post-deploy verification gates and canary analysis criteria
 - `*incident-response*.md` -- If completed, load severity classification and rollback triggers to align pipeline rollback automation with incident escalation thresholds
 - `*infrastructure*.md` -- If completed, load environment topology, container platform, and secrets management to inform deployment targets, runner strategy, and credential injection
+- `*security-plan*.md` -- If completed, load security scanning requirements, compliance gates, and auth testing strategy to inform pipeline security stages
+- `*disaster-recovery*.md` -- If completed, load DR deployment procedures and failover testing that pipelines must support
+- `*capacity-plan*.md` -- If completed, load load-testing requirements that should be integrated as pipeline stages
 
 For each completed plan found:
 - Load the document and extract key decisions relevant to pipeline design

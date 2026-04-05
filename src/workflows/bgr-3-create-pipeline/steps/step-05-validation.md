@@ -71,9 +71,12 @@ After saving the pipeline plan, update the cross-workflow production readiness c
    - If Observability Plan exists and status is `complete`: Verify post-deploy verification gates reference the correct health check metrics and SLO thresholds. If status is `draft`, defer validation until plan is finalized.
    - If Incident Response Plan exists and status is `complete`: Verify rollback automation triggers align with incident severity classification and escalation procedures. If status is `draft`, defer validation until plan is finalized.
    - If Infrastructure Plan exists and status is `complete` or `approved`: Verify pipeline deployment targets match the defined environment topology, and runner infrastructure is provisioned. If status is `draft`, defer validation until plan is finalized.
+   - If Security Plan exists and status is `complete`: Verify pipeline security scanning stages align with the security plan's testing strategy and compliance gates. If status is `draft`, defer validation.
+   - If Disaster Recovery Plan exists and status is `complete`: Verify pipeline supports DR deployment procedures and failover testing. If status is `draft`, defer validation.
+   - If Capacity Plan exists and status is `complete`: Verify pipeline integrates load testing stages defined in the capacity plan. If status is `draft`, defer validation.
    - Record any inconsistencies or deferred validations in section **4.3 Consistency Issues**
 5. Update the `completedWorkflows` array in checklist frontmatter to include `pipeline`. Add this workflow only if it is not already present (use set-style uniqueness to prevent duplicate entries on re-run).
-6. If all 4 workflows are now complete, update **Overall Status** to `READY` (if no critical gaps remain). A **critical gap** is a missing workflow artifact, an unresolved cross-plan dependency, or a key decision conflict between plans that would block production readiness (e.g., mismatched environment topologies, missing rollback alignment, or undefined alerting-to-severity mappings).
+6. If all 7 workflows are now complete, update **Overall Status** to `READY` (if no critical gaps remain). A **critical gap** is a missing workflow artifact, an unresolved cross-plan dependency, or a key decision conflict between plans that would block production readiness (e.g., mismatched environment topologies, missing rollback alignment, or undefined alerting-to-severity mappings).
 7. Save the updated checklist
 
 ## 5.6 Recommend Next Steps

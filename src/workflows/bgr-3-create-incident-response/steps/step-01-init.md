@@ -55,6 +55,9 @@ Check `{bgr_artifacts}/` for previously completed BGreat workflow outputs:
 - `*observability*.md` — If completed, load alerting strategy and SLO thresholds to align severity classification with existing alert definitions
 - `*infrastructure*.md` — If completed, load environment topology and service architecture to inform runbook scope and failure mode identification
 - `*pipeline*.md` — If completed, load deployment strategy and rollback procedures to align incident response escalation with deployment rollback capabilities
+- `*security-plan*.md` — If completed, note security incident classification, compliance breach procedures, and authentication failure escalation paths
+- `*disaster-recovery*.md` — If completed, note DR failover procedures that integrate with incident escalation, and disaster severity classification
+- `*capacity-plan*.md` — If completed, note capacity exhaustion scenarios that should be classified as incidents, and scaling failure procedures
 
 For each completed plan found:
 - Load the document and extract key decisions relevant to incident response planning
