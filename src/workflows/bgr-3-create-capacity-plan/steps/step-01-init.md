@@ -183,6 +183,10 @@ Before proceeding, verify we have the essential inputs:
 
 Copy the template from `../templates/capacity-plan-template.md` to `{bgr_artifacts}/capacity-plan.md`
 
+Immediately update frontmatter in `{bgr_artifacts}/capacity-plan.md`:
+- Set `stepsCompleted: [1]`
+- Set `lastUpdated: {{current_date}}`
+
 #### D. Complete Initialization and Report
 
 Complete setup and report to user:

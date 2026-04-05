@@ -339,7 +339,7 @@ After saving the capacity plan, update the cross-workflow production readiness c
      - Frontmatter including:
        - `lastUpdated: {{current_date}}`
        - `completedWorkflows: []`
-     - An `# Overview` section that includes the checklist `lastUpdated`
+     - An `## Overview` section that includes the checklist `lastUpdated`
      - A `## Workflow Completion Status` table with a row for **Capacity Planning**
      - A capacity plan detail section with fields for **Status**, **Completion Date**, and **Output Document**
      - A `### 4.3 Consistency Issues` section for cross-plan dependency findings
