@@ -340,9 +340,9 @@ After saving the capacity plan, update the cross-workflow production readiness c
        - `lastUpdated: {{current_date}}`
        - `completedWorkflows: []`
      - An `## Overview` section that includes the checklist `lastUpdated`
-     - A `## Workflow Completion Status` table with a row for **Capacity Planning**
+     - A `## Workflow Completion Status` table with columns `| Workflow | Status | Completion Date | Output Document |` and a row for **Capacity Planning**
      - A capacity plan detail section with fields for **Status**, **Completion Date**, and **Output Document**
-     - A `### 4.3 Consistency Issues` section for cross-plan dependency findings
+     - A `### Consistency Issues` section for cross-plan dependency findings
    - If it does exist, DO NOT rewrite the file into a different schema just to match the structure above
    - Treat the Step-01-generated checklist format and the canonical checklist format as equally valid
    - Preserve the existing organization, headings, frontmatter, and tables wherever possible; only add the minimum missing fields/sections needed to record capacity-plan completion
@@ -368,13 +368,13 @@ After saving the capacity plan, update the cross-workflow production readiness c
    - If Pipeline Plan exists: Verify load testing integrates with CI/CD pipeline, scaling events are compatible with deployment strategy
    - If Incident Response Plan exists: Verify capacity alerts integrate with incident severity levels
    - If Disaster Recovery Plan exists: Verify capacity reserves account for DR failover, scaling strategies are consistent across regions
-   - Record inconsistencies in `### 4.3 Consistency Issues` when that section exists
+   - Record inconsistencies in `### Consistency Issues` when that section exists
    - If the checklist uses an equivalent consistency/dependencies/issues section from Step-01, record the findings there instead
    - Only create a new minimal consistency issues subsection if no equivalent location exists
 5. Record workflow completion without forcing a schema conversion:
    - If checklist frontmatter contains `completedWorkflows`, add `capacity-planning` only if it is not already present (use set-style uniqueness to prevent duplicate entries on re-run)
    - If the checklist uses a different Step-01 completion-tracking structure, update the equivalent completion marker there as well
-6. If all workflows are now complete, update **Overall Status** to `READY` (if no critical gaps remain). A **critical gap** is a missing workflow artifact, an unresolved cross-plan dependency, or a key decision conflict between plans that would block production readiness (e.g., mismatched scaling strategies, missing capacity alerts, or undefined cost guardrails).
+6. If all workflows are now complete, update **Overall Status** to `READY` (if no critical gaps remain). The Overall Status field lives in the `## Overview` section of the production readiness checklist (e.g., as a line `**Overall Status**: READY`); if the checklist uses frontmatter to track overall status, update it there instead. A **critical gap** is a missing workflow artifact, an unresolved cross-plan dependency, or a key decision conflict between plans that would block production readiness (e.g., mismatched scaling strategies, missing capacity alerts, or undefined cost guardrails).
 7. Save the updated checklist, preserving the existing schema and content ordering as much as possible
 
 ### 12. Completion Summary

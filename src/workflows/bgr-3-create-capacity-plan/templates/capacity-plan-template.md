@@ -2,6 +2,7 @@
 status: draft
 stepsCompleted: []
 inputDocuments: []
+crossWorkflowContext: []
 createdDate: ""
 lastUpdated: ""
 ---
