@@ -63,7 +63,16 @@ jobs:
               echo "::error file=$file::Potential secret or credential detected in agent config"
               status=1
             fi
-          done < <(find . -type f \( -name 'SKILL.md' -o -name 'workflow.md' -o -name 'config.yaml' -o -name '*.json' -o -name '*.yaml' -o -name '*.yml' \) -path '*/src/*' -not -path '*/node_modules/*' -not -path '*/.git/*'; find . -type f -path '*/.claude/*' -not -path '*/node_modules/*' -not -path '*/.git/*')
+          done < <(find . -type f \
+            \( -name 'SKILL.md' -o -name 'workflow.md' \
+               -o -name 'config.yaml' -o -name '*.json' \
+               -o -name '*.yaml' -o -name '*.yml' \) \
+            -path '*/src/*' \
+            -not -path '*/node_modules/*' \
+            -not -path '*/.git/*'
+          find . -type f -path '*/.claude/*' \
+            -not -path '*/node_modules/*' \
+            -not -path '*/.git/*')
 
           if [ "$status" -eq 0 ]; then
             echo "No secrets detected in agent configuration files."
@@ -99,7 +108,16 @@ jobs:
               echo "::error file=$file::Permission bypass detected: $match"
               status=1
             done < <(grep -inP "$bypass_pattern" "$file" 2>/dev/null || true)
-          done < <(find . -type f \( -name 'SKILL.md' -o -name 'workflow.md' -o -name '*.md' \) \( -path '*/src/*' -o -path '*/.claude/*' \) -not -path '*/node_modules/*' -not -path '*/.git/*'; find . -type f \( -name '*.json' -o -name '*.yaml' -o -name '*.yml' \) -path '*/.claude/*' -not -path '*/node_modules/*' -not -path '*/.git/*')
+          done < <(find . -type f \
+            \( -name 'SKILL.md' -o -name 'workflow.md' -o -name '*.md' \) \
+            \( -path '*/src/*' -o -path '*/.claude/*' \) \
+            -not -path '*/node_modules/*' \
+            -not -path '*/.git/*'
+          find . -type f \
+            \( -name '*.json' -o -name '*.yaml' -o -name '*.yml' \) \
+            -path '*/.claude/*' \
+            -not -path '*/node_modules/*' \
+            -not -path '*/.git/*')
 
           if [ "$status" -eq 0 ]; then
             echo "No permission bypasses detected."

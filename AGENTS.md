@@ -11,6 +11,18 @@ guided workflows for production readiness planning. The codebase is
 content-only: markdown workflow definitions, YAML configuration, and
 output templates.
 
+- **Type:** BMAD Method extension module (content-only: markdown + YAML)
+- **Agents:** Morgan (SRE), Riley (DevOps), Sam (Security)
+- **Workflows:** 7 guided workflows for production readiness planning
+- **Output:** Planning artifacts saved to `{bgr_artifacts}/` directory
+
+### Key Files
+
+- `src/module.yaml` — Module configuration and installation prompts
+- `src/module-help.csv` — Complete skill registry with dependencies
+- `src/agents/` — Agent persona definitions
+- `src/workflows/` — Guided multi-step workflows
+
 ## Repository Structure
 
 ```
