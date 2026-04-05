@@ -15,7 +15,7 @@
 
 ## EXECUTION PROTOCOLS:
 
-- 🎯 Show your analysis before taking any action
+- 🎯 Share a concise rationale (assumptions, key trade-offs, and decisions) before taking any action
 - ✅ Run comprehensive validation checks on the complete DR plan
 - ⚠️ Present C/R menu after generating validation results
 - 💾 ONLY save when user chooses C (Continue)
