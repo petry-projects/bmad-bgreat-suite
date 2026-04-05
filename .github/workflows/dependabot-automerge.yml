@@ -25,18 +25,28 @@ jobs:
         id: eligible
         run: |
           UPDATE_TYPE="${{ steps.metadata.outputs.update-type }}"
+          DEPENDENCY_TYPE="${{ steps.metadata.outputs.dependency-type }}"
           ECOSYSTEM="${{ steps.metadata.outputs.package-ecosystem }}"
 
-          # Auto-merge only patch and minor updates; major updates require human review
-          if [[ "$UPDATE_TYPE" != "version-update:semver-patch" && \
-                "$UPDATE_TYPE" != "version-update:semver-minor" ]]; then
-            echo "eligible=false" >> "$GITHUB_OUTPUT"
-            echo "Skipping: only patch/minor updates are auto-merge eligible"
-            exit 0
+          # Auto-merge direct dependencies: minor and patch only
+          # Auto-merge indirect dependencies: patch only (minor/major require review)
+          if [[ "$DEPENDENCY_TYPE" == "indirect" ]]; then
+            if [[ "$UPDATE_TYPE" != "version-update:semver-patch" ]]; then
+              echo "eligible=false" >> "$GITHUB_OUTPUT"
+              echo "Skipping: indirect dependency updates only auto-merge for patch"
+              exit 0
+            fi
+          else
+            if [[ "$UPDATE_TYPE" != "version-update:semver-patch" && \
+                  "$UPDATE_TYPE" != "version-update:semver-minor" ]]; then
+              echo "eligible=false" >> "$GITHUB_OUTPUT"
+              echo "Skipping: only patch/minor updates are auto-merge eligible"
+              exit 0
+            fi
           fi
 
           echo "eligible=true" >> "$GITHUB_OUTPUT"
-          echo "Auto-merge eligible: ecosystem=$ECOSYSTEM update=$UPDATE_TYPE"
+          echo "Auto-merge eligible: ecosystem=$ECOSYSTEM update=$UPDATE_TYPE dependency=$DEPENDENCY_TYPE"
 
       - name: Generate app token
         if: steps.eligible.outputs.eligible == 'true'
