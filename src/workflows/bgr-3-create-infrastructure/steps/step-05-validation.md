@@ -193,7 +193,7 @@ After saving the infrastructure plan, update the cross-workflow production readi
    - If Observability Plan exists and status is `complete`: Verify infrastructure provisions resources for monitoring agents, collectors, and telemetry data egress. If status is `draft`, note validation is deferred pending finalization.
    - If Incident Response Plan exists and status is `complete`: Verify environment access controls support on-call responder access and war room procedures. If status is `draft`, note validation is deferred pending finalization.
    - If Pipeline Plan exists and status is `complete`: Verify environment topology matches pipeline deployment targets and runner infrastructure needs. If status is `draft`, note validation is deferred pending finalization.
-   - If Security Plan exists and status is `complete` or `approved`: Verify network architecture enforces security plan's segmentation requirements and encryption mandates. If status is `draft`, note validation is deferred.
+   - If Security Plan exists and status is `complete`: Verify network architecture enforces security plan's segmentation requirements and encryption mandates. If status is `draft`, note validation is deferred.
    - If Disaster Recovery Plan exists and status is `complete`: Verify infrastructure topology supports DR failover targets (multi-region, backup storage). If status is `draft`, note validation is deferred.
    - If Capacity Plan exists and status is `complete`: Verify infrastructure sizing accounts for growth projections and auto-scaling is provisioned. If status is `draft`, note validation is deferred.
    - Record any inconsistencies or deferred validations in section **4.3 Consistency Issues**

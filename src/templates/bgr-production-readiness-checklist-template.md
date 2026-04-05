@@ -23,7 +23,7 @@ completedWorkflows: []
 | CI/CD Pipeline Plan | Not Started | | | |
 | Security Plan | Not Started | | | |
 | Disaster Recovery Plan | Not Started | | | |
-| Capacity Plan | Not Started | | | |
+| Capacity Planning | Not Started | | | |
 
 ### 2.1 Observability Plan
 
@@ -117,7 +117,7 @@ completedWorkflows: []
   - Failover procedures inform Incident Response escalation paths
   - DR testing integrates with Pipeline deployment procedures
 
-### 2.7 Capacity Plan
+### 2.7 Capacity Planning
 
 - **Status**: Not Started
 - **Completion Date**:

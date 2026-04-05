@@ -272,6 +272,37 @@ After saving, present the completion summary:
 
 Thank you for building this plan together, {{user_name}}! A security plan is only as good as its implementation — the phased approach ensures you build on a solid foundation without trying to boil the ocean."
 
+### 10. Update Production Readiness Checklist
+
+After saving the security plan, update the cross-workflow production readiness checklist:
+
+1. Load `{bgr_artifacts}/production-readiness-checklist.md`
+   - If it does not exist, create it from `../../../templates/bgr-production-readiness-checklist-template.md`
+2. Update the **Security Plan** row in the Workflow Completion Status table:
+   - Status: `Complete`
+   - Completion Date: `{{current_date}}`
+   - Output Document: `{bgr_artifacts}/security-plan.md`
+3. Update section **2.5 Security Plan** detail fields and key decisions:
+   - Set **Status** to `Complete`
+   - Set **Completion Date** to `{{current_date}}`
+   - Set **Output Document** to `{bgr_artifacts}/security-plan.md`
+   - Auth strategy chosen
+   - Data protection approach
+   - Compliance frameworks identified
+   - Threat model completed
+   - Update checklist `lastUpdated` in both frontmatter and the Overview section
+4. Check for cross-plan dependency gaps (verify each plan's `status` field before validating):
+   - If Observability Plan exists and status is `complete`: Verify security monitoring requirements (auth events, compliance logs) are covered. If status is `draft`, note validation is deferred.
+   - If Incident Response Plan exists and status is `complete`: Verify security incident classification aligns with severity framework. If status is `draft`, note validation is deferred.
+   - If Infrastructure Plan exists and status is `complete` or `approved`: Verify network segmentation and encryption mandates are enforced. If status is `draft`, note validation is deferred.
+   - If Pipeline Plan exists and status is `complete`: Verify security scanning stages align with testing strategy. If status is `draft`, note validation is deferred.
+   - If Disaster Recovery Plan exists and status is `complete`: Verify DR procedures account for security failover requirements. If status is `draft`, note validation is deferred.
+   - If Capacity Plan exists and status is `complete`: Verify capacity planning accounts for security infrastructure overhead. If status is `draft`, note validation is deferred.
+   - Record any inconsistencies or deferred validations in section **4.3 Consistency Issues**
+5. Update the `completedWorkflows` array in checklist frontmatter to include `security-plan`. Add this workflow only if it is not already present.
+6. If all 7 workflows are now complete, update **Overall Status** to `READY` (if no critical gaps remain).
+7. Save the updated checklist
+
 ## SUCCESS METRICS:
 
 ✅ All quality gates evaluated with clear pass/fail
@@ -280,6 +311,7 @@ Thank you for building this plan together, {{user_name}}! A security plan is onl
 ✅ Implementation sequence defined in practical phases
 ✅ Final document saved with complete frontmatter
 ✅ Actionable next steps provided with cross-agent integration points
+✅ Production readiness checklist updated with security plan completion
 ✅ [C]/[R] menu presented and handled correctly
 ✅ Content properly appended to document when C selected
 
