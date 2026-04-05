@@ -111,24 +111,11 @@ jobs:
           status=0
 
           while IFS= read -r file; do
-            if ! head -1 "$file" | grep -q '^---$'; then
-              echo "::error file=$file::SKILL.md must start with YAML frontmatter (---)"
-              status=1
-              continue
-            fi
+            # Extract frontmatter between first and second --- delimiters
+            frontmatter=$(awk '/^---$/{n++; next} n==1{print} n>=2{exit}' "$file")
 
-            # Check for closing --- delimiter
-            closing_line=$(tail -n +2 "$file" | grep -n '^---$' | head -1 | cut -d: -f1)
-            if [ -z "$closing_line" ]; then
-              echo "::error file=$file::SKILL.md frontmatter missing closing --- delimiter"
-              status=1
-              continue
-            fi
-
-            # Extract frontmatter between first and second ---
-            frontmatter=$(sed -n "2,$((closing_line))p" "$file" | head -n -1)
             if [ -z "$frontmatter" ]; then
-              echo "::error file=$file::SKILL.md has empty frontmatter"
+              echo "::error file=$file::SKILL.md has no valid YAML frontmatter (expected --- delimited block)"
               status=1
               continue
             fi
