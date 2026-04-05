@@ -80,33 +80,6 @@ Run through each quality gate systematically:
 - [ ] Review process established with cadence and participants
 - [ ] Reporting requirements documented
 
-### Maturity-Level Gate Calibration
-
-Read `{bgr_maturity}` from config. When evaluating the quality gates above, apply the following maturity-based expectations:
-
-| Gate | greenfield | growing | established | advanced |
-|------|-----------|---------|-------------|----------|
-| Gate 1: Growth Model (current traffic baseline, resource demand mapped) | PASS | PASS | PASS | PASS |
-| Gate 2: Scaling Strategy (basic auto-scaling for key services) | PASS | PASS | PASS | PASS |
-| Gate 3: Cost-Performance (cost awareness, baseline cost model) | PASS | PASS | PASS | PASS |
-| Gate 1: Growth scenarios (conservative, expected, aggressive) | DEFERRED | PASS | PASS | PASS |
-| Gate 2: Scaling policies with thresholds, cooldowns, min/max | DEFERRED | PASS | PASS | PASS |
-| Gate 4: Load Testing (tools selected, test scenarios planned) | DEFERRED | PASS | PASS | PASS |
-| Gate 2: Predictive and scheduled scaling triggers | DEFERRED | DEFERRED | PASS | PASS |
-| Gate 4: Comprehensive load testing suite tied to SLOs | DEFERRED | DEFERRED | PASS | PASS |
-| Gate 3: Cost guardrails with thresholds and actions | DEFERRED | DEFERRED | PASS | PASS |
-| Gate 5: Capacity alerts with thresholds and owners | DEFERRED | DEFERRED | PASS | PASS |
-| Gate 2: ML-driven predictive auto-scaling | DEFERRED | DEFERRED | DEFERRED | PASS |
-| Gate 1: Cross-region capacity planning | DEFERRED | DEFERRED | DEFERRED | PASS |
-| Gate 5: Automated capacity validation | DEFERRED | DEFERRED | DEFERRED | PASS |
-| Gate 5: Quarterly capacity reviews established | DEFERRED | DEFERRED | DEFERRED | PASS |
-
-**How to interpret:**
-- **PASS** — Gate must pass. Flag failures as blocking.
-- **DEFERRED** — Gate is aspirational at this maturity level. Note it as a future improvement area but do not block. If the team has partially addressed it, acknowledge the progress.
-
-When presenting validation results, report each gate's status as PASS, FAIL, or DEFERRED based on the team's maturity level.
-
 ### 2. Cross-Workflow Coherence Validation
 
 Check alignment with other completed workflow plans:
@@ -362,47 +335,32 @@ Show the generated content and present choices:
 After saving the capacity plan, update the cross-workflow production readiness checklist:
 
 1. Load `{bgr_artifacts}/production-readiness-checklist.md`
-   - If it does not exist, create it in place with the minimum required structure for this workflow:
-     - Frontmatter including:
-       - `lastUpdated: {{current_date}}`
-       - `completedWorkflows: []`
-     - An `## Overview` section that includes the checklist `lastUpdated`
-     - A `## Workflow Completion Status` table with columns `| Workflow | Status | Completion Date | Output Document |` and a row for **Capacity Planning**
-     - A capacity plan detail section with fields for **Status**, **Completion Date**, and **Output Document**
-     - A `### Consistency Issues` section for cross-plan dependency findings
-   - If it does exist, DO NOT rewrite the file into a different schema just to match the structure above
-   - Treat the Step-01-generated checklist format and the canonical checklist format as equally valid
-   - Preserve the existing organization, headings, frontmatter, and tables wherever possible; only add the minimum missing fields/sections needed to record capacity-plan completion
-2. Detect the existing checklist structure and update equivalent sections in place:
-   - If frontmatter exists, update `lastUpdated: {{current_date}}` and preserve all other keys
-   - If a `Workflow Completion Status` table exists, update the **Capacity Planning** row there
-   - If the checklist uses a different workflow-status section/table format from Step-01, update the equivalent capacity-plan entry in that format instead of converting the file
-   - If no workflow-status section exists in any format, add the minimum missing status section with a **Capacity Planning** entry
-3. Record capacity-plan completion details in the existing capacity-plan section, or create a minimal one only if none exists:
+   - If it does not exist, skip the checklist update — the checklist is managed by the cross-workflow tracking feature (PR #5). Proceed to step 12.
+   - If it exists but does not have the expected structure (e.g., missing `Workflow Completion Status` table or `4.3 Consistency Issues` section), skip the checklist update and proceed to step 12.
+2. Update the **Capacity Plan** row in the Workflow Completion Status table:
+   - Status: `Complete`
+   - Completion Date: `{{current_date}}`
+   - Output Document: `{bgr_artifacts}/capacity-plan.md`
+3. Update the capacity plan detail section with key decisions:
    - Set **Status** to `Complete`
    - Set **Completion Date** to `{{current_date}}`
    - Set **Output Document** to `{bgr_artifacts}/capacity-plan.md`
-   - Include key decisions:
-     - Growth forecast summary (conservative/expected/aggressive projections)
-     - Scaling approach (horizontal, vertical, hybrid per service tier)
-     - Reserved capacity commitments
-     - Load testing cadence and tools
-     - Cost guardrail thresholds
-   - If an Overview section contains a human-readable `lastUpdated`, update it; otherwise do not create or rename sections solely for that purpose
+   - Growth forecast summary (conservative/expected/aggressive projections)
+   - Scaling approach (horizontal, vertical, hybrid per service tier)
+   - Reserved capacity commitments
+   - Load testing cadence and tools
+   - Cost guardrail thresholds
+   - Update checklist `lastUpdated` in both frontmatter and the Overview section
 4. Check for cross-plan dependency gaps:
    - If Infrastructure Plan exists: Verify scaling strategies align with infrastructure architecture, reserved capacity aligns with infrastructure cost plans
    - If Observability Plan exists: Verify capacity alerts align with alerting strategy, scaling triggers reference defined metrics
    - If Pipeline Plan exists: Verify load testing integrates with CI/CD pipeline, scaling events are compatible with deployment strategy
    - If Incident Response Plan exists: Verify capacity alerts integrate with incident severity levels
    - If Disaster Recovery Plan exists: Verify capacity reserves account for DR failover, scaling strategies are consistent across regions
-   - Record inconsistencies in `### Consistency Issues` when that section exists
-   - If the checklist uses an equivalent consistency/dependencies/issues section from Step-01, record the findings there instead
-   - Only create a new minimal consistency issues subsection if no equivalent location exists
-5. Record workflow completion without forcing a schema conversion:
-   - If checklist frontmatter contains `completedWorkflows`, add `capacity-planning` only if it is not already present (use set-style uniqueness to prevent duplicate entries on re-run)
-   - If the checklist uses a different Step-01 completion-tracking structure, update the equivalent completion marker there as well
-6. If all workflows are now complete, update **Overall Status** to `READY` (if no critical gaps remain). The Overall Status field lives in the `## Overview` section of the production readiness checklist (e.g., as a line `**Overall Status**: READY`); if the checklist uses frontmatter to track overall status, update it there instead. A **critical gap** is a missing workflow artifact, an unresolved cross-plan dependency, or a key decision conflict between plans that would block production readiness (e.g., mismatched scaling strategies, missing capacity alerts, or undefined cost guardrails).
-7. Save the updated checklist, preserving the existing schema and content ordering as much as possible
+   - Record any inconsistencies in section **4.3 Consistency Issues**
+5. Update the `completedWorkflows` array in checklist frontmatter to include `capacity-planning`. Add this workflow only if it is not already present (use set-style uniqueness to prevent duplicate entries on re-run).
+6. If all workflows are now complete, update **Overall Status** to `READY` (if no critical gaps remain). A **critical gap** is a missing workflow artifact, an unresolved cross-plan dependency, or a key decision conflict between plans that would block production readiness (e.g., mismatched scaling strategies, missing capacity alerts, or undefined cost guardrails).
+7. Save the updated checklist
 
 ### 12. Completion Summary
 

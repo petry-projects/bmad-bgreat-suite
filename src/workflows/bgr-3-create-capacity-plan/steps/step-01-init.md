@@ -60,8 +60,7 @@ Look for `{bgr_artifacts}/production-readiness-checklist.md`:
 
 - If it exists, read it as-is to understand which other workflows have been completed
 - Note any completed workflow plans — their key decisions and cross-references will be loaded in the discovery phase
-- If it does not exist:
-  - Create from `../../../templates/bgr-production-readiness-checklist-template.md`
+- If it does not exist, skip checklist creation — the checklist is managed by the cross-workflow tracking feature (PR #5)
 
 ### 4. Load Context from Completed Workflow Artifacts
 
@@ -135,10 +134,6 @@ Before proceeding, verify we have the essential inputs:
 
 Copy the template from `../templates/capacity-plan-template.md` to `{bgr_artifacts}/capacity-plan.md`
 
-Immediately update frontmatter in `{bgr_artifacts}/capacity-plan.md`:
-- Set `stepsCompleted: [1]`
-- Set `lastUpdated: {{current_date}}`
-
 #### D. Complete Initialization and Report
 
 Complete setup and report to user:
@@ -175,7 +170,7 @@ Ready to begin capacity planning. Do you have any other documents you'd like me 
 ✅ Architecture requirement validated and communicated
 ✅ Infrastructure recommendation communicated
 ✅ User confirmed document setup and can proceed
-✅ Production readiness checklist loaded if present, or created with initial structure if absent
+✅ Production readiness checklist loaded if present (creation deferred to cross-workflow tracking)
 ✅ Previously completed workflow artifacts discovered and context loaded
 ✅ File overwrite protection enforced — no silent overwrites
 
