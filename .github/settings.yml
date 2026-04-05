@@ -1,0 +1,6 @@
+# Repository settings managed via https://github.com/apps/settings
+# See https://github.com/petry-projects/.github/blob/main/standards/github-settings.md
+
+repository:
+  # Documentation lives in the repo, not the wiki
+  has_wiki: false
