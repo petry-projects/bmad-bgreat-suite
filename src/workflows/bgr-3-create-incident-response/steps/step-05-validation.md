@@ -37,48 +37,57 @@ Validate the complete incident response plan for coherence, completeness, and op
 
 ### 1. Quality Gates Checklist
 
-Run through each quality gate and assess pass/fail:
+Check `{bgr_maturity}` before evaluating gates. Gates are marked with the minimum maturity level at which they are **required**:
+- 🟢 **All** — Required at every maturity level
+- 🟡 **Growing+** — Required for growing, established, and advanced teams
+- 🟠 **Established+** — Required for established and advanced teams
+- 🔴 **Advanced** — Advanced teams only
+
+Run through each quality gate and assess pass/fail. For gates above the team's current maturity, note as "deferred — not required at this maturity level":
 
 **Severity Classification:**
-- [ ] Severity levels (SEV1-SEV4) defined with clear, unambiguous criteria
-- [ ] Response time SLAs specified for each severity level
-- [ ] SLAs are realistic for the team size and structure
+- [ ] 🟢 Severity levels defined with clear, unambiguous criteria (2-3 levels acceptable for greenfield; SEV1-SEV4 for growing+)
+- [ ] 🟢 Response time SLAs specified for each severity level
+- [ ] 🟢 SLAs are realistic for the team size and structure
 
 **Escalation:**
-- [ ] Escalation paths documented for each severity level
-- [ ] Time-based escalation triggers defined
-- [ ] Escalation contacts identified (by role or name)
-- [ ] Communication channels mapped per severity
+- [ ] 🟢 Escalation paths documented for each severity level
+- [ ] 🟡 Time-based escalation triggers defined
+- [ ] 🟢 Escalation contacts identified (by role or name)
+- [ ] 🟢 Communication channels mapped per severity
 
 **On-Call & Response:**
-- [ ] On-call rotation schedule and handoff procedures defined
-- [ ] Incident commander role and responsibilities documented
-- [ ] End-to-end response workflow documented (detect → postmortem)
-- [ ] Fatigue management and on-call wellness addressed
+- [ ] 🟢 Primary on-call contact defined (rotation not required for greenfield)
+- [ ] 🟡 On-call rotation schedule and handoff procedures defined
+- [ ] 🟡 Incident commander role and responsibilities documented
+- [ ] 🟢 End-to-end response workflow documented (detect → postmortem)
+- [ ] 🟠 Fatigue management and on-call wellness addressed
 
 **Communication:**
-- [ ] Internal status update template ready
-- [ ] Customer-facing status page template ready
-- [ ] Stakeholder notification template ready
-- [ ] Communication cadence defined per severity
+- [ ] 🟢 Internal status update process defined (template not required for greenfield)
+- [ ] 🟡 Internal status update template ready
+- [ ] 🟡 Customer-facing status page template ready
+- [ ] 🟠 Stakeholder notification template ready
+- [ ] 🟡 Communication cadence defined per severity
 
 **Runbooks:**
-- [ ] Runbook standard structure documented
-- [ ] Initial runbooks identified with owners
-- [ ] Runbook maintenance process defined
-- [ ] Runbook template available for creating new runbooks
+- [ ] 🟢 Critical incidents have documented response steps (informal runbooks acceptable for greenfield)
+- [ ] 🟡 Runbook standard structure documented
+- [ ] 🟡 Initial runbooks identified with owners
+- [ ] 🟠 Runbook maintenance process defined
+- [ ] 🟡 Runbook template available for creating new runbooks
 
 **Postmortems:**
-- [ ] Postmortem trigger criteria defined and tied to severity levels
-- [ ] Postmortem timeline and ownership documented
-- [ ] Postmortem template available with all required sections
-- [ ] Action item tracking process established
-- [ ] Blameless culture principles documented
+- [ ] 🟢 Postmortem trigger criteria defined and tied to severity levels
+- [ ] 🟢 Postmortem process documented (lightweight for greenfield)
+- [ ] 🟡 Postmortem template available with all required sections
+- [ ] 🟡 Action item tracking process established
+- [ ] 🟡 Blameless culture principles documented
 
 **War Room:**
-- [ ] War room activation criteria defined
-- [ ] War room roles documented
-- [ ] War room procedures and rules established
+- [ ] 🟠 War room activation criteria defined
+- [ ] 🟠 War room roles documented
+- [ ] 🟠 War room procedures and rules established
 
 ### 2. Coherence Validation
 

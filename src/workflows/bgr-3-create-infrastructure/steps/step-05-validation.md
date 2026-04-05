@@ -36,36 +36,42 @@ Validate the complete infrastructure plan for coherence, completeness, and readi
 
 ### 1. Quality Gate Checks
 
-Run through each quality gate and report pass/fail:
+Check `{bgr_maturity}` before evaluating gates. Gates are marked with the minimum maturity level at which they are **required** (not just recommended):
+- 🟢 **All** — Required at every maturity level
+- 🟡 **Growing+** — Required for growing, established, and advanced teams
+- 🟠 **Established+** — Required for established and advanced teams
+- 🔴 **Advanced** — Advanced teams only
+
+Run through each quality gate and report pass/fail (for required gates at the team's maturity level) or note as "deferred/not required" for gates above the team's current maturity:
 
 **IaC Strategy Gates:**
 
-- [ ] IaC tool selected with clear rationale
-- [ ] State management strategy defined (backend, locking, per-environment)
-- [ ] Module/component strategy documented (granularity, versioning, registry)
-- [ ] Policy-as-code approach defined (tools, categories, enforcement levels)
-- [ ] Drift detection and remediation strategy documented
+- [ ] 🟢 IaC tool selected with clear rationale
+- [ ] 🟢 State management strategy defined (backend, locking, per-environment)
+- [ ] 🟡 Module/component strategy documented (granularity, versioning, registry)
+- [ ] 🟠 Policy-as-code approach defined (tools, categories, enforcement levels)
+- [ ] 🟠 Drift detection and remediation strategy documented
 
 **Environment Strategy Gates:**
 
-- [ ] Environment topology documented with purpose for each environment
-- [ ] Environment parity rules defined (identical vs different)
-- [ ] Configuration management strategy documented
-- [ ] Secrets management strategy defined (backend, rotation, injection)
-- [ ] Cost management approach documented (non-prod controls, prod optimization)
+- [ ] 🟢 Environment topology documented with purpose for each environment
+- [ ] 🟢 Environment parity rules defined (identical vs different)
+- [ ] 🟢 Configuration management strategy documented
+- [ ] 🟢 Secrets management strategy defined (backend, rotation, injection)
+- [ ] 🟡 Cost management approach documented (non-prod controls, prod optimization)
 
 **Network Architecture Gates:**
 
-- [ ] VPC/VNet design documented
-- [ ] Subnet strategy defined
-- [ ] DNS and load balancing approach documented
-- [ ] Network security strategy defined
+- [ ] 🟢 VPC/VNet design documented
+- [ ] 🟢 Subnet strategy defined
+- [ ] 🟢 DNS and load balancing approach documented
+- [ ] 🟢 Network security strategy defined
 
 **Container Strategy Gates:**
 
-- [ ] Container strategy defined (or explicitly deferred with rationale)
-- [ ] If containers: cluster architecture, image strategy, and security documented
-- [ ] If containers: service mesh evaluated with complexity-vs-value assessment
+- [ ] 🟢 Container strategy defined (or explicitly deferred with rationale)
+- [ ] 🟢 If containers: cluster architecture, image strategy, and security documented
+- [ ] 🟠 If containers: service mesh evaluated with complexity-vs-value assessment
 
 ### 2. Coherence Validation
 

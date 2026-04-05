@@ -10,20 +10,33 @@
 
 ## 5.1 Quality Gate Checklist
 
-Review the pipeline plan against these quality gates. Present each item with a pass/fail status:
+Check `{bgr_maturity}` before evaluating gates. Gates are marked with the minimum maturity level at which they are **required**:
+- 🟢 **All** — Required at every maturity level
+- 🟡 **Growing+** — Required for growing, established, and advanced teams
+- 🟠 **Established+** — Required for established and advanced teams
+- 🔴 **Advanced** — Advanced teams only
 
-| # | Quality Gate | Status |
-|---|-------------|--------|
-| 1 | CI/CD platform selected with pipeline-as-code approach | |
-| 2 | Branching strategy defined with trigger mapping | |
-| 3 | All pipeline stages documented with pass/fail criteria | |
-| 4 | Security scanning integrated (SAST, dependencies, containers, secrets) | |
-| 5 | Deployment strategy defined per service type | |
-| 6 | Rollback procedures documented | |
-| 7 | Database migration strategy addressed | |
-| 8 | Artifact management and retention defined | |
+Review the pipeline plan against these quality gates. Present each item with a pass/fail status (or "deferred — not required at this maturity level" for gates above the team's current tier):
 
-For any gate that fails, note what is missing and discuss with the user whether to address it now or defer.
+| # | Quality Gate | Maturity | Status |
+|---|-------------|----------|--------|
+| 1 | CI/CD platform selected with pipeline-as-code approach | 🟢 All | |
+| 2 | Branching strategy defined with trigger mapping | 🟢 All | |
+| 3 | Core pipeline stages documented with pass/fail criteria | 🟢 All | |
+| 4 | Dependency scanning (SCA) and secrets detection integrated | 🟢 All | |
+| 5 | Deployment strategy defined per service type | 🟢 All | |
+| 6 | Rollback procedures documented | 🟢 All | |
+| 7 | SAST and container image scanning integrated | 🟡 Growing+ | |
+| 8 | E2E tests on staging environment | 🟡 Growing+ | |
+| 9 | Database migration strategy addressed | 🟡 Growing+ | |
+| 10 | Artifact management and retention defined | 🟡 Growing+ | |
+| 11 | Performance tests gating production deployments | 🟠 Established+ | |
+| 12 | DAST integrated on pre-production environment | 🟠 Established+ | |
+| 13 | Canary or blue-green deployment strategy with automated analysis | 🟠 Established+ | |
+| 14 | Supply chain security: SBOM generation and artifact signing | 🔴 Advanced | |
+| 15 | ML-based anomaly detection for automated rollback triggers | 🔴 Advanced | |
+
+For any required gate that fails, note what is missing and discuss with the user whether to address it now or defer.
 
 ## 5.2 Present Validation Summary
 

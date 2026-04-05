@@ -37,57 +37,67 @@ Validate the complete security plan for coherence, completeness, and implementat
 
 ### 1. Quality Gates Checklist
 
-Run through each quality gate and assess pass/fail:
+Check `{bgr_maturity}` before evaluating gates. Gates are marked with the minimum maturity level at which they are **required**:
+- 🟢 **All** — Required at every maturity level
+- 🟡 **Growing+** — Required for growing, established, and advanced teams
+- 🟠 **Established+** — Required for established and advanced teams
+- 🔴 **Advanced** — Advanced teams only
+
+Run through each quality gate and assess pass/fail. For gates above the team's current maturity, note as "deferred — not required at this maturity level":
 
 **Threat Modeling:**
-- [ ] System assets identified and data classified
-- [ ] Trust boundaries mapped with data flows
-- [ ] STRIDE analysis applied to major components
-- [ ] Threat matrix includes likelihood, impact, and risk level
-- [ ] Existing controls documented alongside gaps
+- [ ] 🟢 System assets identified and data classified
+- [ ] 🟢 Trust boundaries mapped with data flows
+- [ ] 🟡 STRIDE analysis applied to major components
+- [ ] 🟡 Threat matrix includes likelihood, impact, and risk level
+- [ ] 🟠 Existing controls documented alongside gaps
 
 **Authentication & Authorization:**
-- [ ] User authentication strategy defined (provider, MFA, session management)
-- [ ] Service-to-service authentication defined
-- [ ] Authorization model selected with enforcement points
-- [ ] Least privilege principle applied across all access
+- [ ] 🟢 User authentication strategy defined (provider, MFA, session management)
+- [ ] 🟢 Service-to-service authentication defined
+- [ ] 🟡 Authorization model selected with enforcement points
+- [ ] 🟡 Least privilege principle applied across all access
 
 **Data Protection:**
-- [ ] Encryption at rest defined for all data classifications
-- [ ] Encryption in transit defined (TLS version, mTLS for internal)
-- [ ] PII/PHI handling procedures specified
-- [ ] Data retention and disposal policies defined
-- [ ] Backup security addressed
+- [ ] 🟢 Encryption at rest defined for all data classifications
+- [ ] 🟢 Encryption in transit defined (TLS version minimum)
+- [ ] 🟡 PII/PHI handling procedures specified
+- [ ] 🟡 Data retention and disposal policies defined
+- [ ] 🟠 mTLS for internal service communication
+- [ ] 🟠 Backup security addressed
 
 **Network Security:**
-- [ ] Perimeter security controls defined (WAF, DDoS, rate limiting)
-- [ ] Internal segmentation and micro-segmentation planned
-- [ ] Zero-trust principles applied where appropriate
-- [ ] Private endpoints for managed services specified
+- [ ] 🟢 Perimeter security controls defined (at minimum: rate limiting)
+- [ ] 🟡 Internal segmentation planned
+- [ ] 🟠 WAF for public-facing endpoints
+- [ ] 🟠 Micro-segmentation and private endpoints for managed services
+- [ ] 🔴 Zero-trust principles applied across all service communication
 
 **Secret Management:**
-- [ ] Centralized secret store selected
-- [ ] Rotation policies defined for each secret type
-- [ ] CI/CD secret strategy defined (OIDC federation preferred)
-- [ ] Break-glass procedures documented
+- [ ] 🟢 Secrets stored outside of source code (not hardcoded)
+- [ ] 🟡 Centralized secret store selected
+- [ ] 🟡 CI/CD secret strategy defined (OIDC federation preferred)
+- [ ] 🟠 Rotation policies defined for each secret type
+- [ ] 🟠 Break-glass procedures documented
 
 **Supply Chain Security:**
-- [ ] Dependency scanning integrated into CI
-- [ ] SBOM generation planned
-- [ ] Container security controls defined
-- [ ] Artifact signing strategy defined
+- [ ] 🟢 Dependency scanning integrated into CI
+- [ ] 🟡 Container security controls defined
+- [ ] 🟠 SBOM generation planned
+- [ ] 🔴 Artifact signing strategy defined
 
 **Security Testing:**
-- [ ] SAST, SCA, and container scanning in CI pipeline
-- [ ] DAST for pre-production environments
-- [ ] Security review gates defined for high-risk changes
-- [ ] Penetration testing schedule defined
+- [ ] 🟢 SCA (dependency scanning) in CI pipeline
+- [ ] 🟡 SAST and container scanning in CI pipeline
+- [ ] 🟡 Security review gates defined for high-risk changes
+- [ ] 🟠 DAST for pre-production environments
+- [ ] 🟠 Penetration testing schedule defined
 
 **Compliance:**
-- [ ] Applicable frameworks identified with rationale
-- [ ] Controls mapped to framework requirements
-- [ ] Gaps identified with risk levels
-- [ ] Remediation roadmap prioritized
+- [ ] 🟡 Applicable frameworks identified with rationale
+- [ ] 🟡 Controls mapped to framework requirements
+- [ ] 🟠 Gaps identified with risk levels
+- [ ] 🟠 Remediation roadmap prioritized
 
 ### 2. Coherence Validation
 

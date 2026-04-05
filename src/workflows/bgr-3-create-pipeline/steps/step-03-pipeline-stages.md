@@ -8,6 +8,21 @@
 
 ---
 
+## MATURITY-ADAPTIVE GUIDANCE:
+
+Check `{bgr_maturity}` before designing pipeline stages. Right-size pipeline complexity to match the team's current capabilities:
+
+| Maturity | Stage Focus | Testing | Security Scanning | Deployment Strategy |
+|----------|-------------|---------|------------------|---------------------|
+| **greenfield** | Core 5 stages: Source → Build → Test → Package → Deploy. Keep it simple and fast. | Unit tests gate the build. Defer E2E and performance tests to a future phase. | Dependency scanning (SCA) and secrets detection are the minimum bar. | Simple rolling deploy to staging, then manual-approved deploy to production. |
+| **growing** | Add Staging Verification stage. Separate deploy-to-staging from post-deploy validation. | Add integration tests. E2E tests against staging. Define test data strategy. | Add SAST. Container image scanning if using containers. Set severity block thresholds. | Blue-green for stateless services. Database migration strategy required. |
+| **established** | Full 9-stage pipeline. Add dedicated performance gating stage before production. | Performance tests with baseline comparison. Contract tests for microservices. | Full suite: SAST, SCA, container scanning, DAST on staging, secrets detection. | Canary deployments with automated analysis. Traffic shifting with validation at each increment. |
+| **advanced** | Multi-pipeline architecture per service type. Parallel pipeline stages where safe. | Chaos engineering in pre-production. Synthetic monitoring in production verification. ML-based anomaly detection for automated rollback triggers. | Supply chain security: SBOM generation, artifact signing, provenance verification. | Multi-region deployments with global traffic management. Feature-flag-controlled rollouts. |
+
+When reviewing pipeline stages with the user, focus on what's appropriate for their maturity tier. For greenfield teams, explicitly defer advanced stages (performance tests, canary deployments, chaos) as "future phases" to avoid overwhelming them. For advanced teams, challenge whether they have supply chain security and ML-driven rollback in place.
+
+---
+
 ## 3.1 Design End-to-End Pipeline Stages
 
 Walk through each stage with the user, defining configuration, pass/fail criteria, timeouts, retry policies, and notifications.

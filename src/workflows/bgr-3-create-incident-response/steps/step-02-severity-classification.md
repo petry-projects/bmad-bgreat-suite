@@ -28,6 +28,19 @@
 - Focus on severity definitions and escalation that match the user's team and services
 - Adapt recommendations to team size and organizational structure
 
+## MATURITY-ADAPTIVE GUIDANCE:
+
+Check `{bgr_maturity}` before proposing severity levels. Scale incident response complexity to what the team can actually operate:
+
+| Maturity | Severity Model | On-Call | Communication | What to Skip |
+|----------|---------------|---------|---------------|--------------|
+| **greenfield** | 2-3 levels: Critical (all-hands), High (respond today), Low (backlog). Simple is better than aspirational. | Founder or lead developer is primary on-call. No formal rotation required yet. | Slack channel for incidents. Status page optional. Email for external communication. | Formal war room procedures, automated incident commander tools, multi-tier escalation matrices. |
+| **growing** | Full SEV1-SEV4. Define clear criteria so anyone on the team can classify correctly without ambiguity. | Establish a 2-3 person on-call rotation. Define clear handoff procedures. | PagerDuty or OpsGenie for alerting. Dedicated incident channel per incident. Simple status page. | Automated incident correlation, ML-based severity detection, advanced war room tooling. |
+| **established** | SEV1-SEV4 with documented decision guides, escalation matrices, and SLA monitoring. War room procedures for SEV1. | Formal on-call rotation with fatigue management. Incident commander role defined and trained. | Full communication templates for all audiences (internal, customer, stakeholder). Status page with automation. | ML-based incident correlation (can be in roadmap), fully automated severity detection. |
+| **advanced** | All of established, plus automated severity detection from observability signals, game day exercises, and toil-based review of incident patterns. | On-call wellness metrics tracked. Shadow program for on-call readiness. | Automated status page updates. Customer communication SLAs measured and tracked. | Nothing — this is the target state. |
+
+For greenfield teams: Strongly encourage starting with fewer severity levels. A complex matrix that doesn't get used is worse than a simple one that does. Explicitly label SEV1-SEV4 escalation matrices as "grow into this" for small teams.
+
 ## YOUR TASK:
 
 Collaboratively define severity levels (SEV1-SEV4) with clear criteria, response SLAs, communication requirements, and escalation paths tailored to the user's organization.

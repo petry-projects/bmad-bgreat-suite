@@ -35,6 +35,19 @@ This step will generate content and present choices:
 - Focus on what exists today and what gaps need to be addressed
 - No design decisions yet - pure assessment phase
 
+## MATURITY-ADAPTIVE GUIDANCE:
+
+Check `{bgr_maturity}` to calibrate what "good" current-state observability looks like for this team. Use this to frame gap severity — a gap that's critical for an established team may be acceptable for a greenfield team.
+
+| Maturity | Expected Current State | Gaps That Are Critical | Gaps That Can Be Deferred |
+|----------|----------------------|----------------------|--------------------------|
+| **greenfield** | Basic logging (even unstructured), health check endpoints, error tracking on critical paths. Minimal dashboards are fine. | No logging at all on critical services. No error detection on customer-facing flows. | No distributed tracing, no SLOs, no structured logging format, no retention policy. |
+| **growing** | Structured logging on most services, basic metrics collection, simple dashboards. Some alerting exists. | Logging is not centralized. No correlation IDs across services. No alerting on SEV1-equivalent conditions. | SLO/error budgets not formalized, tracing not yet instrumented, business KPI metrics absent. |
+| **established** | Full Golden Signals coverage on critical services, SLOs defined, burn-rate alerts, centralized log platform, distributed tracing. | Missing SLOs on critical journeys. Alerts that lack runbooks. No distributed tracing for cross-service flows. Noisy alerting with low signal. | Business KPI metrics incomplete, dashboard consolidation incomplete, adaptive sampling not yet tuned. |
+| **advanced** | All of established, plus business KPI metrics, ML-assisted anomaly detection, chaos engineering observability validation, toil metrics tracked. | Any regression from established baseline. SLOs that haven't been reviewed in over 6 months. Runbooks that are stale. | Toil elimination metrics not yet tracked, ML-based forecasting not yet implemented. |
+
+When presenting gaps in step 5 of this assessment, classify them relative to the team's maturity tier. A "critical gap" for a greenfield team means something that hides production failures — not the absence of error budgets.
+
 ## YOUR TASK:
 
 Audit the existing observability landscape by analyzing loaded project documents to understand what telemetry exists, what signals are available, and where the blind spots are.

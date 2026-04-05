@@ -27,6 +27,19 @@
 - Focus on environment decisions that align with IaC choices
 - Consider cost optimization alongside reliability
 
+## MATURITY-ADAPTIVE GUIDANCE:
+
+Check `{bgr_maturity}` before making recommendations. Adapt environment complexity to the team's current capabilities:
+
+| Maturity | Environment Topology | Secrets Management | Network Complexity |
+|----------|---------------------|-------------------|-------------------|
+| **greenfield** | 3 environments: dev, staging, prod. Shared dev is fine. DR is optional. | Start simple: SSM Parameter Store or basic secrets manager. No automated rotation required yet. | Single VPC, public/private subnets, basic security groups. Skip transit gateway and service mesh. |
+| **growing** | Add QA/UAT for structured pre-staging validation. Consider ephemeral environments for feature branches. | Migrate to a proper secrets manager. Define initial rotation policies for service credentials. | Add VPN or VPC peering for team access. Tighten security groups. Begin network ACLs. |
+| **established** | Feature/preview environments via IaC on demand. Dedicated performance testing environment. DR environment with defined RTO/RPO. | Full automated secret rotation. Dynamic secrets for short-lived credentials. Audit logs for secret access. | Multi-VPC with transit gateway. Private endpoints for managed services. WAF on public-facing endpoints. |
+| **advanced** | Multi-region mirroring. Chaos/canary environments. Environment-as-code provisioned from PR. | Zero-trust just-in-time access. Automated break-glass procedures. Full secret lifecycle governance. | Service mesh for east-west traffic. Cross-region peering. Zero-trust network policies enforced. |
+
+When presenting recommendations, tailor your initial suggestion to the team's maturity tier. Do **not** recommend advanced capabilities (service mesh, multi-region, chaos environments) to greenfield or growing teams unless they explicitly ask. For greenfield teams, explicitly label any advanced patterns as "future phase" items.
+
 ## YOUR TASK:
 
 Collaboratively define the environment topology, parity rules, configuration management, secrets management, cost management, and network architecture through structured discussion with the user.

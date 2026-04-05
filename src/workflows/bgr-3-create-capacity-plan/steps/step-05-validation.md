@@ -44,41 +44,47 @@ Validate the complete capacity plan for coverage, coherence, and actionability. 
 
 ### 1. Quality Gates Checklist
 
-Run through each quality gate systematically:
+Check `{bgr_maturity}` before evaluating gates. Gates are marked with the minimum maturity level at which they are **required**:
+- 🟢 **All** — Required at every maturity level
+- 🟡 **Growing+** — Required for growing, established, and advanced teams
+- 🟠 **Established+** — Required for established and advanced teams
+- 🔴 **Advanced** — Advanced teams only
+
+Run through each quality gate systematically. For gates above the team's current maturity, note as "deferred — not required at this maturity level":
 
 **Gate 1: Growth Model Completeness**
-- [ ] Current traffic baseline established with real data or informed estimates
-- [ ] Growth scenarios defined (conservative, expected, aggressive)
-- [ ] Growth drivers identified and quantified
-- [ ] Seasonal and event-driven demand patterns documented
-- [ ] Resource demand mapped per service
+- [ ] 🟢 Current traffic baseline established with real data or informed estimates
+- [ ] 🟢 Growth scenarios defined (conservative, expected, aggressive)
+- [ ] 🟡 Growth drivers identified and quantified
+- [ ] 🟡 Seasonal and event-driven demand patterns documented
+- [ ] 🟡 Resource demand mapped per service
 
 **Gate 2: Scaling Strategy Coverage**
-- [ ] Every service has a defined scaling approach (horizontal, vertical, or hybrid)
-- [ ] Auto-scaling policies defined with thresholds, cooldowns, and min/max
-- [ ] Reactive, predictive, and scheduled triggers documented
-- [ ] Database and data store scaling addressed separately
-- [ ] Emergency scaling triggers defined with owner accountability
+- [ ] 🟢 Every critical service has a defined scaling approach (horizontal, vertical, or hybrid)
+- [ ] 🟡 Auto-scaling policies defined with thresholds, cooldowns, and min/max
+- [ ] 🟠 Reactive, predictive, and scheduled triggers documented
+- [ ] 🟡 Database and data store scaling addressed separately
+- [ ] 🟠 Emergency scaling triggers defined with owner accountability
 
 **Gate 3: Cost-Performance Analysis**
-- [ ] Cost model covers baseline, peak, and scaling premium
-- [ ] Reserved capacity strategy defined with commitment terms
-- [ ] Cost guardrails established with thresholds and actions
-- [ ] Trade-off decisions documented with rationale and owner
-- [ ] Cost optimization strategies identified
+- [ ] 🟢 Cost model covers baseline and peak estimates
+- [ ] 🟡 Reserved capacity strategy defined with commitment terms
+- [ ] 🟡 Cost guardrails established with thresholds and actions
+- [ ] 🟠 Trade-off decisions documented with rationale and owner
+- [ ] 🟡 Cost optimization strategies identified
 
 **Gate 4: Load Testing Readiness**
-- [ ] Load testing tools selected with rationale
-- [ ] Test scenarios cover all growth projections and scaling triggers
-- [ ] Testing environment strategy documented
-- [ ] Testing cadence established (recurring and trigger-based)
-- [ ] Success criteria tied to SLOs for each test scenario
+- [ ] 🟡 Load testing tools selected with rationale
+- [ ] 🟡 Test scenarios cover growth projections and scaling triggers
+- [ ] 🟡 Testing environment strategy documented
+- [ ] 🟠 Testing cadence established (recurring and trigger-based)
+- [ ] 🟠 Success criteria tied to SLOs for each test scenario
 
 **Gate 5: Capacity Validation Process**
-- [ ] Capacity validation checklist covers all critical dimensions
-- [ ] Capacity alerts defined with thresholds and owners
-- [ ] Review process established with cadence and participants
-- [ ] Reporting requirements documented
+- [ ] 🟡 Capacity alerts defined with thresholds and owners
+- [ ] 🟠 Capacity validation checklist covers all critical dimensions
+- [ ] 🟠 Review process established with cadence and participants
+- [ ] 🟠 Reporting requirements documented
 
 ### 2. Cross-Workflow Coherence Validation
 

@@ -44,50 +44,58 @@ Validate the complete observability plan for coverage, coherence, and actionabil
 
 ### 1. Quality Gates Checklist
 
-Run through each quality gate systematically:
+Check `{bgr_maturity}` before evaluating gates. Gates are marked with the minimum maturity level at which they are **required**:
+- 🟢 **All** — Required at every maturity level
+- 🟡 **Growing+** — Required for growing, established, and advanced teams
+- 🟠 **Established+** — Required for established and advanced teams
+- 🔴 **Advanced** — Advanced teams only
+
+Run through each quality gate systematically. For gates above the team's current maturity, note as "deferred — not required at this maturity level" rather than fail:
 
 **Gate 1: Critical User Journey Coverage**
-- [ ] Every critical user journey identified in step 4 has metrics defined
-- [ ] Every critical user journey has at least one SLO with error budget
-- [ ] Every critical user journey has burn-rate alerts configured
-- [ ] Every critical user journey has a triage dashboard panel
-- [ ] No journey is missing any of the four Golden Signals
+- [ ] 🟢 Every critical user journey identified in step 4 has metrics defined
+- [ ] 🟡 Every critical user journey has at least one SLO defined
+- [ ] 🟠 Every critical user journey has an SLO with error budget
+- [ ] 🟠 Every critical user journey has burn-rate alerts configured
+- [ ] 🟢 Every critical user journey has a triage dashboard panel
+- [ ] 🟡 No journey is missing any of the four Golden Signals
 
 **Gate 2: Logging Standards Completeness**
-- [ ] Logging format is specified (JSON structured)
-- [ ] Required fields are defined with consistent naming
-- [ ] PII handling policy is documented with redaction approach
-- [ ] Retention policy covers hot, warm, and cold storage
-- [ ] Correlation IDs link logs to traces
-- [ ] Log level guidelines are defined with usage examples
+- [ ] 🟢 Logging format is specified (structured preferred; plaintext acceptable for greenfield)
+- [ ] 🟡 Required fields are defined with consistent naming
+- [ ] 🟡 PII handling policy is documented with redaction approach
+- [ ] 🟡 Retention policy covers hot, warm, and cold storage
+- [ ] 🟡 Correlation IDs link logs to traces
+- [ ] 🟠 Log level guidelines are defined with usage examples
 
 **Gate 3: Tracing Coverage**
-- [ ] Distributed tracing covers all cross-service communication paths
-- [ ] Span naming convention is documented and consistent
-- [ ] Key attributes are defined for business and technical correlation
-- [ ] Sampling strategy balances cost with observability needs
-- [ ] Cardinality controls are specified to prevent storage explosion
+- [ ] 🟡 Distributed tracing covers all cross-service communication paths
+- [ ] 🟡 Span naming convention is documented and consistent
+- [ ] 🟠 Key attributes are defined for business and technical correlation
+- [ ] 🟠 Sampling strategy balances cost with observability needs
+- [ ] 🟠 Cardinality controls are specified to prevent storage explosion
 
 **Gate 4: SLO & Error Budget Rigor**
-- [ ] SLOs are defined with measurable SLIs (not aspirational statements)
-- [ ] Error budgets have a 30-day rolling window
-- [ ] Error budget policy defines actions at each consumption level
-- [ ] SLO targets are based on current performance baselines
-- [ ] SLOs are stricter than any external SLA commitments
+- [ ] 🟡 SLOs are defined with measurable SLIs (not aspirational statements)
+- [ ] 🟠 Error budgets have a 30-day rolling window
+- [ ] 🟠 Error budget policy defines actions at each consumption level
+- [ ] 🟠 SLO targets are based on current performance baselines
+- [ ] 🟠 SLOs are stricter than any external SLA commitments
 
 **Gate 5: Alerting Operational Readiness**
-- [ ] Alerts use multi-window multi-burn-rate approach (not raw thresholds)
-- [ ] Every alert has a linked runbook (or runbook flagged for creation)
-- [ ] Alert routing maps severity to channel and escalation path
-- [ ] Noise reduction strategies are defined (grouping, suppression, dedup)
-- [ ] Alert content includes summary, impact, hypothesis, and links
+- [ ] 🟢 Alerts fire on conditions that impact users (not just system metrics)
+- [ ] 🟢 Every alert has a linked runbook (or runbook flagged for creation)
+- [ ] 🟢 Alert routing maps severity to channel and escalation path
+- [ ] 🟡 Noise reduction strategies are defined (grouping, suppression, dedup)
+- [ ] 🟠 Alerts use multi-window multi-burn-rate approach (not raw thresholds)
+- [ ] 🟠 Alert content includes summary, impact, hypothesis, and links
 
 **Gate 6: Dashboard Alignment**
-- [ ] Executive dashboard covers business KPIs and SLO status
-- [ ] Engineering dashboard covers Golden Signals and deployments
-- [ ] On-call dashboard covers active alerts and triage tools
-- [ ] Each dashboard has a defined refresh rate and owner
-- [ ] Dashboards answer "is the system healthy?" within seconds
+- [ ] 🟢 On-call dashboard covers active alerts and triage tools
+- [ ] 🟡 Engineering dashboard covers Golden Signals and deployments
+- [ ] 🟠 Executive dashboard covers business KPIs and SLO status
+- [ ] 🟡 Each dashboard has a defined refresh rate and owner
+- [ ] 🟢 Dashboards answer "is the system healthy?" within seconds
 
 ### 2. Present Validation Summary
 

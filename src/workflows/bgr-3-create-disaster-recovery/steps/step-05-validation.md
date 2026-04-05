@@ -44,47 +44,58 @@ Validate the complete disaster recovery plan for coverage, coherence, and action
 
 ### 1. Quality Gates Checklist
 
-Run through each quality gate systematically:
+Check `{bgr_maturity}` before evaluating gates. Gates are marked with the minimum maturity level at which they are **required**:
+- 🟢 **All** — Required at every maturity level
+- 🟡 **Growing+** — Required for growing, established, and advanced teams
+- 🟠 **Established+** — Required for established and advanced teams
+- 🔴 **Advanced** — Advanced teams only
+
+Run through each quality gate systematically. For gates above the team's current maturity, note as "deferred — not required at this maturity level":
 
 **Gate 1: Service Classification Completeness**
-- [ ] All services from architecture are classified into criticality tiers
-- [ ] Tier assignments are justified by business impact analysis
-- [ ] No services are missing from the classification
-- [ ] Classification aligns with SLO targets (if observability plan exists)
+- [ ] 🟢 Critical services identified and classified (formal tiers required for growing+)
+- [ ] 🟡 All services from architecture are classified into criticality tiers
+- [ ] 🟡 Tier assignments are justified by business impact analysis
+- [ ] 🟠 No services are missing from the classification
+- [ ] 🟠 Classification aligns with SLO targets (if observability plan exists)
 
 **Gate 2: RTO/RPO Target Validity**
-- [ ] RTO/RPO targets defined for every criticality tier
-- [ ] Targets are achievable with the planned infrastructure
-- [ ] Targets align with business requirements and SLAs
-- [ ] Cost implications of targets are understood and accepted
-- [ ] Recovery sequencing accounts for dependency chains
+- [ ] 🟢 RTO/RPO targets defined for critical services
+- [ ] 🟡 RTO/RPO targets defined for every criticality tier
+- [ ] 🟡 Targets align with business requirements and SLAs
+- [ ] 🟠 Targets are achievable with the planned infrastructure
+- [ ] 🟠 Cost implications of targets are understood and accepted
+- [ ] 🟠 Recovery sequencing accounts for dependency chains
 
 **Gate 3: Backup & Restore Coverage**
-- [ ] Every data store has a defined backup procedure
-- [ ] Backup frequency meets RPO targets for each tier
-- [ ] Geographic replication strategy supports RTO targets
-- [ ] Restore testing cadence is defined with success criteria
-- [ ] Data protection policies cover encryption, compliance, and immutability
+- [ ] 🟢 Every critical data store has a defined backup procedure
+- [ ] 🟡 Backup frequency meets RPO targets for each tier
+- [ ] 🟡 Restore testing cadence is defined
+- [ ] 🟠 Geographic replication strategy supports RTO targets
+- [ ] 🟠 Restore testing cadence includes success criteria
+- [ ] 🟠 Data protection policies cover encryption, compliance, and immutability
 
 **Gate 4: Failover Procedure Completeness**
-- [ ] Failover strategy defined for each criticality tier
-- [ ] DR activation criteria are clear and unambiguous
-- [ ] DR team roles and responsibilities are assigned
-- [ ] DR runbook standard structure is documented
-- [ ] Initial DR runbooks are identified with owners
+- [ ] 🟢 DR activation criteria are clear and unambiguous
+- [ ] 🟢 DR team roles and responsibilities are assigned
+- [ ] 🟡 Failover strategy defined for each criticality tier
+- [ ] 🟡 DR runbook standard structure is documented
+- [ ] 🟡 Initial DR runbooks are identified with owners
 
 **Gate 5: Communication Readiness**
-- [ ] Internal communication plan covers all DR levels
-- [ ] External communication plan addresses customer notifications
-- [ ] Communication templates are ready for all phases (declaration, update, resolution)
-- [ ] Status page integration is planned
-- [ ] Communication cadence is defined per DR level
+- [ ] 🟢 Internal communication process defined for DR events
+- [ ] 🟡 Internal communication plan covers all DR levels with templates
+- [ ] 🟡 External communication plan addresses customer notifications
+- [ ] 🟠 Communication templates are ready for all phases (declaration, update, resolution)
+- [ ] 🟠 Status page integration is planned
+- [ ] 🟠 Communication cadence is defined per DR level
 
 **Gate 6: Failback & Recovery Completeness**
-- [ ] Failback prerequisites are documented
-- [ ] Failback sequence is defined with gradual traffic shift
-- [ ] Data reconciliation procedures address merge conflicts
-- [ ] Post-DR review process is established
+- [ ] 🟡 Failback prerequisites are documented
+- [ ] 🟡 Failback sequence is defined
+- [ ] 🟠 Failback uses gradual traffic shift with validation
+- [ ] 🟠 Data reconciliation procedures address merge conflicts
+- [ ] 🟢 Post-DR review process is established
 
 ### 2. Cross-Workflow Coherence Validation
 
