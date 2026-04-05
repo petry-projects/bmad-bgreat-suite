@@ -340,7 +340,7 @@ After saving the capacity plan, update the cross-workflow production readiness c
        - `lastUpdated: {{current_date}}`
        - `completedWorkflows: []`
      - An `# Overview` section that includes the checklist `lastUpdated`
-     - A `## Workflow Completion Status` table with a row for **Capacity Plan**
+     - A `## Workflow Completion Status` table with a row for **Capacity Planning**
      - A capacity plan detail section with fields for **Status**, **Completion Date**, and **Output Document**
      - A `### 4.3 Consistency Issues` section for cross-plan dependency findings
    - If it does exist, DO NOT rewrite the file into a different schema just to match the structure above
@@ -348,9 +348,9 @@ After saving the capacity plan, update the cross-workflow production readiness c
    - Preserve the existing organization, headings, frontmatter, and tables wherever possible; only add the minimum missing fields/sections needed to record capacity-plan completion
 2. Detect the existing checklist structure and update equivalent sections in place:
    - If frontmatter exists, update `lastUpdated: {{current_date}}` and preserve all other keys
-   - If a `Workflow Completion Status` table exists, update the **Capacity Plan** row there
+   - If a `Workflow Completion Status` table exists, update the **Capacity Planning** row there
    - If the checklist uses a different workflow-status section/table format from Step-01, update the equivalent capacity-plan entry in that format instead of converting the file
-   - If no workflow-status section exists in any format, add the minimum missing status section with a **Capacity Plan** entry
+   - If no workflow-status section exists in any format, add the minimum missing status section with a **Capacity Planning** entry
 3. Record capacity-plan completion details in the existing capacity-plan section, or create a minimal one only if none exists:
    - Set **Status** to `Complete`
    - Set **Completion Date** to `{{current_date}}`
