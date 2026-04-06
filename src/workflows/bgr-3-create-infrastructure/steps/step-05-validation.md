@@ -49,10 +49,26 @@ Run through each quality gate and report pass/fail:
 **Environment Strategy Gates:**
 
 - [ ] Environment topology documented with purpose for each environment
+- [ ] Environment isolation enforced — separate cloud accounts/subscriptions per environment
+- [ ] Network isolation confirmed — no cross-environment VPC peering or transit routes
+- [ ] Secrets isolation confirmed — separate secrets stores per environment, no shared credentials
+- [ ] IAM isolation confirmed — no cross-environment role assumptions (except audited break-glass)
+- [ ] State isolation confirmed — separate IaC state backends per environment
 - [ ] Environment parity rules defined (identical vs different)
 - [ ] Configuration management strategy documented
-- [ ] Secrets management strategy defined (backend, rotation, injection)
+- [ ] Secrets management strategy defined (backend, rotation, injection) per environment
+- [ ] Promotion gates defined at every environment boundary
+- [ ] Production signoff requirements documented (reviewer who did not author the change)
+- [ ] Hotfix pipeline path defined with minimum gates
 - [ ] Cost management approach documented (non-prod controls, prod optimization)
+
+**Change Control Gates:**
+
+- [ ] All infrastructure changes flow through pipelines — no manual provisioning paths
+- [ ] No-bypass enforcement documented — pipeline prevents skipping gates even for admins
+- [ ] Direct production access disabled or restricted to read-only with audit logging
+- [ ] Rollback procedures are pipeline-driven, not manual
+- [ ] Drift detection configured with alerting for unauthorized changes
 
 **Network Architecture Gates:**
 
@@ -66,6 +82,35 @@ Run through each quality gate and report pass/fail:
 - [ ] Container strategy defined (or explicitly deferred with rationale)
 - [ ] If containers: cluster architecture, image strategy, and security documented
 - [ ] If containers: service mesh evaluated with complexity-vs-value assessment
+
+### Maturity-Level Gate Calibration
+
+Read `{bgr_maturity}` from config. When evaluating the quality gates above, apply the following maturity-based expectations:
+
+| Gate Group / Gate | greenfield | growing | established | advanced |
+|-------------------|-----------|---------|-------------|----------|
+| IaC Strategy: IaC tool selected with rationale | PASS | PASS | PASS | PASS |
+| IaC Strategy: State management strategy defined | PASS | PASS | PASS | PASS |
+| Environment Strategy: At least one environment defined with purpose | PASS | PASS | PASS | PASS |
+| Environment Strategy: Secrets management strategy defined | PASS | PASS | PASS | PASS |
+| Environment Strategy: Configuration management strategy | PASS | PASS | PASS | PASS |
+| IaC Strategy: State management per-environment separation | DEFERRED | PASS | PASS | PASS |
+| Environment Strategy: Environment parity rules defined | DEFERRED | PASS | PASS | PASS |
+| IaC Strategy: Policy-as-code approach defined | DEFERRED | PASS | PASS | PASS |
+| IaC Strategy: Drift detection and remediation strategy | DEFERRED | PASS | PASS | PASS |
+| Environment Strategy: Separate cloud accounts per environment | DEFERRED | DEFERRED | PASS | PASS |
+| Network Architecture: Network isolation and security strategy | DEFERRED | DEFERRED | PASS | PASS |
+| Environment Strategy: Full secrets rotation | DEFERRED | DEFERRED | PASS | PASS |
+| Environment Strategy: Promotion gates with signoff at every boundary | DEFERRED | DEFERRED | PASS | PASS |
+| Network Architecture: Zero-trust IAM with break-glass procedures | DEFERRED | DEFERRED | DEFERRED | PASS |
+| IaC Strategy: Automated compliance scanning (full change control) | DEFERRED | DEFERRED | DEFERRED | PASS |
+| Container Strategy: Anti-pattern scans and security hardening | DEFERRED | DEFERRED | DEFERRED | PASS |
+
+**How to interpret:**
+- **PASS** — Gate must pass. Flag failures as blocking.
+- **DEFERRED** — Gate is aspirational at this maturity level. Note it as a future improvement area but do not block. If the team has partially addressed it, acknowledge the progress.
+
+When presenting validation results, report each gate's status as PASS, FAIL, or DEFERRED based on the team's maturity level.
 
 ### 2. Coherence Validation
 
@@ -84,6 +129,17 @@ Check that all infrastructure decisions work together:
 - Are cost controls consistent across IaC and environment sections?
 - Does drift detection cover both IaC resources and container configuration?
 - Are security decisions consistent across network, container, and secrets sections?
+
+**DevOps Anti-Pattern Scan:**
+
+- Are there any snowflake environments (manually built or diverged from IaC)?
+- Is any infrastructure shared across SDLC environment boundaries?
+- Are there any manual change paths (console, SSH, direct API) that bypass pipelines?
+- Are any secrets hardcoded in code, config, or pipeline definitions?
+- Can code reach production without passing through all environments and quality gates?
+- Are there inconsistencies between staging and production topology?
+- Are rollback procedures manual rather than pipeline-driven?
+- Is there unaudited production access?
 
 ### 3. Architecture Alignment
 
@@ -193,9 +249,12 @@ After saving the infrastructure plan, update the cross-workflow production readi
    - If Observability Plan exists and status is `complete`: Verify infrastructure provisions resources for monitoring agents, collectors, and telemetry data egress. If status is `draft`, note validation is deferred pending finalization.
    - If Incident Response Plan exists and status is `complete`: Verify environment access controls support on-call responder access and war room procedures. If status is `draft`, note validation is deferred pending finalization.
    - If Pipeline Plan exists and status is `complete`: Verify environment topology matches pipeline deployment targets and runner infrastructure needs. If status is `draft`, note validation is deferred pending finalization.
+   - **Security Plan** — if `Complete`: verify network architecture enforces security plan's segmentation requirements and encryption mandates. If `Draft`: validation deferred.
+   - **Disaster Recovery Plan** — if `Complete`: verify infrastructure topology supports DR failover targets (multi-region, backup storage). If `Draft`: validation deferred.
+   - **Capacity Planning** — if `Complete`: verify infrastructure sizing accounts for growth projections and auto-scaling is provisioned. If `Draft`: validation deferred.
    - Record any inconsistencies or deferred validations in section **4.3 Consistency Issues**
 5. Update the `completedWorkflows` array in checklist frontmatter to include `infrastructure`. Add this workflow only if it is not already present (use set-style uniqueness to prevent duplicate entries on re-run).
-6. If all 4 workflows are now complete, update **Overall Status** to `READY` (if no critical gaps remain). A **critical gap** is a missing workflow artifact, an unresolved cross-plan dependency, or a key decision conflict between plans that would block production readiness (e.g., mismatched environment topologies, missing rollback alignment, or undefined alerting-to-severity mappings).
+6. If all 7 workflows are now complete, update **Overall Status** to `READY` (if no critical gaps remain). A **critical gap** is a missing workflow artifact, an unresolved cross-plan dependency, or a key decision conflict between plans that would block production readiness (e.g., mismatched environment topologies, missing rollback alignment, or undefined alerting-to-severity mappings).
 7. Save the updated checklist
 
 ### 9. Completion Message
