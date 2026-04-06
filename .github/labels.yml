@@ -48,3 +48,7 @@
 - name: ci
   color: "f9d0c4"
   description: CI/CD pipeline related changes
+
+- name: scorecard
+  color: "0075ca"
+  description: OpenSSF Scorecard security compliance
