@@ -113,7 +113,45 @@ Read `{bgr_maturity}` from config. When evaluating the quality gates above, appl
 
 When presenting validation results, report each gate's status as PASS, FAIL, or DEFERRED based on the team's maturity level.
 
-### 2. Present Validation Summary
+### 2. Cross-Workflow Coherence Validation
+
+Check alignment with other completed workflow plans:
+
+**If Security Plan exists:**
+- Are security monitoring requirements (auth events, access logs, compliance audit trails) covered by the observability strategy?
+- Do alerting rules cover security-critical events defined in the security plan's threat model?
+- Is PII redaction in logging consistent with the security plan's data protection requirements?
+- Are security scanning results and compliance status included in dashboards?
+
+**If Disaster Recovery Plan exists:**
+- Do SLO definitions account for DR failover scenarios (degraded targets during failover)?
+- Does monitoring cover failover health, replication lag, and backup integrity?
+- Are DR-specific alerts defined for failover trigger conditions?
+- Do dashboards include DR readiness indicators?
+
+**If Capacity Plan exists:**
+- Do auto-scaling triggers reference metrics defined in the observability plan?
+- Are capacity-related SLOs (latency under load, throughput) aligned with capacity plan targets?
+- Are capacity dashboards consistent with the existing dashboard strategy?
+- Do load testing success criteria reference observability-defined SLIs?
+
+**If Infrastructure Plan exists:**
+- Do monitoring targets match the environment topology (all environments covered)?
+- Are observability agents and collectors provisioned in the infrastructure plan?
+- Does the network architecture allow telemetry data egress?
+
+**If Pipeline Plan exists:**
+- Do health check metrics align with post-deploy verification gates?
+- Are deployment events tracked as observability signals (deploy markers, annotations)?
+- Do pipeline failure alerts integrate with the alerting strategy?
+
+**If Incident Response Plan exists:**
+- Do alerting thresholds and burn-rate windows align with incident severity classification?
+- Are runbook links attached to all critical alerts?
+- Does the on-call dashboard support incident triage workflows?
+- Do SLO error budget exhaustion alerts map to incident escalation triggers?
+
+### 3. Present Validation Summary
 
 Report the validation results to the user:
 
@@ -141,7 +179,7 @@ Would you like to address these before finalizing?
 All quality gates passed. The observability plan is comprehensive and ready for implementation.
 {/if_all_pass}"
 
-### 3. Address Validation Issues
+### 4. Address Validation Issues
 
 If any quality gates failed:
 
@@ -150,7 +188,7 @@ If any quality gates failed:
 - Update the relevant document sections
 - Re-run the failed quality gates to confirm resolution
 
-### 4. Generate Implementation Backlog
+### 5. Generate Implementation Backlog
 
 Create a prioritized list of implementation tasks:
 
@@ -178,7 +216,7 @@ Create a prioritized list of implementation tasks:
 - Add chaos engineering observability validation
 - Create SLO review cadence (quarterly)
 
-### 5. Generate Validation Content
+### 6. Generate Validation Content
 
 Prepare the content to append to the document:
 
@@ -255,7 +293,7 @@ Prepare the content to append to the document:
 {{maturity_tasks}}
 ```
 
-### 6. Save Final Document
+### 7. Save Final Document
 
 - Append the validation and implementation content to `{bgr_artifacts}/observability.md`
 - Update frontmatter:
@@ -263,7 +301,7 @@ Prepare the content to append to the document:
   - `status: complete`
   - `lastUpdated: {{current_date}}`
 
-### 7. Present Content and Menu
+### 8. Present Content and Menu
 
 Show the generated content and present choices:
 
@@ -277,7 +315,7 @@ Show the generated content and present choices:
 [C] Continue - Save and finalize the observability plan
 [R] Revise - Let's address issues before finalizing"
 
-### 8. Handle Menu Selection
+### 9. Handle Menu Selection
 
 #### If 'R' (Revise):
 
@@ -292,7 +330,7 @@ Show the generated content and present choices:
 - Update frontmatter to mark workflow as complete
 - Present completion summary and next steps
 
-### 9. Update Production Readiness Checklist
+### 10. Update Production Readiness Checklist
 
 After saving the observability plan, update the cross-workflow production readiness checklist:
 
@@ -323,7 +361,7 @@ After saving the observability plan, update the cross-workflow production readin
 6. If all 7 workflows are now complete, update **Overall Status** to `READY` (if no critical gaps remain). A **critical gap** is a missing workflow artifact, an unresolved cross-plan dependency, or a key decision conflict between plans that would block production readiness (e.g., mismatched environment topologies, missing rollback alignment, or undefined alerting-to-severity mappings).
 7. Save the updated checklist
 
-### 10. Completion Summary
+### 11. Completion Summary
 
 After saving, present the final summary:
 

@@ -108,7 +108,7 @@ Read `{bgr_maturity}` from config. When evaluating the quality gates above, appl
 
 When presenting validation results, report each gate's status as PASS, FAIL, or DEFERRED based on the team's maturity level.
 
-### 2. Coherence Validation
+### 2. Internal Coherence Validation
 
 Check that all sections work together:
 
@@ -117,6 +117,44 @@ Check that all sections work together:
 - Does the on-call rotation support the response time SLAs?
 - Do postmortem triggers reference the correct severity levels?
 - Are runbook categories consistent with the architecture?
+
+### 2b. Cross-Workflow Coherence Validation
+
+Check alignment with other completed workflow plans:
+
+**If Security Plan exists:**
+- Are security incidents classified within the severity framework (e.g., data breach as SEV1)?
+- Are auth breach and unauthorized access procedures documented in runbooks?
+- Do escalation paths include security team notification for security-related incidents?
+- Are compliance incident procedures aligned with the security plan's regulatory requirements?
+
+**If Disaster Recovery Plan exists:**
+- Are disaster scenarios covered in incident escalation paths?
+- Is the handoff from incident response to DR activation clearly defined?
+- Do DR failover triggers map to incident severity levels?
+- Are communication procedures consistent between incident response and DR activation?
+
+**If Capacity Plan exists:**
+- Is capacity exhaustion classified as an incident type with appropriate severity?
+- Are emergency scaling procedures documented in runbooks?
+- Do capacity alert thresholds align with incident severity classification?
+- Are capacity-related escalation paths defined?
+
+**If Observability Plan exists:**
+- Does severity classification align with alerting thresholds and burn-rate windows?
+- Do runbook procedures reference the correct monitoring dashboards and metrics?
+- Are alert routing rules consistent with the incident response escalation matrix?
+- Do postmortem analysis procedures reference observability data sources?
+
+**If Infrastructure Plan exists:**
+- Do runbook procedures reference the correct environment topology and access paths?
+- Are break-glass access procedures consistent with infrastructure access controls?
+- Do infrastructure failure scenarios map to incident severity levels?
+
+**If Pipeline Plan exists:**
+- Do escalation procedures account for deployment rollback capabilities?
+- Are deployment failure incidents classified with appropriate severity?
+- Do rollback runbooks reference the correct pipeline procedures?
 
 ### 3. Gap Analysis
 

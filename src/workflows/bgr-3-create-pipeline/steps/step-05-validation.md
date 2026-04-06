@@ -57,6 +57,43 @@ Read `{bgr_maturity}` from config. When evaluating the quality gates above, appl
 
 When presenting validation results, report each gate's status as PASS, FAIL, or DEFERRED based on the team's maturity level.
 
+## 5.1b Cross-Workflow Coherence Validation
+
+Check alignment with other completed workflow plans:
+
+**If Security Plan exists:**
+- Do pipeline security scanning stages (SAST, SCA, DAST, container scanning) align with the security plan's testing strategy?
+- Are compliance gates in the pipeline consistent with the security plan's compliance requirements?
+- Does the pipeline enforce the security plan's secret management practices (no secrets in logs, env vars, or artifacts)?
+- Are dependency scanning and SBOM generation aligned with the security plan's supply chain requirements?
+
+**If Disaster Recovery Plan exists:**
+- Can the pipeline deploy to DR regions and failover environments?
+- Are deployment procedures consistent with DR recovery steps?
+- Does the rollback strategy align with DR failback procedures?
+- Is the pipeline tested for DR scenario deployments?
+
+**If Capacity Plan exists:**
+- Are load testing stages from the capacity plan integrated into the pipeline?
+- Can the pipeline handle deployments during auto-scaling events?
+- Are CI/CD resource costs accounted for in the capacity plan's cost model?
+- Does the pipeline support canary or blue-green deployments for capacity validation?
+
+**If Infrastructure Plan exists:**
+- Do pipeline deployment targets match the defined environment topology?
+- Is runner/agent infrastructure provisioned and consistent with pipeline requirements?
+- Are promotion gates aligned with environment boundary definitions?
+
+**If Observability Plan exists:**
+- Do post-deploy verification gates reference the correct health check metrics and SLO thresholds?
+- Are deployment events instrumented for observability (deploy markers, annotations)?
+- Does the pipeline validate that observability agents are healthy after deployment?
+
+**If Incident Response Plan exists:**
+- Does rollback automation integrate with incident severity classification?
+- Are deployment failure escalation paths aligned with incident response procedures?
+- Does the pipeline emit alerts that map to the incident response severity framework?
+
 ## 5.2 Present Validation Summary
 
 Present a concise summary of the complete pipeline plan:
