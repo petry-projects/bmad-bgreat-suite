@@ -24,6 +24,7 @@ completedWorkflows: []
 | Security Plan | Not Started | | | |
 | Disaster Recovery Plan | Not Started | | | |
 | Capacity Planning | Not Started | | | |
+| Cost Optimization Plan | Not Started | | | |
 
 ### 2.1 Observability Plan
 
@@ -133,13 +134,30 @@ completedWorkflows: []
   - Cost guardrails inform Infrastructure reserved capacity decisions
   - Load testing integrates with Pipeline CI/CD stages
 
+### 2.8 Cost Optimization Plan
+
+- **Status**: Not Started
+- **Completion Date**:
+- **Output Document**:
+- **Key Decisions**:
+  - Right-sizing approach:
+  - Reserved/spot strategy:
+  - Tagging taxonomy:
+  - Anomaly detection approach:
+  - FinOps maturity target:
+- **Cross-References**:
+  - Right-sizing aligns with Capacity Planning growth projections
+  - Budget scopes align with Infrastructure environment topology
+  - Cost anomaly alerts align with Observability alerting strategy
+  - SLO-cost trade-offs reference Observability SLO targets
+
 ## 3. Overall Readiness Assessment
 
 ### 3.1 Readiness Gate
 
 | Criterion | Met? | Notes |
 |-----------|------|-------|
-| All 7 workflow plans completed | | |
+| All 8 workflow plans completed | | |
 | Cross-plan references are consistent | | |
 | No critical gaps identified | | |
 | Key decisions align across plans | | |
@@ -148,7 +166,7 @@ completedWorkflows: []
 
 **Overall Status**: NOT READY
 
-> Update this status to READY when all seven workflow plans are complete, cross-references are consistent, and no critical gaps remain.
+> Update this status to READY when all eight workflow plans are complete, cross-references are consistent, and no critical gaps remain.
 
 ## 4. Gap Analysis
 
@@ -184,3 +202,4 @@ The following order maximizes context sharing between workflows:
 5. **Security Plan** -- Defines auth strategy, compliance requirements, and security controls that constrain all other plans
 6. **Disaster Recovery Plan** -- Defines RTO/RPO targets and failover procedures that inform Infrastructure multi-region design
 7. **Capacity Planning** -- Defines growth models and scaling triggers that reference Observability metrics and Infrastructure auto-scaling
+8. **Cost Optimization Plan** -- References Capacity Planning for growth projections, Infrastructure for resource topology, and Observability for SLO-cost trade-offs
