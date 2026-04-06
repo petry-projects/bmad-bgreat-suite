@@ -21,6 +21,7 @@ completedWorkflows: []
 | Incident Response Plan | Not Started | | | |
 | Infrastructure Plan | Not Started | | | |
 | CI/CD Pipeline Plan | Not Started | | | |
+| Cost Optimization Plan | Not Started | | | |
 
 ### 2.1 Observability Plan
 
@@ -82,13 +83,30 @@ completedWorkflows: []
   - Post-deploy verification uses Observability health checks
   - Rollback procedures align with Incident Response escalation
 
+### 2.5 Cost Optimization Plan
+
+- **Status**: Not Started
+- **Completion Date**:
+- **Output Document**:
+- **Key Decisions**:
+  - Right-sizing approach:
+  - Reserved/spot strategy:
+  - Tagging taxonomy:
+  - Anomaly detection approach:
+  - FinOps maturity target:
+- **Cross-References**:
+  - Right-sizing aligns with Capacity Planning growth projections
+  - Budget scopes align with Infrastructure environment topology
+  - Cost anomaly alerts align with Observability alerting strategy
+  - SLO-cost trade-offs reference Observability SLO targets
+
 ## 3. Overall Readiness Assessment
 
 ### 3.1 Readiness Gate
 
 | Criterion | Met? | Notes |
 |-----------|------|-------|
-| All 4 workflow plans completed | | |
+| All 5 workflow plans completed | | |
 | Cross-plan references are consistent | | |
 | No critical gaps identified | | |
 | Key decisions align across plans | | |
@@ -130,3 +148,4 @@ The following order maximizes context sharing between workflows:
 2. **Incident Response Plan** -- Builds on Observability alerting to define severity, escalation, and runbooks
 3. **Infrastructure Plan** -- References Observability for monitoring targets and Incident Response for operational procedures
 4. **CI/CD Pipeline Plan** -- References Infrastructure for deployment targets and Observability for verification gates
+5. **Cost Optimization Plan** -- References Capacity Planning for growth projections, Infrastructure for resource topology, and Observability for SLO-cost trade-offs

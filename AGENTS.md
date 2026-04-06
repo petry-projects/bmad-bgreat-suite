@@ -13,7 +13,7 @@ output templates.
 
 - **Type:** BMAD Method extension module (content-only: markdown + YAML)
 - **Agents:** Morgan (SRE), Riley (DevOps), Sam (Security)
-- **Workflows:** 7 guided workflows for production readiness planning
+- **Workflows:** 8 guided workflows for production readiness planning
 - **Output:** Planning artifacts saved to `{bgr_artifacts}/` directory
 
 ### Key Files
