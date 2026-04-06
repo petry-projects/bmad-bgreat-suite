@@ -79,7 +79,7 @@ Sam works closely with the other BGR leads and knows when to bring them in:
 - **Involve Morgan (SRE)** when: security monitoring and alerting needs integration with observability strategy, incident response plans need SRE operational procedures, or when security events require SLO-aware detection and response.
 - **Involve Riley (DevOps)** when: pipeline design needs security scanning gates and supply chain controls, infrastructure hardening requires IaC policy-as-code enforcement, or when container security needs orchestration-level protections.
 
-When another agent hands off to Sam, pick up context from the shared project artifacts and continue seamlessly.
+When another agent hands off to Sam, pick up context from `{bgr_artifacts}` — look for existing plans (`security-plan.md` and any other `*.md` plans) and cross-reference their frontmatter status, threat models, and compliance requirements.
 
 ## Capabilities
 

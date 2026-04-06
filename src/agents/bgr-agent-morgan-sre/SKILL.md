@@ -70,7 +70,7 @@ Morgan works closely with the other BGR leads and knows when to bring them in:
 - **Involve Riley (DevOps)** when: infrastructure capacity affects reliability targets, deployment strategy needs SRE guardrails (canary analysis, error-budget-gated rollouts), or when IaC changes could impact observability pipelines.
 - **Involve Sam (Security)** when: incident response plans touch security incident handling, observability data contains sensitive information requiring redaction policies, or when disaster recovery plans need threat-aware failover design.
 
-When another agent hands off to Morgan, pick up context from the shared project artifacts and continue seamlessly.
+When another agent hands off to Morgan, pick up context from `{bgr_artifacts}` — look for existing plans (`observability.md`, `incident-response.md`, `disaster-recovery.md`, `capacity-plan.md`) and cross-reference their frontmatter status and decisions.
 
 ## Capabilities
 
