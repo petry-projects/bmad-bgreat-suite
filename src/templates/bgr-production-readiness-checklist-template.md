@@ -23,7 +23,7 @@ completedWorkflows: []
 | CI/CD Pipeline Plan | Not Started | | | |
 | Security Plan | Not Started | | | |
 | Disaster Recovery Plan | Not Started | | | |
-| Capacity Plan | Not Started | | | |
+| Capacity Planning | Not Started | | | |
 
 ### 2.1 Observability Plan
 
@@ -117,7 +117,7 @@ completedWorkflows: []
   - Failover procedures inform Incident Response escalation paths
   - DR testing integrates with Pipeline deployment procedures
 
-### 2.7 Capacity Plan
+### 2.7 Capacity Planning
 
 - **Status**: Not Started
 - **Completion Date**:
@@ -183,4 +183,4 @@ The following order maximizes context sharing between workflows:
 4. **CI/CD Pipeline Plan** -- References Infrastructure for deployment targets and Observability for verification gates
 5. **Security Plan** -- Defines auth strategy, compliance requirements, and security controls that constrain all other plans
 6. **Disaster Recovery Plan** -- Defines RTO/RPO targets and failover procedures that inform Infrastructure multi-region design
-7. **Capacity Plan** -- Defines growth models and scaling triggers that reference Observability metrics and Infrastructure auto-scaling
+7. **Capacity Planning** -- Defines growth models and scaling triggers that reference Observability metrics and Infrastructure auto-scaling

@@ -80,6 +80,34 @@ Run through each quality gate and assess pass/fail:
 - [ ] War room roles documented
 - [ ] War room procedures and rules established
 
+### Maturity-Level Gate Calibration
+
+Read `{bgr_maturity}` from config. When evaluating the quality gates above, apply the following maturity-based expectations:
+
+| Gate | greenfield | growing | established | advanced |
+|------|-----------|---------|-------------|----------|
+| Severity Classification (severity levels defined, at least SEV1/SEV2) | PASS | PASS | PASS | PASS |
+| Escalation (basic escalation path) | PASS | PASS | PASS | PASS |
+| Runbooks (one emergency runbook, runbook template) | PASS | PASS | PASS | PASS |
+| Postmortems (postmortem template exists) | PASS | PASS | PASS | PASS |
+| Severity Classification (response SLAs for all levels) | DEFERRED | PASS | PASS | PASS |
+| On-Call & Response (on-call rotation, incident commander) | DEFERRED | PASS | PASS | PASS |
+| Communication (templates for internal, customer, stakeholder) | DEFERRED | PASS | PASS | PASS |
+| Runbooks (runbook inventory with owners) | DEFERRED | PASS | PASS | PASS |
+| On-Call & Response (full procedures, fatigue management, handoff) | DEFERRED | DEFERRED | PASS | PASS |
+| War Room (activation criteria, roles, procedures) | DEFERRED | DEFERRED | PASS | PASS |
+| Postmortems (blameless culture principles, action item tracking) | DEFERRED | DEFERRED | PASS | PASS |
+| On-Call & Response (regular training drills) | DEFERRED | DEFERRED | PASS | PASS |
+| Severity Classification (automated severity classification) | DEFERRED | DEFERRED | DEFERRED | PASS |
+| Runbooks (chaos-driven runbook validation) | DEFERRED | DEFERRED | DEFERRED | PASS |
+| Escalation (cross-team incident coordination) | DEFERRED | DEFERRED | DEFERRED | PASS |
+
+**How to interpret:**
+- **PASS** — Gate must pass. Flag failures as blocking.
+- **DEFERRED** — Gate is aspirational at this maturity level. Note it as a future improvement area but do not block. If the team has partially addressed it, acknowledge the progress.
+
+When presenting validation results, report each gate's status as PASS, FAIL, or DEFERRED based on the team's maturity level.
+
 ### 2. Coherence Validation
 
 Check that all sections work together:

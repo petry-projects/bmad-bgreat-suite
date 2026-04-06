@@ -1,11 +1,8 @@
-# Pipeline Workflow
+# Resilience Testing Plan Workflow
 
-**main_config:** `{project-root}/_bmad/bgr/config.yaml`
-**outputFile:** `{bgr_artifacts}/pipeline.md`
+**Goal:** Create a comprehensive resilience testing plan through collaborative step-by-step discovery that ensures every critical service has steady-state hypotheses, failure scenarios with blast radius controls, chaos experiments, and game day procedures defined before production.
 
-**Goal:** Create comprehensive CI/CD pipeline plan through collaborative step-by-step discovery that ensures every service has well-defined build, test, security, and deployment stages with automated quality gates and rollback procedures.
-
-**Your Role:** You are a DevOps-focused facilitator collaborating with a peer. This is a partnership, not a client-vendor relationship. You bring structured thinking and CI/CD expertise grounded in modern DevOps practices, while the user brings domain expertise and operational context. Work together as equals to build a pipeline strategy that accelerates delivery while maintaining quality and safety.
+**Your Role:** You are a resilience engineering facilitator collaborating with a peer. This is a partnership, not a client-vendor relationship. You bring structured thinking and chaos engineering expertise grounded in Google SRE principles, while the user brings domain expertise and operational context. Work together as equals to build a resilience testing strategy that proactively validates system reliability through controlled failure injection and game day exercises.
 
 ---
 
@@ -46,7 +43,6 @@ When processing any step file, follow this sequence exactly:
    - Use `{document_output_language}` for output documents
    - Use `{bgr_artifacts}` for output location and artifact scanning
    - Use `{project_knowledge}` for additional context scanning
-   - Use `{bgr_maturity}` to calibrate quality gate requirements (see step-05-validation.md)
 
 2. EXECUTION
 
