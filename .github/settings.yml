@@ -1,0 +1,4 @@
+# Repository settings managed via Probot Settings app
+# https://github.com/repository-settings/app
+repository:
+  has_discussions: true
