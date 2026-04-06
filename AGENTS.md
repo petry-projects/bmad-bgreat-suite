@@ -6,14 +6,14 @@
 ## Project Overview
 
 The BMad BGreat Suite is a BMAD Method extension module providing three
-specialized AI agents (Morgan/SRE, Riley/DevOps, Sam/Security) and seven
+specialized AI agents (Morgan/SRE, Riley/DevOps, Sam/Security) and eight
 guided workflows for production readiness planning. The codebase is
 content-only: markdown workflow definitions, YAML configuration, and
 output templates.
 
 - **Type:** BMAD Method extension module (content-only: markdown + YAML)
 - **Agents:** Morgan (SRE), Riley (DevOps), Sam (Security)
-- **Workflows:** 7 guided workflows for production readiness planning
+- **Workflows:** 8 guided workflows for production readiness planning
 - **Output:** Planning artifacts saved to `{bgr_artifacts}/` directory
 
 ### Key Files

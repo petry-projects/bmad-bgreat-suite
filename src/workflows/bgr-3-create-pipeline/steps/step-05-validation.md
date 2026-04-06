@@ -129,7 +129,7 @@ Suggest logical follow-up actions:
 - **[C]omplete** — Finalize and save the pipeline plan
 - **[R]evise** — Return to a specific step to make changes
 
-🔄 **Before completing:** Update `stepsCompleted` in frontmatter to include `"step-05-validation"`.
+🔄 **Before completing:** Update frontmatter `stepsCompleted: [1, 2, 3, 4, 5]`.
 
 🔄 **Before completing:** Update the production readiness checklist per step 5.5.
 
