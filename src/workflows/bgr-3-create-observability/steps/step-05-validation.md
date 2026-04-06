@@ -89,6 +89,30 @@ Run through each quality gate systematically:
 - [ ] Each dashboard has a defined refresh rate and owner
 - [ ] Dashboards answer "is the system healthy?" within seconds
 
+### Maturity-Level Gate Calibration
+
+Read `{bgr_maturity}` from config. When evaluating the quality gates above, apply the following maturity-based expectations:
+
+| Gate | greenfield | growing | established | advanced |
+|------|-----------|---------|-------------|----------|
+| Gate 1: Critical User Journey Coverage (basic metrics, at least one SLO, basic burn-rate alerts) | PASS | PASS | PASS | PASS |
+| Gate 2: Logging Standards (structured format, required fields, PII handling, retention, correlation IDs) | PASS | PASS | PASS | PASS |
+| Gate 1+5: Golden Signals coverage, multi-burn-rate alerting, alert routing | DEFERRED | PASS | PASS | PASS |
+| Gate 6: On-call triage dashboard | DEFERRED | PASS | PASS | PASS |
+| Gate 3: Tracing Coverage (distributed tracing, span naming, sampling, cardinality) | DEFERRED | DEFERRED | PASS | PASS |
+| Gate 4: SLO & Error Budget Rigor (error budget policies, baseline-driven targets) | DEFERRED | DEFERRED | PASS | PASS |
+| Gate 6: Executive dashboards | DEFERRED | DEFERRED | PASS | PASS |
+| Gate 5: Noise reduction strategies | DEFERRED | DEFERRED | PASS | PASS |
+| Gate 3: Adaptive sampling | DEFERRED | DEFERRED | DEFERRED | PASS |
+| Gate 6: Business KPI dashboards | DEFERRED | DEFERRED | DEFERRED | PASS |
+| Gate 4: Quarterly SLO reviews | DEFERRED | DEFERRED | DEFERRED | PASS |
+
+**How to interpret:**
+- **PASS** — Gate must pass. Flag failures as blocking.
+- **DEFERRED** — Gate is aspirational at this maturity level. Note it as a future improvement area but do not block. If the team has partially addressed it, acknowledge the progress.
+
+When presenting validation results, report each gate's status as PASS, FAIL, or DEFERRED based on the team's maturity level.
+
 ### 2. Present Validation Summary
 
 Report the validation results to the user:
@@ -291,9 +315,12 @@ After saving the observability plan, update the cross-workflow production readin
    - If Incident Response Plan exists and status is `complete`: Verify alerting thresholds align with severity classification. If status is `draft`, note validation is deferred pending finalization.
    - If Infrastructure Plan exists and status is `complete` or `approved`: Verify monitoring targets match environment topology. If status is `draft`, note validation is deferred pending finalization.
    - If Pipeline Plan exists and status is `complete`: Verify health check metrics align with post-deploy verification. If status is `draft`, note validation is deferred pending finalization.
+   - **Security Plan** — if `Complete`: verify security monitoring requirements (auth events, compliance audit logs) are covered by the observability strategy. If `Draft`: validation deferred.
+   - **Disaster Recovery Plan** — if `Complete`: verify SLO definitions account for DR failover scenarios and monitoring covers failover health. If `Draft`: validation deferred.
+   - **Capacity Planning** — if `Complete`: verify scaling triggers reference metrics defined in the observability plan. If `Draft`: validation deferred.
    - Record any inconsistencies or deferred validations in section **4.3 Consistency Issues**
 5. Update the `completedWorkflows` array in checklist frontmatter to include `observability`. Add this workflow only if it is not already present (use set-style uniqueness to prevent duplicate entries on re-run).
-6. If all 4 workflows are now complete, update **Overall Status** to `READY` (if no critical gaps remain). A **critical gap** is a missing workflow artifact, an unresolved cross-plan dependency, or a key decision conflict between plans that would block production readiness (e.g., mismatched environment topologies, missing rollback alignment, or undefined alerting-to-severity mappings).
+6. If all 7 workflows are now complete, update **Overall Status** to `READY` (if no critical gaps remain). A **critical gap** is a missing workflow artifact, an unresolved cross-plan dependency, or a key decision conflict between plans that would block production readiness (e.g., mismatched environment topologies, missing rollback alignment, or undefined alerting-to-severity mappings).
 7. Save the updated checklist
 
 ### 10. Completion Summary

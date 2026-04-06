@@ -27,7 +27,7 @@ Define rollback procedures for each deployment model:
 
 - **Automated triggers** — Error rate spike, latency degradation, failed health checks, SLO breach
 - **Automated rollback** — Conditions under which the system automatically reverts (canary failure, health check timeout)
-- **Manual rollback procedure** — Step-by-step process for operator-initiated rollback
+- **Operator-initiated rollback** — Step-by-step process for triggering rollback through the pipeline UI (redeploy previous artifact). All rollbacks are pipeline-driven — never via SSH, console, or direct infrastructure changes.
 - **Data migration rollback** — How to handle database changes when rolling back application code
 - **Rollback verification** — How to confirm rollback was successful
 
@@ -51,7 +51,28 @@ Define requirements for maintaining availability during deployments:
 - **Dependency readiness** — Ensuring downstream services and caches are warm before accepting traffic
 - **Session handling** — Sticky sessions, session migration, or stateless design
 
-## 4.5 Release Management
+## 4.5 Environment Promotion Gates
+
+Define mandatory gates at each environment boundary:
+
+- **Automated quality gates** — Tests, security scans, policy checks that must pass before promotion
+- **Gate thresholds per boundary**:
+  - Dev → Staging: unit tests pass, SAST clean (no critical/high), dependency scan clean, IaC plan validated
+  - Staging → Production: all of above PLUS integration/e2e tests pass, performance baseline met, SLO compliance verified, container scan clean
+  - Hotfix path: smoke tests + security scan + manual signoff, with mandatory post-deploy review within 24 hours
+- **Signoff requirements** — Production promotion requires approval from at least one reviewer who did not author the change; signoff recorded in pipeline audit trail
+- **No-bypass enforcement** — Pipeline configuration MUST prevent skipping gates, even for admins. No direct pushes to deployment branches. No manual image tag updates.
+- **Audit trail** — All promotions logged with timestamp, approver identity, artifact version, and gate results
+
+**Anti-Pattern Check:**
+
+Before finalizing, explicitly verify:
+- There is NO path to production that bypasses the pipeline
+- There is NO mechanism to skip quality gates
+- Rollbacks are operator-initiated only via approved pipeline actions; the rollback itself is executed by the pipeline, not through manual infra/app changes
+- Emergency changes use the hotfix pipeline with recorded approval/signoff, not console/SSH access or ad hoc manual changes
+
+## 4.6 Release Management
 
 Define the release management process:
 
@@ -60,9 +81,9 @@ Define the release management process:
 - **Release notes automation** — What to include, audience, distribution
 - **Release approval process** — Who approves, what criteria, emergency release procedures
 
-## 4.6 Discuss and Document
+## 4.7 Discuss and Document
 
-Present the deployment strategy to the user. Update sections 4 and 5 of the pipeline plan with all deployment and release management decisions.
+Present the deployment strategy to the user. Update sections 4 and 5 of the pipeline plan with all deployment, promotion gate, and release management decisions.
 
 ---
 

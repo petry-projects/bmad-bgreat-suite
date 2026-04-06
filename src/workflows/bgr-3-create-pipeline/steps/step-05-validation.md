@@ -17,13 +17,45 @@ Review the pipeline plan against these quality gates. Present each item with a p
 | 1 | CI/CD platform selected with pipeline-as-code approach | |
 | 2 | Branching strategy defined with trigger mapping | |
 | 3 | All pipeline stages documented with pass/fail criteria | |
-| 4 | Security scanning integrated (SAST, dependencies, containers, secrets) | |
+| 4 | Security scanning integrated (SAST, dependencies, containers, secrets) — blocking, not advisory | |
 | 5 | Deployment strategy defined per service type | |
-| 6 | Rollback procedures documented | |
+| 6 | Rollback procedures documented and pipeline-driven (no manual rollback execution; manual approval may trigger an automated/pipeline rollback) | |
 | 7 | Database migration strategy addressed | |
 | 8 | Artifact management and retention defined | |
+| 9 | Promotion gates defined at every environment boundary with automated quality checks | |
+| 10 | Production signoff requirement — approval from reviewer who did not author the change | |
+| 11 | No-bypass enforcement — pipeline prevents skipping gates even for admins | |
+| 12 | No manual deployment paths — all changes flow exclusively through pipelines | |
+| 13 | Hotfix pipeline path defined with minimum gates and post-deploy review requirement | |
+| 14 | Audit trail — all promotions and approvals recorded with timestamp and approver | |
 
 For any gate that fails, note what is missing and discuss with the user whether to address it now or defer.
+
+### Maturity-Level Gate Calibration
+
+Read `{bgr_maturity}` from config. When evaluating the quality gates above, apply the following maturity-based expectations:
+
+| Gate # | Quality Gate | greenfield | growing | established | advanced |
+|--------|-------------|-----------|---------|-------------|----------|
+| 1 | CI/CD platform selected with pipeline-as-code approach | PASS | PASS | PASS | PASS |
+| 3 | All pipeline stages documented with pass/fail criteria | PASS | PASS | PASS | PASS |
+| 8 | Artifact management and retention defined | PASS | PASS | PASS | PASS |
+| 4 | Security scanning integrated (SAST, dependencies, containers, secrets) | DEFERRED | PASS | PASS | PASS |
+| 2 | Branching strategy defined with trigger mapping | DEFERRED | PASS | PASS | PASS |
+| 6 | Rollback procedures documented | DEFERRED | PASS | PASS | PASS |
+| 4 | All security scans set to blocking | DEFERRED | DEFERRED | PASS | PASS |
+| 5 | Deployment strategy with promotion gates and signoff | DEFERRED | DEFERRED | PASS | PASS |
+| 5 | No manual deployment paths to production | DEFERRED | DEFERRED | PASS | PASS |
+| 7 | Database migration strategy addressed, hotfix pipeline defined | DEFERRED | DEFERRED | PASS | PASS |
+| — | Full audit trail for all deployments | DEFERRED | DEFERRED | DEFERRED | PASS |
+| — | Error-budget-gated promotion | DEFERRED | DEFERRED | DEFERRED | PASS |
+| — | Pipeline performance optimization | DEFERRED | DEFERRED | DEFERRED | PASS |
+
+**How to interpret:**
+- **PASS** — Gate must pass. Flag failures as blocking.
+- **DEFERRED** — Gate is aspirational at this maturity level. Note it as a future improvement area but do not block. If the team has partially addressed it, acknowledge the progress.
+
+When presenting validation results, report each gate's status as PASS, FAIL, or DEFERRED based on the team's maturity level.
 
 ## 5.2 Present Validation Summary
 
@@ -71,9 +103,12 @@ After saving the pipeline plan, update the cross-workflow production readiness c
    - If Observability Plan exists and status is `complete`: Verify post-deploy verification gates reference the correct health check metrics and SLO thresholds. If status is `draft`, defer validation until plan is finalized.
    - If Incident Response Plan exists and status is `complete`: Verify rollback automation triggers align with incident severity classification and escalation procedures. If status is `draft`, defer validation until plan is finalized.
    - If Infrastructure Plan exists and status is `complete` or `approved`: Verify pipeline deployment targets match the defined environment topology, and runner infrastructure is provisioned. If status is `draft`, defer validation until plan is finalized.
+   - If Security Plan exists and status is `complete`: Verify pipeline security scanning stages align with the security plan's testing strategy and compliance gates. If status is `draft`, defer validation.
+   - If Disaster Recovery Plan exists and status is `complete`: Verify pipeline supports DR deployment procedures and failover testing. If status is `draft`, defer validation.
+   - If Capacity Plan exists and status is `complete`: Verify pipeline integrates load testing stages defined in the capacity plan. If status is `draft`, defer validation.
    - Record any inconsistencies or deferred validations in section **4.3 Consistency Issues**
 5. Update the `completedWorkflows` array in checklist frontmatter to include `pipeline`. Add this workflow only if it is not already present (use set-style uniqueness to prevent duplicate entries on re-run).
-6. If all 4 workflows are now complete, update **Overall Status** to `READY` (if no critical gaps remain). A **critical gap** is a missing workflow artifact, an unresolved cross-plan dependency, or a key decision conflict between plans that would block production readiness (e.g., mismatched environment topologies, missing rollback alignment, or undefined alerting-to-severity mappings).
+6. If all 7 workflows are now complete, update **Overall Status** to `READY` (if no critical gaps remain). A **critical gap** is a missing workflow artifact, an unresolved cross-plan dependency, or a key decision conflict between plans that would block production readiness (e.g., mismatched environment topologies, missing rollback alignment, or undefined alerting-to-severity mappings).
 7. Save the updated checklist
 
 ## 5.6 Recommend Next Steps

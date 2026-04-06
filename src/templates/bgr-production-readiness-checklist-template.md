@@ -21,6 +21,9 @@ completedWorkflows: []
 | Incident Response Plan | Not Started | | | |
 | Infrastructure Plan | Not Started | | | |
 | CI/CD Pipeline Plan | Not Started | | | |
+| Security Plan | Not Started | | | |
+| Disaster Recovery Plan | Not Started | | | |
+| Capacity Planning | Not Started | | | |
 
 ### 2.1 Observability Plan
 
@@ -82,13 +85,61 @@ completedWorkflows: []
   - Post-deploy verification uses Observability health checks
   - Rollback procedures align with Incident Response escalation
 
+### 2.5 Security Plan
+
+- **Status**: Not Started
+- **Completion Date**:
+- **Output Document**:
+- **Key Decisions**:
+  - Auth strategy:
+  - Data protection approach:
+  - Compliance frameworks:
+  - Threat model completed:
+- **Cross-References**:
+  - Auth strategy informs Infrastructure IAM design
+  - Network security requirements inform Infrastructure network architecture
+  - Security scanning strategy informs Pipeline security stages
+  - Compliance requirements inform all workflow plans
+
+### 2.6 Disaster Recovery Plan
+
+- **Status**: Not Started
+- **Completion Date**:
+- **Output Document**:
+- **Key Decisions**:
+  - RTO/RPO targets:
+  - Backup strategy:
+  - Failover approach:
+  - DR testing cadence:
+- **Cross-References**:
+  - RTO/RPO targets inform Infrastructure multi-region design
+  - Backup procedures reference Infrastructure storage configuration
+  - Failover procedures inform Incident Response escalation paths
+  - DR testing integrates with Pipeline deployment procedures
+
+### 2.7 Capacity Planning
+
+- **Status**: Not Started
+- **Completion Date**:
+- **Output Document**:
+- **Key Decisions**:
+  - Growth model:
+  - Auto-scaling strategy:
+  - Cost guardrails:
+  - Load testing approach:
+- **Cross-References**:
+  - Scaling triggers reference Observability metrics
+  - Auto-scaling integrates with Infrastructure container orchestration
+  - Cost guardrails inform Infrastructure reserved capacity decisions
+  - Load testing integrates with Pipeline CI/CD stages
+
 ## 3. Overall Readiness Assessment
 
 ### 3.1 Readiness Gate
 
 | Criterion | Met? | Notes |
 |-----------|------|-------|
-| All 4 workflow plans completed | | |
+| All 7 workflow plans completed | | |
 | Cross-plan references are consistent | | |
 | No critical gaps identified | | |
 | Key decisions align across plans | | |
@@ -97,7 +148,7 @@ completedWorkflows: []
 
 **Overall Status**: NOT READY
 
-> Update this status to READY when all four workflow plans are complete, cross-references are consistent, and no critical gaps remain.
+> Update this status to READY when all seven workflow plans are complete, cross-references are consistent, and no critical gaps remain.
 
 ## 4. Gap Analysis
 
@@ -130,3 +181,6 @@ The following order maximizes context sharing between workflows:
 2. **Incident Response Plan** -- Builds on Observability alerting to define severity, escalation, and runbooks
 3. **Infrastructure Plan** -- References Observability for monitoring targets and Incident Response for operational procedures
 4. **CI/CD Pipeline Plan** -- References Infrastructure for deployment targets and Observability for verification gates
+5. **Security Plan** -- Defines auth strategy, compliance requirements, and security controls that constrain all other plans
+6. **Disaster Recovery Plan** -- Defines RTO/RPO targets and failover procedures that inform Infrastructure multi-region design
+7. **Capacity Planning** -- Defines growth models and scaling triggers that reference Observability metrics and Infrastructure auto-scaling
