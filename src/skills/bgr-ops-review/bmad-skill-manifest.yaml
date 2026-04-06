@@ -1,0 +1,8 @@
+type: skill
+name: bgr-ops-review
+displayName: Ops Review
+title: Operational Health Review
+icon: "🔍"
+capabilities: "cross-artifact consistency checks, coverage gap detection, cross-reference validation, staleness detection, operational scorecard"
+module: bgr
+canonicalId: bgr-ops-review
