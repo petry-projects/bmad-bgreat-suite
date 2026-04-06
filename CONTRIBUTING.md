@@ -1,46 +1,141 @@
 # Contributing to BMad BGreat Suite
 
-Thanks for your interest in contributing! This module is designed to grow — new agents, workflows, and templates are welcome.
+## Overview
 
-## Getting Started
+The BMad BGreat Suite is a BMAD Method extension module providing specialized AI agents (Morgan/SRE, Riley/DevOps, Sam/Security) and seven guided workflows for production readiness planning. The codebase is content-only: markdown workflow definitions, YAML configuration, and output templates.
 
-1. Fork the repository
-2. Create a feature branch from `main`
-3. Make your changes
-4. Submit a pull request with a clear description
+## Architecture
 
-## Adding a New Agent
+- **Micro-file architecture:** each workflow = `SKILL.md` + manifest + `workflow.md` + `steps/` + `templates/`
+- **Step processing:** sequential, user-controlled, append-only document building
+- **Config variables:** resolved from `{project-root}/_bmad/bgr/config.yaml`
+- **Output:** planning artifacts saved to `{bgr_artifacts}/`
 
-Create a directory under `src/agents/` following the naming pattern `bgr-agent-{name}/` with:
-
-- `SKILL.md` — Agent persona, expertise, capabilities table, and activation sequence
-- `bmad-skill-manifest.yaml` — Agent metadata (`type: agent`, name, displayName, title, icon, etc.)
-
-Register the agent in `src/module-help.csv` with a unique 2-letter menu code.
+```
+src/
+├── agents/           # Agent personas (SKILL.md + manifest)
+├── workflows/        # Guided multi-step workflows
+│   └── {name}/
+│       ├── SKILL.md
+│       ├── bmad-skill-manifest.yaml
+│       ├── workflow.md
+│       ├── steps/
+│       └── templates/
+├── templates/        # Shared templates (production readiness checklist)
+├── module.yaml       # Module configuration
+└── module-help.csv   # Skill registry
+```
 
 ## Adding a New Workflow
 
-Create a directory under `src/workflows/` following the pattern `bgr-{phase}-{name}/` with:
+Every workflow lives in `src/workflows/bgr-3-<name>/` and requires:
 
-- `SKILL.md` — Frontmatter with name and description, body delegates to `./workflow.md`
-- `bmad-skill-manifest.yaml` — Just `type: skill`
-- `workflow.md` — Workflow orchestrator with micro-file architecture, step processing rules, and activation
-- `steps/` — Sequential step files (`step-01-init.md`, `step-01b-continue.md`, `step-02-*.md`, etc.)
-- `templates/` — Output document templates with frontmatter tracking
+| File | Purpose |
+|------|---------|
+| `SKILL.md` | Trigger phrases and pointer to workflow.md |
+| `bmad-skill-manifest.yaml` | Metadata (`type: skill`) |
+| `workflow.md` | Goal, role, architecture, activation |
+| `steps/step-01-init.md` | Initialization and input discovery |
+| `steps/step-01b-continue.md` | Continuation handler |
+| `steps/step-02-*.md` through `step-04-*.md` | Domain-specific steps |
+| `steps/step-05-validation.md` | Quality gates and cross-workflow checks |
+| `templates/<name>-template.md` | Output template with frontmatter |
 
-Register the workflow in `src/module-help.csv` and update `.claude-plugin/marketplace.json`.
+After creating files:
+1. Update `src/module.yaml` description and subheader workflow count
+2. Update `src/module-help.csv` with a new entry (unique 2-char menu code)
+3. Update `AGENTS.md` workflow count
 
-## Conventions
+## Adding a New Agent
 
-- Follow the existing step file structure: `# Step N: Title`, MANDATORY EXECUTION RULES, EXECUTION PROTOCOLS, CONTEXT BOUNDARIES, task content, and `[C]ontinue / [R]evise` menus
-- Use `{bgr_artifacts}` for output paths
-- Config loads from `{project-root}/_bmad/bgr/config.yaml`
-- Steps update `stepsCompleted` in document frontmatter before loading the next step
-- Templates use YAML frontmatter for state tracking (`status`, `stepsCompleted`, `inputDocuments`, dates)
+Agent personas live in `src/agents/bgr-agent-<name>/` and require:
 
-## Code of Conduct
+| File | Purpose |
+|------|---------|
+| `SKILL.md` | Full persona: identity, principles, capabilities, expertise, on-activation |
+| `bmad-skill-manifest.yaml` | Full metadata |
 
-Be respectful and constructive. We follow the spirit of the [Contributor Covenant](https://www.contributor-covenant.org/).
+Register in `src/module-help.csv` with correct phase, dependencies, and menu code.
+
+## Step File Contract
+
+Every step file must include these sections in order:
+
+1. **MANDATORY EXECUTION RULES** — behavioral constraints (no content without user input, read complete step, facilitator role)
+2. **EXECUTION PROTOCOLS** — action requirements (show analysis, update frontmatter, gate next step)
+3. **CONTEXT BOUNDARIES** — what's in scope (workflow.md variables, output document, frontmatter state)
+4. Sequential numbered task sections
+5. Content generation template
+6. **[C]ontinue / [R]evise menu** — halt for user input before proceeding
+7. **SUCCESS METRICS** and **FAILURE MODES**
+
+Update `stepsCompleted` as a numeric array (e.g., `[1, 2, 3]`) before transitioning to the next step.
+
+## Frontmatter Schema
+
+All output templates must include this YAML frontmatter:
+
+```yaml
+---
+status: draft                # draft | in-progress | complete
+stepsCompleted: []           # numeric array, e.g. [1, 2, 3]
+createdDate: ""
+lastUpdated: ""
+inputDocuments: []           # optional: discovered input docs
+---
+```
+
+Optional fields: `crossWorkflowContext`
+
+## Module-Help.csv Format
+
+| Field | Description |
+|-------|-------------|
+| `module` | Always `BGreat Suite` |
+| `skill` | Skill ID (e.g., `bgr-3-create-observability`) |
+| `display-name` | Human-readable name |
+| `menu-code` | Unique 2-character code (e.g., `CO`, `CR`) |
+| `description` | One-line description |
+| `action` | Leave blank for workflows |
+| `args` | Leave blank |
+| `phase` | BMAD phase (e.g., `3-solutioning`) |
+| `after` | Dependency skill ID |
+| `before` | Leave blank |
+| `required` | `true` or `false` |
+| `output-location` | `bgr_artifacts` for workflows |
+| `outputs` | Artifact name |
+
+## Config Variables
+
+**Module-specific** (defined in `module.yaml`):
+
+| Variable | Description |
+|----------|-------------|
+| `{bgr_artifacts}` | Output directory for planning artifacts |
+| `{bgr_maturity}` | Operations maturity level |
+| `{cloud_preference}` | Primary cloud provider |
+| `{container_orchestration}` | Container platform |
+
+**Inherited from core:**
+
+`{user_name}`, `{communication_language}`, `{document_output_language}`, `{project_knowledge}`, `{output_folder}`
+
+## AI-Generated Code Policy
+
+- Read 2+ existing reference workflows before writing new ones
+- Follow all naming conventions and structural patterns documented above
+- Run `bash tools/validate-skills.sh` if available
+- AI-generated contributions receive the same review scrutiny as human contributions
+
+## PR Checklist
+
+- [ ] Skill validator passes (if applicable)
+- [ ] `module.yaml` counts and description updated
+- [ ] `module-help.csv` entry added with unique 2-char menu code
+- [ ] `AGENTS.md` counts updated
+- [ ] Production readiness checklist template updated (if adding a workflow)
+- [ ] Step files follow naming convention and include all required sections
+- [ ] Templates include required frontmatter fields (`status`, `stepsCompleted`, `createdDate`, `lastUpdated`)
 
 ## License
 
