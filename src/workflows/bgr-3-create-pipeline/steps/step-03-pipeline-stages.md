@@ -188,48 +188,54 @@ Prepare the content to append to the document:
 ```markdown
 ## 3. Pipeline Stages
 
-### 3.1 Stage Overview
+### 3.1 Source
 
-| Stage | Trigger | Key Actions | Gate Criteria |
-|-------|---------|-------------|---------------|
-| Source | {{trigger}} | {{actions}} | {{gate}} |
-| Build | Source pass | {{actions}} | {{gate}} |
-| Test | Build pass | {{actions}} | {{gate}} |
-| Security | Build pass | {{actions}} | {{gate}} |
-| Package | Test + Security pass | {{actions}} | {{gate}} |
-| Stage Deploy | Package pass (main) | {{actions}} | {{gate}} |
-| Stage Verify | Deploy complete | {{actions}} | {{gate}} |
-| Prod Promote | Stage verify pass | {{actions}} | {{gate}} |
-| Post-Deploy | Prod deploy complete | {{actions}} | {{gate}} |
+{{source_stage_details}}
 
-### 3.2 Testing Strategy
+### 3.2 Build
 
-| Test Type | Threshold | Timeout | Blocking |
-|-----------|----------|---------|----------|
-| {{test_type}} | {{threshold}} | {{timeout}} | {{blocking}} |
+{{build_stage_details}}
+
+### 3.3 Test
+
+| Test Type | Stage Gate | Timeout | Retry | Notes |
+|-----------|-----------|---------|-------|-------|
+| {{test_type}} | {{gate}} | {{timeout}} | {{retry}} | {{notes}} |
 
 **Flaky Test Policy:** {{flaky_test_handling}}
 **Test Data Strategy:** {{test_data_approach}}
 
-### 3.3 Security Scanning
+### 3.4 Security Scanning
 
-| Scan Type | Tool | Blocking Severity | Remediation SLA |
-|-----------|------|-------------------|-----------------|
-| {{scan_type}} | {{tool}} | {{severity}} | {{sla}} |
+| Scan Type | Tool | Stage | Blocking | Owner | Notes |
+|-----------|------|-------|----------|-------|-------|
+| {{scan_type}} | {{tool}} | {{stage}} | {{blocking}} | {{owner}} | {{notes}} |
 
 **Exception Workflow:** {{exception_process}}
 
-### 3.4 Staging Verification
+### 3.5 Package
+
+{{package_stage_details}}
+
+### 3.6 Deploy to Staging
+
+{{staging_deploy_details}}
+
+### 3.7 Staging Verification
 
 **Smoke Tests:** {{smoke_test_scope}}
 **SLO Monitoring:** {{slo_check_details}}
 **Manual Gate:** {{manual_qa_requirement}}
 
-### 3.5 Production Promotion
+### 3.8 Production Promotion
 
 **Approval Model:** {{approval_approach}}
 **Monitoring Window:** {{monitoring_window}} minutes
+
+### 3.9 Post-Deploy Verification
+
 **Rollback Triggers:** {{automated_rollback_criteria}}
+**SLO Watch:** {{slo_monitoring_details}}
 ```
 
 ### 11. Present Content and Menu

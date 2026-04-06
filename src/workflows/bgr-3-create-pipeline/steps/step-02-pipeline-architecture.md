@@ -125,7 +125,7 @@ Define the compute strategy for pipeline execution:
 **Key Decisions:**
 
 - **Managed vs self-hosted** — Managed runners for simplicity; self-hosted for cost control, compliance, or network access to private resources
-- **Runner sizing** — Standard (2 CPU/7 GB) for most jobs; large runners for builds, compilation, integration tests
+- **Runner sizing** — Match runner specs to job needs: standard runners for most jobs, larger runners for builds, compilation, and integration tests
 - **Runner OS and architecture** — Linux x64 as default; ARM for cost savings on supported workloads; macOS/Windows for platform-specific builds
 
 **Caching Strategy:**
@@ -202,13 +202,15 @@ Prepare the content to append to the document:
 ```markdown
 ## 2. Pipeline Architecture
 
-### 2.1 CI/CD Platform
+### 2.1 Platform & Tooling
 
-**Platform:** {{platform_choice}}
+| Tool | Purpose | Version | Notes |
+|------|---------|---------|-------|
+| {{platform}} | {{purpose}} | {{version}} | {{notes}} |
+
 **Selection Rationale:** {{rationale}}
-**Managed/Self-Hosted:** {{runner_model}}
 
-### 2.2 Branching Strategy
+### 2.2 Branching & Trigger Strategy
 
 **Model:** {{branching_model}}
 
@@ -219,7 +221,6 @@ Prepare the content to append to the document:
 ### 2.3 Runner Strategy
 
 **Runner Type:** {{managed_or_self_hosted}}
-**Default Sizing:** {{runner_size}}
 **Security Model:** {{security_isolation}}
 **Scaling:** {{scaling_approach}}
 
@@ -235,12 +236,6 @@ Prepare the content to append to the document:
 **Tagging Strategy:** {{tagging_strategy}}
 **Image Signing:** {{signing_approach}}
 **Retention:** {{retention_policies}}
-
-### 2.5 Pipeline as Code
-
-**Format:** {{definition_format}}
-**Shared Workflows:** {{shared_workflow_strategy}}
-**Validation:** {{validation_approach}}
 ```
 
 ### 8. Present Content and Menu

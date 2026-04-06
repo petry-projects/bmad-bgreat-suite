@@ -135,8 +135,8 @@ Define how database changes are managed alongside application deployments:
 
 - **Pre-deploy:** Run forward migrations as a pipeline stage before app deployment
 - **Verification:** Row count validation, constraint checks, query plan analysis
-- **Large migrations:** Background migrations (pt-online-schema-change, gh-ost) for tables > {{row_threshold}} rows
-- **Migration timeout:** Kill and retry if migration exceeds {{timeout}} minutes
+- **Large migrations:** Online schema change tools appropriate to your database engine for tables exceeding safe direct-DDL thresholds
+- **Migration timeout:** Set per-migration timeouts; if exceeded, investigate before retrying (migrations may not be idempotent)
 - **Rollback plan:** Compensating migration ready before executing, tested in staging
 
 ### 5. Feature Flag Integration
@@ -243,13 +243,13 @@ Prepare the content to append to the document:
 ```markdown
 ## 4. Deployment Strategy
 
-### 4.1 Deployment Models
+### 4.1 Deployment Model per Service
 
-| Service | Strategy | Traffic Steps | Validation Window | Rollback Trigger |
-|---------|----------|--------------|-------------------|-----------------|
-| {{service}} | {{strategy}} | {{steps}} | {{window}} | {{trigger}} |
+| Service | Strategy | Rollback | Health Check | Notes |
+|---------|----------|----------|-------------|-------|
+| {{service}} | {{strategy}} | {{rollback}} | {{health_check}} | {{notes}} |
 
-### 4.2 Rollback Strategy
+### 4.2 Rollback Procedures
 
 **Automated Triggers:**
 
@@ -260,36 +260,32 @@ Prepare the content to append to the document:
 **Manual Rollback Procedure:** {{procedure_summary}}
 **Rollback Target:** Under {{rollback_target}} minutes
 
-### 4.3 Database Migration Strategy
+### 4.3 Database Migrations
 
 **Approach:** {{migration_approach}}
 **Safety Rule:** Backward-compatible schemas required during deploy window
 **Large Migrations:** {{large_migration_strategy}}
 
-### 4.4 Feature Flags
-
-**Platform:** {{flag_platform}}
-**Flag Types:** {{flag_types_used}}
-**Cleanup Policy:** Flags removed within {{max_age}} days of full rollout
-
-### 4.5 Deployment Automation
-
-**GitOps Model:** {{gitops_model}}
-**Manifest Management:** {{manifest_tool}}
-**Secrets Management:** {{secrets_approach}}
-
-### 4.6 Zero-Downtime Requirements
+### 4.4 Zero-Downtime Requirements
 
 **Graceful Shutdown Timeout:** {{shutdown_timeout}} seconds
 **Health Check Configuration:** Startup / Readiness / Liveness probes configured
 **Session Handling:** {{session_strategy}}
+**Feature Flags:** {{flag_platform}} — {{flag_types_used}}
 
 ## 5. Release Management
 
-**Versioning:** {{versioning_scheme}}
-**Changelog:** {{changelog_approach}}
-**Release Cadence:** {{release_cadence}}
-**Approval Process:** {{approval_process}}
+### 5.1 Versioning
+
+{{versioning_scheme}}
+
+### 5.2 Changelog & Release Notes
+
+{{changelog_approach}}
+
+### 5.3 Release Approval Process
+
+{{approval_process}}
 ```
 
 ### 11. Present Content and Menu
