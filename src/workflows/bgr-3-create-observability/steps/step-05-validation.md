@@ -89,6 +89,30 @@ Run through each quality gate systematically:
 - [ ] Each dashboard has a defined refresh rate and owner
 - [ ] Dashboards answer "is the system healthy?" within seconds
 
+### Maturity-Level Gate Calibration
+
+Read `{bgr_maturity}` from config. When evaluating the quality gates above, apply the following maturity-based expectations:
+
+| Gate | greenfield | growing | established | advanced |
+|------|-----------|---------|-------------|----------|
+| Gate 1: Critical User Journey Coverage (basic metrics, at least one SLO, basic burn-rate alerts) | PASS | PASS | PASS | PASS |
+| Gate 2: Logging Standards (structured format, required fields, PII handling, retention, correlation IDs) | PASS | PASS | PASS | PASS |
+| Gate 1+5: Golden Signals coverage, multi-burn-rate alerting, alert routing | DEFERRED | PASS | PASS | PASS |
+| Gate 6: On-call triage dashboard | DEFERRED | PASS | PASS | PASS |
+| Gate 3: Tracing Coverage (distributed tracing, span naming, sampling, cardinality) | DEFERRED | DEFERRED | PASS | PASS |
+| Gate 4: SLO & Error Budget Rigor (error budget policies, baseline-driven targets) | DEFERRED | DEFERRED | PASS | PASS |
+| Gate 6: Executive dashboards | DEFERRED | DEFERRED | PASS | PASS |
+| Gate 5: Noise reduction strategies | DEFERRED | DEFERRED | PASS | PASS |
+| Gate 3: Adaptive sampling | DEFERRED | DEFERRED | DEFERRED | PASS |
+| Gate 6: Business KPI dashboards | DEFERRED | DEFERRED | DEFERRED | PASS |
+| Gate 4: Quarterly SLO reviews | DEFERRED | DEFERRED | DEFERRED | PASS |
+
+**How to interpret:**
+- **PASS** — Gate must pass. Flag failures as blocking.
+- **DEFERRED** — Gate is aspirational at this maturity level. Note it as a future improvement area but do not block. If the team has partially addressed it, acknowledge the progress.
+
+When presenting validation results, report each gate's status as PASS, FAIL, or DEFERRED based on the team's maturity level.
+
 ### 2. Present Validation Summary
 
 Report the validation results to the user:

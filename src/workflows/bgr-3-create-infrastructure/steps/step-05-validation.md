@@ -83,6 +83,35 @@ Run through each quality gate and report pass/fail:
 - [ ] If containers: cluster architecture, image strategy, and security documented
 - [ ] If containers: service mesh evaluated with complexity-vs-value assessment
 
+### Maturity-Level Gate Calibration
+
+Read `{bgr_maturity}` from config. When evaluating the quality gates above, apply the following maturity-based expectations:
+
+| Gate Group / Gate | greenfield | growing | established | advanced |
+|-------------------|-----------|---------|-------------|----------|
+| IaC Strategy: IaC tool selected with rationale | PASS | PASS | PASS | PASS |
+| IaC Strategy: State management strategy defined | PASS | PASS | PASS | PASS |
+| Environment Strategy: At least one environment defined with purpose | PASS | PASS | PASS | PASS |
+| Environment Strategy: Secrets management strategy defined | PASS | PASS | PASS | PASS |
+| Environment Strategy: Configuration management strategy | PASS | PASS | PASS | PASS |
+| IaC Strategy: State management per-environment separation | DEFERRED | PASS | PASS | PASS |
+| Environment Strategy: Environment parity rules defined | DEFERRED | PASS | PASS | PASS |
+| IaC Strategy: Policy-as-code approach defined | DEFERRED | PASS | PASS | PASS |
+| IaC Strategy: Drift detection and remediation strategy | DEFERRED | PASS | PASS | PASS |
+| Environment Strategy: Separate cloud accounts per environment | DEFERRED | DEFERRED | PASS | PASS |
+| Network Architecture: Network isolation and security strategy | DEFERRED | DEFERRED | PASS | PASS |
+| Environment Strategy: Full secrets rotation | DEFERRED | DEFERRED | PASS | PASS |
+| Environment Strategy: Promotion gates with signoff at every boundary | DEFERRED | DEFERRED | PASS | PASS |
+| Network Architecture: Zero-trust IAM with break-glass procedures | DEFERRED | DEFERRED | DEFERRED | PASS |
+| IaC Strategy: Automated compliance scanning (full change control) | DEFERRED | DEFERRED | DEFERRED | PASS |
+| Container Strategy: Anti-pattern scans and security hardening | DEFERRED | DEFERRED | DEFERRED | PASS |
+
+**How to interpret:**
+- **PASS** — Gate must pass. Flag failures as blocking.
+- **DEFERRED** — Gate is aspirational at this maturity level. Note it as a future improvement area but do not block. If the team has partially addressed it, acknowledge the progress.
+
+When presenting validation results, report each gate's status as PASS, FAIL, or DEFERRED based on the team's maturity level.
+
 ### 2. Coherence Validation
 
 Check that all infrastructure decisions work together:
