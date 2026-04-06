@@ -115,37 +115,37 @@ When presenting validation results, report each gate's status as PASS, FAIL, or 
 
 ### 2. Cross-Workflow Coherence Validation
 
-Check alignment with other completed workflow plans:
+Check alignment with other finalized workflow plans. For each plan, verify its `status` field before validating. If status is `draft`, note validation is deferred pending finalization.
 
-**If Security Plan exists:**
+**If Security Plan exists and status is `complete`:**
 - Are security monitoring requirements (auth events, access logs, compliance audit trails) covered by the observability strategy?
 - Do alerting rules cover security-critical events defined in the security plan's threat model?
 - Is PII redaction in logging consistent with the security plan's data protection requirements?
 - Are security scanning results and compliance status included in dashboards?
 
-**If Disaster Recovery Plan exists:**
+**If Disaster Recovery Plan exists and status is `complete`:**
 - Do SLO definitions account for DR failover scenarios (degraded targets during failover)?
 - Does monitoring cover failover health, replication lag, and backup integrity?
 - Are DR-specific alerts defined for failover trigger conditions?
 - Do dashboards include DR readiness indicators?
 
-**If Capacity Plan exists:**
+**If Capacity Plan exists and status is `complete`:**
 - Do auto-scaling triggers reference metrics defined in the observability plan?
 - Are capacity-related SLOs (latency under load, throughput) aligned with capacity plan targets?
 - Are capacity dashboards consistent with the existing dashboard strategy?
 - Do load testing success criteria reference observability-defined SLIs?
 
-**If Infrastructure Plan exists:**
+**If Infrastructure Plan exists and status is `complete` or `approved`:**
 - Do monitoring targets match the environment topology (all environments covered)?
 - Are observability agents and collectors provisioned in the infrastructure plan?
 - Does the network architecture allow telemetry data egress?
 
-**If Pipeline Plan exists:**
+**If Pipeline Plan exists and status is `complete`:**
 - Do health check metrics align with post-deploy verification gates?
 - Are deployment events tracked as observability signals (deploy markers, annotations)?
 - Do pipeline failure alerts integrate with the alerting strategy?
 
-**If Incident Response Plan exists:**
+**If Incident Response Plan exists and status is `complete`:**
 - Do alerting thresholds and burn-rate windows align with incident severity classification?
 - Are runbook links attached to all critical alerts?
 - Does the on-call dashboard support incident triage workflows?

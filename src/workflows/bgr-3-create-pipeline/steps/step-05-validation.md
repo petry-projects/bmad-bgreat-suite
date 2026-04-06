@@ -59,37 +59,37 @@ When presenting validation results, report each gate's status as PASS, FAIL, or 
 
 ## 5.1b Cross-Workflow Coherence Validation
 
-Check alignment with other completed workflow plans:
+Check alignment with other finalized workflow plans. For each plan, verify its `status` field before validating. If status is `draft`, note validation is deferred pending finalization.
 
-**If Security Plan exists:**
+**If Security Plan exists and status is `complete`:**
 - Do pipeline security scanning stages (SAST, SCA, DAST, container scanning) align with the security plan's testing strategy?
 - Are compliance gates in the pipeline consistent with the security plan's compliance requirements?
 - Does the pipeline enforce the security plan's secret management practices (no secrets in logs, env vars, or artifacts)?
 - Are dependency scanning and SBOM generation aligned with the security plan's supply chain requirements?
 
-**If Disaster Recovery Plan exists:**
+**If Disaster Recovery Plan exists and status is `complete`:**
 - Can the pipeline deploy to DR regions and failover environments?
 - Are deployment procedures consistent with DR recovery steps?
 - Does the rollback strategy align with DR failback procedures?
 - Is the pipeline tested for DR scenario deployments?
 
-**If Capacity Plan exists:**
+**If Capacity Plan exists and status is `complete`:**
 - Are load testing stages from the capacity plan integrated into the pipeline?
 - Can the pipeline handle deployments during auto-scaling events?
 - Are CI/CD resource costs accounted for in the capacity plan's cost model?
 - Does the pipeline support canary or blue-green deployments for capacity validation?
 
-**If Infrastructure Plan exists:**
+**If Infrastructure Plan exists and status is `complete` or `approved`:**
 - Do pipeline deployment targets match the defined environment topology?
 - Is runner/agent infrastructure provisioned and consistent with pipeline requirements?
 - Are promotion gates aligned with environment boundary definitions?
 
-**If Observability Plan exists:**
+**If Observability Plan exists and status is `complete`:**
 - Do post-deploy verification gates reference the correct health check metrics and SLO thresholds?
 - Are deployment events instrumented for observability (deploy markers, annotations)?
 - Does the pipeline validate that observability agents are healthy after deployment?
 
-**If Incident Response Plan exists:**
+**If Incident Response Plan exists and status is `complete`:**
 - Does rollback automation integrate with incident severity classification?
 - Are deployment failure escalation paths aligned with incident response procedures?
 - Does the pipeline emit alerts that map to the incident response severity framework?
