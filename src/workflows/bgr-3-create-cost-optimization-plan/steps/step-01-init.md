@@ -226,6 +226,7 @@ Report what was found:
 Ready to begin cost optimization planning. Do you have any other documents you'd like me to include?
 
 [C] Continue to cost baseline analysis
+[R] Revise — adjust initialization or provide missing documents
 
 ## SUCCESS METRICS:
 

@@ -267,7 +267,7 @@ Prepare the content to append to the document:
 
 ## 9. Implementation Roadmap
 
-| Milestone | Description | Owner | Target Date |
+| Milestone | Description | Owner | Dependencies |
 |-----------|-------------|-------|-------------|
 {{implementation_sequence_entries}}
 
