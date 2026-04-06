@@ -57,7 +57,7 @@ Read `{bgr_maturity}` from config. When evaluating the quality gates above, appl
 
 When presenting validation results, report each gate's status as PASS, FAIL, or DEFERRED based on the team's maturity level.
 
-## 5.1b Cross-Workflow Coherence Validation
+### 5.1b Cross-Workflow Coherence Validation
 
 Check alignment with other finalized workflow plans. For each plan, verify its `status` field before validating. If status is `draft`, note validation is deferred pending finalization.
 

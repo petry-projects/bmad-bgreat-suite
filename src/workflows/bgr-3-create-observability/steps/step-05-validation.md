@@ -309,7 +309,7 @@ Show the generated content and present choices:
 
 **Here's what I'll add to finalize the observability plan:**
 
-[Show the complete markdown content from step 5]
+[Show the complete markdown content from step 6]
 
 **What would you like to do?**
 [C] Continue - Save and finalize the observability plan
@@ -381,7 +381,7 @@ Thank you for collaborating on this, {{user_name}}. Your services will be well-o
 
 ## APPEND TO DOCUMENT:
 
-When user selects 'C', append the content directly to the document using the structure from step 5.
+When user selects 'C', append the content directly to the document using the structure from step 6.
 
 ## SUCCESS METRICS:
 
