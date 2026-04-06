@@ -49,10 +49,26 @@ Run through each quality gate and report pass/fail:
 **Environment Strategy Gates:**
 
 - [ ] Environment topology documented with purpose for each environment
+- [ ] Environment isolation enforced — separate cloud accounts/subscriptions per environment
+- [ ] Network isolation confirmed — no cross-environment VPC peering or transit routes
+- [ ] Secrets isolation confirmed — separate secrets stores per environment, no shared credentials
+- [ ] IAM isolation confirmed — no cross-environment role assumptions (except audited break-glass)
+- [ ] State isolation confirmed — separate IaC state backends per environment
 - [ ] Environment parity rules defined (identical vs different)
 - [ ] Configuration management strategy documented
-- [ ] Secrets management strategy defined (backend, rotation, injection)
+- [ ] Secrets management strategy defined (backend, rotation, injection) per environment
+- [ ] Promotion gates defined at every environment boundary
+- [ ] Production signoff requirements documented (reviewer who did not author the change)
+- [ ] Hotfix pipeline path defined with minimum gates
 - [ ] Cost management approach documented (non-prod controls, prod optimization)
+
+**Change Control Gates:**
+
+- [ ] All infrastructure changes flow through pipelines — no manual provisioning paths
+- [ ] No-bypass enforcement documented — pipeline prevents skipping gates even for admins
+- [ ] Direct production access disabled or restricted to read-only with audit logging
+- [ ] Rollback procedures are pipeline-driven, not manual
+- [ ] Drift detection configured with alerting for unauthorized changes
 
 **Network Architecture Gates:**
 
@@ -84,6 +100,17 @@ Check that all infrastructure decisions work together:
 - Are cost controls consistent across IaC and environment sections?
 - Does drift detection cover both IaC resources and container configuration?
 - Are security decisions consistent across network, container, and secrets sections?
+
+**DevOps Anti-Pattern Scan:**
+
+- Are there any snowflake environments (manually built or diverged from IaC)?
+- Is any infrastructure shared across SDLC environment boundaries?
+- Are there any manual change paths (console, SSH, direct API) that bypass pipelines?
+- Are any secrets hardcoded in code, config, or pipeline definitions?
+- Can code reach production without passing through all environments and quality gates?
+- Are there inconsistencies between staging and production topology?
+- Are rollback procedures manual rather than pipeline-driven?
+- Is there unaudited production access?
 
 ### 3. Architecture Alignment
 
