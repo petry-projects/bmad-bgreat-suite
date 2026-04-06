@@ -115,7 +115,7 @@ completedWorkflows: []
 
 **Overall Status**: NOT READY
 
-> Update this status to READY when all four workflow plans are complete, cross-references are consistent, and no critical gaps remain.
+> Update this status to READY when all five workflow plans are complete, cross-references are consistent, and no critical gaps remain.
 
 ## 4. Gap Analysis
 
