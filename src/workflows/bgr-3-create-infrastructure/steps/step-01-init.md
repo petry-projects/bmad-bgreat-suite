@@ -55,6 +55,9 @@ Check `{bgr_artifacts}/` for previously completed BGreat workflow outputs:
 - `*observability*.md` — If completed, load metrics strategy and SLO definitions to inform monitoring targets, agent deployment requirements, and network egress for telemetry data
 - `*incident-response*.md` — If completed, load severity classification and on-call procedures to inform environment isolation requirements and access control decisions
 - `*pipeline*.md` — If completed, load CI/CD platform and deployment strategy to inform runner infrastructure, registry placement, and environment provisioning needs
+- `*security-plan*.md` — If completed, note network segmentation requirements, encryption-at-rest mandates, IAM strategy, and compliance constraints that infrastructure must enforce
+- `*disaster-recovery*.md` — If completed, note RTO/RPO targets that inform multi-region topology, backup storage requirements, and failover network architecture
+- `*capacity-plan*.md` — If completed, note growth projections that inform initial sizing, auto-scaling requirements, and reserved capacity commitments
 
 For each completed plan found:
 - Load the document and extract key decisions relevant to infrastructure planning
