@@ -1,6 +1,7 @@
 ---
 status: complete
-generatedAt: ""
+createdDate: ""
+lastUpdated: ""
 ---
 
 # Operations Review Report
@@ -25,7 +26,7 @@ generatedAt: ""
 | Security Plan | | |
 | Production Readiness Checklist | | |
 
-**Artifacts found**: 0 / 7
+**Artifacts found**: 0 / 8
 
 ## 3. Consistency Checks
 
