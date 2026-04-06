@@ -11,7 +11,7 @@ The BMad BGreat Suite is a BMAD Method extension module providing specialized AI
 - **Config variables:** resolved from `{project-root}/_bmad/bgr/config.yaml`
 - **Output:** planning artifacts saved to `{bgr_artifacts}/`
 
-```
+```text
 src/
 ├── agents/           # Agent personas (SKILL.md + manifest)
 ├── workflows/        # Guided multi-step workflows
@@ -59,17 +59,17 @@ Register in `src/module-help.csv` with correct phase, dependencies, and menu cod
 
 ## Step File Contract
 
-Every step file must include these sections in order:
+New step files should follow this structure (existing files may vary — use newer workflows like infrastructure or capacity plan as references):
 
 1. **MANDATORY EXECUTION RULES** — behavioral constraints (no content without user input, read complete step, facilitator role)
 2. **EXECUTION PROTOCOLS** — action requirements (show analysis, update frontmatter, gate next step)
-3. **CONTEXT BOUNDARIES** — what's in scope (workflow.md variables, output document, frontmatter state)
-4. Sequential numbered task sections
-5. Content generation template
+3. **CONTEXT BOUNDARIES** — what's in scope (loaded documents, frontmatter state)
+4. Sequential numbered task sections with discovery questions and decision tables
+5. Content generation template matching the output template sections
 6. **[C]ontinue / [R]evise menu** — halt for user input before proceeding
 7. **SUCCESS METRICS** and **FAILURE MODES**
 
-Update `stepsCompleted` as a numeric array (e.g., `[1, 2, 3]`) before transitioning to the next step.
+Update `stepsCompleted` as a numeric array (e.g., `[1, 2, 3]`) before transitioning. Some older workflows use string step IDs — numeric arrays are the preferred convention going forward.
 
 ## Frontmatter Schema
 
@@ -77,15 +77,14 @@ All output templates must include this YAML frontmatter:
 
 ```yaml
 ---
-status: draft                # draft | in-progress | complete
+status: draft                # draft | complete | approved
 stepsCompleted: []           # numeric array, e.g. [1, 2, 3]
 createdDate: ""
 lastUpdated: ""
-inputDocuments: []           # optional: discovered input docs
+inputDocuments: []           # discovered input docs (allowed empty)
+crossWorkflowContext: []     # cross-workflow references (allowed empty)
 ---
 ```
-
-Optional fields: `crossWorkflowContext`
 
 ## Module-Help.csv Format
 
@@ -124,7 +123,7 @@ Optional fields: `crossWorkflowContext`
 
 - Read 2+ existing reference workflows before writing new ones
 - Follow all naming conventions and structural patterns documented above
-- Run `bash tools/validate-skills.sh` if available
+- Run `bash tools/validate-skills.sh` before submitting (added in PR #66)
 - AI-generated contributions receive the same review scrutiny as human contributions
 
 ## PR Checklist
