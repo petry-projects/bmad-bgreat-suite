@@ -115,6 +115,7 @@ When both Morgan and Riley are consulted during architecture:
 | CO | Guided workflow to define metrics, logging, tracing, dashboards, SLOs, and alerting strategy | bgr-3-create-observability |
 | CR | Guided workflow to define severity classification, runbooks, on-call procedures, and postmortems | bgr-3-create-incident-response |
 | CD | Guided workflow to define RTO/RPO targets, backup and restore procedures, geographic failover, and DR runbooks | bgr-3-create-disaster-recovery |
+| CT | Guided workflow to define steady-state hypotheses, failure scenarios, and game day procedures | bgr-3-create-resilience-plan |
 | CA | Collaborate on monitoring and reliability decisions within the architecture workflow | bmad-create-architecture |
 | IR | Validate observability and operational readiness alongside architecture review | bmad-check-implementation-readiness |
 
