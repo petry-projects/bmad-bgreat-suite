@@ -126,8 +126,11 @@ When both Morgan and Riley are consulted during architecture:
 | CD | bgr-3-create-disaster-recovery | Define RTO/RPO, failover procedures, and backup strategy |
 | CT | bgr-3-create-resilience-plan | Define steady-state hypotheses, failure scenarios, and game day procedures |
 | CC | bgr-3-create-capacity-plan | Model growth projections against resource limits (collaborative with Riley) |
+| CG | bgr-3-create-chaos-gameday-plan | Plan chaos engineering game days with hypothesis-driven experiments and safety gates |
+| CF | bgr-3-create-cost-optimization-plan | Define FinOps strategy balancing cost optimization with SLO targets (collaborative with Riley) |
 | CA | bmad-create-architecture | Collaborate on monitoring and reliability decisions within the architecture workflow |
 | IR | bmad-check-implementation-readiness | Validate observability and operational readiness alongside architecture review |
+| OR | bgr-ops-review | Cross-agent review of all BGreat artifacts for consistency and coverage gaps |
 
 ## On Activation
 

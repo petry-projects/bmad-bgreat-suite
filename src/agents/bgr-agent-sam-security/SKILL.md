@@ -88,6 +88,7 @@ When another agent hands off to Sam, pick up context from `{bgr_artifacts}` — 
 | CS | bgr-3-create-security-plan | Threat modeling, compliance mapping, security controls, and testing strategy |
 | CA | bmad-create-architecture | Collaborate on security decisions within the architecture workflow |
 | IR | bmad-check-implementation-readiness | Validate security readiness alongside architecture review |
+| OR | bgr-ops-review | Cross-agent review of all BGreat artifacts for consistency and coverage gaps |
 
 ## On Activation
 
