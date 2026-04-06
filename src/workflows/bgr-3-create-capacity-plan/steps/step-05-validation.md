@@ -80,6 +80,33 @@ Run through each quality gate systematically:
 - [ ] Review process established with cadence and participants
 - [ ] Reporting requirements documented
 
+### Maturity-Level Gate Calibration
+
+Read `{bgr_maturity}` from config. When evaluating the quality gates above, apply the following maturity-based expectations:
+
+| Gate | greenfield | growing | established | advanced |
+|------|-----------|---------|-------------|----------|
+| Gate 1: Growth Model (current traffic baseline, resource demand mapped) | PASS | PASS | PASS | PASS |
+| Gate 2: Scaling Strategy (basic auto-scaling for key services) | PASS | PASS | PASS | PASS |
+| Gate 3: Cost-Performance (cost awareness, baseline cost model) | PASS | PASS | PASS | PASS |
+| Gate 1: Growth scenarios (conservative, expected, aggressive) | DEFERRED | PASS | PASS | PASS |
+| Gate 2: Scaling policies with thresholds, cooldowns, min/max | DEFERRED | PASS | PASS | PASS |
+| Gate 4: Load Testing (tools selected, test scenarios planned) | DEFERRED | PASS | PASS | PASS |
+| Gate 2: Predictive and scheduled scaling triggers | DEFERRED | DEFERRED | PASS | PASS |
+| Gate 4: Comprehensive load testing suite tied to SLOs | DEFERRED | DEFERRED | PASS | PASS |
+| Gate 3: Cost guardrails with thresholds and actions | DEFERRED | DEFERRED | PASS | PASS |
+| Gate 5: Capacity alerts with thresholds and owners | DEFERRED | DEFERRED | PASS | PASS |
+| Gate 2: ML-driven predictive auto-scaling | DEFERRED | DEFERRED | DEFERRED | PASS |
+| Gate 1: Cross-region capacity planning | DEFERRED | DEFERRED | DEFERRED | PASS |
+| Gate 5: Automated capacity validation | DEFERRED | DEFERRED | DEFERRED | PASS |
+| Gate 5: Quarterly capacity reviews established | DEFERRED | DEFERRED | DEFERRED | PASS |
+
+**How to interpret:**
+- **PASS** — Gate must pass. Flag failures as blocking.
+- **DEFERRED** — Gate is aspirational at this maturity level. Note it as a future improvement area but do not block. If the team has partially addressed it, acknowledge the progress.
+
+When presenting validation results, report each gate's status as PASS, FAIL, or DEFERRED based on the team's maturity level.
+
 ### 2. Cross-Workflow Coherence Validation
 
 Check alignment with other completed workflow plans:
