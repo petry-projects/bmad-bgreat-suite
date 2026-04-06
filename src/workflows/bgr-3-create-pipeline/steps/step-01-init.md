@@ -84,6 +84,6 @@ Ask the user if they are ready to begin designing the pipeline architecture.
 - **[C]ontinue** — Proceed to pipeline architecture design
 - **[R]evise** — Adjust initialization or provide missing documents
 
-🔄 **Before transitioning:** Update `stepsCompleted` in frontmatter to include `"step-01-init"`.
+🔄 **Before transitioning:** Update frontmatter `stepsCompleted: [1]`.
 
 ➡️ **NEXT:** `./step-02-pipeline-architecture.md`
