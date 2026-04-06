@@ -1,4 +1,4 @@
-# Step 1: Observability Workflow Initialization
+# Step 1: Resilience Testing Plan Workflow Initialization
 
 ## MANDATORY EXECUTION RULES (READ FIRST):
 
@@ -28,7 +28,7 @@
 
 ## YOUR TASK:
 
-Initialize the Observability workflow by detecting continuation state, discovering input documents, and setting up the document for collaborative observability planning.
+Initialize the Resilience Testing Plan workflow by detecting continuation state, discovering input documents, and setting up the document for collaborative resilience planning.
 
 ## INITIALIZATION SEQUENCE:
 
@@ -36,7 +36,7 @@ Initialize the Observability workflow by detecting continuation state, discoveri
 
 First, check if the output document already exists:
 
-- Look for existing {bgr_artifacts}/`*observability*.md`
+- Look for existing {bgr_artifacts}/`*resilience*`
 - If exists, read the complete file(s) including frontmatter
 - If not exists, this is a fresh workflow
 
@@ -52,17 +52,15 @@ Look for `{bgr_artifacts}/production-readiness-checklist.md`:
 
 Check `{bgr_artifacts}/` for previously completed BGreat workflow outputs:
 
-- `*incident-response*.md` — If completed, note severity classification and alerting thresholds that observability should align with
-- `*infrastructure*.md` — If completed, note environment topology and monitoring targets for instrumentation planning
-- `*pipeline*.md` — If completed, note deployment strategy and post-deploy verification needs
-- `*security-plan*.md` — If completed, note security monitoring requirements, compliance audit logging needs, and authentication event tracking that observability must support
-- `*disaster-recovery*.md` — If completed, note RTO/RPO targets that inform SLO definitions, and failover scenarios that need monitoring coverage
-- `*capacity-plan*.md` — If completed, note scaling triggers and metrics that observability must track, and load testing verification requirements
+- `*observability*.md` — If completed, note SLO targets, metrics definitions, and alerting thresholds that resilience testing should validate
+- `*incident-response*.md` — If completed, note severity classification and runbook procedures that game days should exercise
+- `*infrastructure*.md` — If completed, note environment topology and failure domains for experiment design
+- `*pipeline*.md` — If completed, note rollback mechanisms, canary strategy, and deployment gates that experiments should validate
 
 For each completed plan found:
-- Load the document and extract key decisions relevant to observability planning
-- Surface these as context during the workflow (e.g., "The Infrastructure Plan specifies Kubernetes on AWS — this informs our metrics collection approach")
-- Track loaded plans in frontmatter `crossWorkflowContext` array. Each entry should include a `workflow` field identifying the source (e.g., 'observability', 'infrastructure', 'pipeline'). Before adding an entry, check if `crossWorkflowContext` already contains an entry with the same `workflow` field value -- if found, update it with the latest decisions; if not found, append a new entry (upsert by `workflow` field).
+- Load the document and extract key decisions relevant to resilience planning
+- Surface these as context during the workflow (e.g., "The Observability Plan defines SLOs for the checkout service — these become steady-state hypotheses for chaos experiments")
+- Track loaded plans in frontmatter `crossWorkflowContext` array. Each entry should include a `workflow` field identifying the source (e.g., 'observability', 'infrastructure', 'incident-response'). Before adding an entry, check if `crossWorkflowContext` already contains an entry with the same `workflow` field value -- if found, update it with the latest decisions; if not found, append a new entry (upsert by `workflow` field).
 
 ### 4. Handle Continuation (If Document Exists)
 
@@ -86,10 +84,11 @@ Discover and load context documents using smart discovery. Documents can be in t
 Also - when searching - documents can be a single markdown file, or a folder with an index and multiple files. For example, if searching for `*foo*.md` and not found, also search for a folder called *foo*/index.md (which indicates sharded content)
 
 Try to discover the following:
-- Architecture Document (`*architecture*.md`)
-- Product Requirements Document (`*prd*.md`)
-- Infrastructure Document (`*infrastructure*.md`)
-- Project Context (`**/project-context.md`)
+- Architecture Document (`*architecture*.md`) — **REQUIRED**
+- Observability Plan (`*observability*.md`) — Recommended
+- Incident Response Plan (`*incident-response*.md`) — Recommended
+- Infrastructure Plan (`*infrastructure*.md`) — Recommended
+- Pipeline Plan (`*pipeline*.md`) — Recommended
 
 <critical>Confirm what you have found with the user, along with asking if the user wants to provide anything else. Only after this confirmation will you proceed to follow the loading rules</critical>
 
@@ -107,17 +106,18 @@ Before proceeding, verify we have the essential inputs:
 
 **Architecture Validation:**
 
-- If no Architecture document found: "Observability requires architecture decisions. Please run the architecture workflow first."
+- If no Architecture document found: "Resilience testing requires architecture decisions to identify failure domains. Please run the architecture workflow first."
 - Do NOT proceed without an Architecture document
 
 **Other Input that might exist:**
 
-- Infrastructure Document: "Provides infrastructure context for monitoring targets"
-- PRD: "Provides business context for SLO definition"
+- Observability Plan: "Provides SLO targets and metrics for steady-state hypothesis definition"
+- Incident Response Plan: "Provides severity classification and runbooks for game day exercise design"
+- Infrastructure Plan: "Provides environment topology for failure scenario mapping"
 
 #### C. Create Initial Document
 
-Copy the template from `../templates/observability-plan-template.md` to `{bgr_artifacts}/observability.md`
+Copy the template from `../templates/resilience-plan-template.md` to `{bgr_artifacts}/resilience-plan.md`
 
 #### D. Complete Initialization and Report
 
@@ -125,25 +125,25 @@ Complete setup and report to user:
 
 **Document Setup:**
 
-- Created: `{bgr_artifacts}/observability.md` from template
+- Created: `{bgr_artifacts}/resilience-plan.md` from template
 - Initialized frontmatter with workflow state
 
 **Input Documents Discovered:**
 Report what was found:
-"Welcome {{user_name}}! I've set up your Observability workspace for {{project_name}}.
+"Welcome {{user_name}}! I've set up your Resilience Testing Plan workspace for {{project_name}}.
 
 **Documents Found:**
 
 - Architecture: {number of architecture files loaded or "None found - REQUIRED"}
-- Infrastructure: {number of infrastructure files loaded or "None found"}
-- PRD: {number of PRD files loaded or "None found"}
-- Project context: {project_context_rules count of rules for AI agents found}
+- Observability Plan: {number of observability files loaded or "None found"}
+- Incident Response Plan: {number of incident response files loaded or "None found"}
+- Infrastructure Plan: {number of infrastructure files loaded or "None found"}
 
 **Files loaded:** {list of specific file names or "No additional documents found"}
 
-Ready to begin observability planning. Do you have any other documents you'd like me to include?
+Ready to begin resilience testing planning. Do you have any other documents you'd like me to include?
 
-[C] Continue to current state assessment
+[C] Continue to steady-state hypothesis definition
 
 ## SUCCESS METRICS:
 
@@ -171,6 +171,6 @@ Ready to begin observability planning. Do you have any other documents you'd lik
 
 ## NEXT STEP:
 
-After user selects [C] to continue, only after ensuring all the template output has been created, then load `./step-02-current-state.md` to assess the current observability landscape.
+After user selects [C] to continue, only after ensuring all the template output has been created, then load `./step-02-steady-state.md` to begin defining steady-state hypotheses.
 
 Remember: Do NOT proceed to step-02 until user explicitly selects [C] from the menu and setup is confirmed!

@@ -43,6 +43,7 @@ This uses **micro-file architecture** for disciplined execution:
    - Use `{document_output_language}` for output documents
    - Use `{bgr_artifacts}` for output location and artifact scanning
    - Use `{project_knowledge}` for additional context scanning
+   - Use `{bgr_maturity}` to calibrate quality gate requirements (see step-05-validation.md)
 
 2. EXECUTION
 

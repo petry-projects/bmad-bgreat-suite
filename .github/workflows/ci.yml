@@ -123,3 +123,6 @@ jobs:
             echo "Module-help.csv consistency check passed."
           fi
           exit $status
+
+      - name: Validate skill structural integrity
+        run: bash tools/validate-skills.sh

@@ -80,6 +80,34 @@ Run through each quality gate and assess pass/fail:
 - [ ] War room roles documented
 - [ ] War room procedures and rules established
 
+### Maturity-Level Gate Calibration
+
+Read `{bgr_maturity}` from config. When evaluating the quality gates above, apply the following maturity-based expectations:
+
+| Gate | greenfield | growing | established | advanced |
+|------|-----------|---------|-------------|----------|
+| Severity Classification (severity levels defined, at least SEV1/SEV2) | PASS | PASS | PASS | PASS |
+| Escalation (basic escalation path) | PASS | PASS | PASS | PASS |
+| Runbooks (one emergency runbook, runbook template) | PASS | PASS | PASS | PASS |
+| Postmortems (postmortem template exists) | PASS | PASS | PASS | PASS |
+| Severity Classification (response SLAs for all levels) | DEFERRED | PASS | PASS | PASS |
+| On-Call & Response (on-call rotation, incident commander) | DEFERRED | PASS | PASS | PASS |
+| Communication (templates for internal, customer, stakeholder) | DEFERRED | PASS | PASS | PASS |
+| Runbooks (runbook inventory with owners) | DEFERRED | PASS | PASS | PASS |
+| On-Call & Response (full procedures, fatigue management, handoff) | DEFERRED | DEFERRED | PASS | PASS |
+| War Room (activation criteria, roles, procedures) | DEFERRED | DEFERRED | PASS | PASS |
+| Postmortems (blameless culture principles, action item tracking) | DEFERRED | DEFERRED | PASS | PASS |
+| On-Call & Response (regular training drills) | DEFERRED | DEFERRED | PASS | PASS |
+| Severity Classification (automated severity classification) | DEFERRED | DEFERRED | DEFERRED | PASS |
+| Runbooks (chaos-driven runbook validation) | DEFERRED | DEFERRED | DEFERRED | PASS |
+| Escalation (cross-team incident coordination) | DEFERRED | DEFERRED | DEFERRED | PASS |
+
+**How to interpret:**
+- **PASS** — Gate must pass. Flag failures as blocking.
+- **DEFERRED** — Gate is aspirational at this maturity level. Note it as a future improvement area but do not block. If the team has partially addressed it, acknowledge the progress.
+
+When presenting validation results, report each gate's status as PASS, FAIL, or DEFERRED based on the team's maturity level.
+
 ### 2. Coherence Validation
 
 Check that all sections work together:
@@ -216,9 +244,12 @@ After saving the incident response plan, update the cross-workflow production re
    - If Observability Plan exists and status is `complete`: Verify severity classification aligns with alerting thresholds and burn-rate windows. If status is `draft`, note validation is deferred pending finalization.
    - If Infrastructure Plan exists and status is `complete` or `approved`: Verify runbook procedures reference correct environment topology and access paths. If status is `draft`, note validation is deferred pending finalization.
    - If Pipeline Plan exists and status is `complete`: Verify escalation procedures account for deployment rollback capabilities. If status is `draft`, note validation is deferred pending finalization.
+   - If Security Plan exists and status is `complete`: Verify security incidents are classified within the severity framework and auth breach procedures are documented. If status is `draft`, note validation is deferred.
+   - If Disaster Recovery Plan exists and status is `complete`: Verify disaster scenarios are covered in incident escalation paths and DR failover triggers are defined. If status is `draft`, note validation is deferred.
+   - If Capacity Plan exists and status is `complete`: Verify capacity exhaustion is classified as an incident type with appropriate severity and escalation. If status is `draft`, note validation is deferred.
    - Record any inconsistencies or deferred validations in section **4.3 Consistency Issues**
 5. Update the `completedWorkflows` array in checklist frontmatter to include `incident-response`. Add this workflow only if it is not already present (use set-style uniqueness to prevent duplicate entries on re-run).
-6. If all 4 workflows are now complete, update **Overall Status** to `READY` (if no critical gaps remain). A **critical gap** is a missing workflow artifact, an unresolved cross-plan dependency, or a key decision conflict between plans that would block production readiness (e.g., mismatched environment topologies, missing rollback alignment, or undefined alerting-to-severity mappings).
+6. If all 7 workflows are now complete, update **Overall Status** to `READY` (if no critical gaps remain). A **critical gap** is a missing workflow artifact, an unresolved cross-plan dependency, or a key decision conflict between plans that would block production readiness (e.g., mismatched environment topologies, missing rollback alignment, or undefined alerting-to-severity mappings).
 7. Save the updated checklist
 
 ### 9. Finalization Report
