@@ -1,0 +1,125 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Install PyYAML
+        run: pip install pyyaml
+
+      - name: Validate YAML files
+        run: |
+          status=0
+          while IFS= read -r file; do
+            if ! python3 -c "import yaml, sys; yaml.safe_load(open(sys.argv[1]))" "$file" 2>/dev/null; then
+              echo "::error file=$file::Invalid YAML syntax"
+              status=1
+            fi
+          done < <(find . \( -name '*.yaml' -o -name '*.yml' \) -not -path '*/node_modules/*' -not -path '*/.git/*')
+          exit $status
+
+      - name: Validate module structure
+        run: |
+          status=0
+
+          # Check required module files exist
+          for f in src/module.yaml src/module-help.csv; do
+            if [ ! -f "$f" ]; then
+              echo "::error::Missing required file: $f"
+              status=1
+            fi
+          done
+
+          # Check that agent and workflow directories exist
+          if [ ! -d "src/agents" ]; then
+            echo "::error::Missing src/agents/ directory"
+            status=1
+          fi
+          if [ ! -d "src/workflows" ]; then
+            echo "::error::Missing src/workflows/ directory"
+            status=1
+          fi
+
+          # Check every agent has SKILL.md and manifest
+          for dir in src/agents/*/; do
+            [ -d "$dir" ] || continue
+            if [ ! -f "$dir/SKILL.md" ]; then
+              echo "::error::Missing SKILL.md in $dir"
+              status=1
+            fi
+            if [ ! -f "$dir/bmad-skill-manifest.yaml" ]; then
+              echo "::error::Missing bmad-skill-manifest.yaml in $dir"
+              status=1
+            fi
+          done
+
+          # Check every workflow has required files
+          for dir in src/workflows/*/; do
+            [ -d "$dir" ] || continue
+            if [ ! -f "$dir/SKILL.md" ]; then
+              echo "::error::Missing SKILL.md in $dir"
+              status=1
+            fi
+            if [ ! -f "$dir/workflow.md" ]; then
+              echo "::error::Missing workflow.md in $dir"
+              status=1
+            fi
+            if [ ! -d "$dir/steps" ]; then
+              echo "::error::Missing steps/ directory in $dir"
+              status=1
+            fi
+            if [ ! -d "$dir/templates" ]; then
+              echo "::error::Missing templates/ directory in $dir"
+              status=1
+            fi
+          done
+
+          if [ "$status" -eq 0 ]; then
+            echo "Module structure validation passed."
+          fi
+          exit $status
+
+      - name: Validate module-help.csv consistency
+        run: |
+          status=0
+
+          # Check that every agent directory is registered in module-help.csv
+          for dir in src/agents/*/; do
+            [ -d "$dir" ] || continue
+            skill_name=$(basename "$dir")
+            if ! awk -F',' -v name="$skill_name" 'gsub(/^[[:space:]]+|[[:space:]]+$/, "", $2) == 0 && $2 == name { found=1; exit } END { exit !found }' src/module-help.csv; then
+              echo "::error::Agent $skill_name not registered in module-help.csv"
+              status=1
+            fi
+          done
+
+          # Check that every workflow directory is registered in module-help.csv
+          for dir in src/workflows/*/; do
+            [ -d "$dir" ] || continue
+            skill_name=$(basename "$dir")
+            if ! awk -F',' -v name="$skill_name" 'gsub(/^[[:space:]]+|[[:space:]]+$/, "", $2) == 0 && $2 == name { found=1; exit } END { exit !found }' src/module-help.csv; then
+              echo "::error::Workflow $skill_name not registered in module-help.csv"
+              status=1
+            fi
+          done
+
+          if [ "$status" -eq 0 ]; then
+            echo "Module-help.csv consistency check passed."
+          fi
+          exit $status
