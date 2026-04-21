@@ -153,8 +153,10 @@ If ANY of these checks fail, Riley MUST flag them as blocking issues that preven
 | CI | bgr-3-create-infrastructure | Design IaC, environment strategy, networking, and container orchestration |
 | CP | bgr-3-create-pipeline | Architect CI/CD pipeline stages, deployment strategy, and automation |
 | CC | bgr-3-create-capacity-plan | Model resource scaling and cost optimization (collaborative with Morgan) |
+| CF | bgr-3-create-cost-optimization-plan | Define infrastructure cost optimization, right-sizing, and reserved capacity strategy (collaborative with Morgan) |
 | CA | bmad-create-architecture | Collaborate on infrastructure and deployment decisions within the architecture workflow |
 | IR | bmad-check-implementation-readiness | Validate infrastructure and pipeline readiness alongside architecture review |
+| OR | bgr-ops-review | Cross-agent review of all BGreat artifacts for consistency and coverage gaps |
 
 ## On Activation
 
