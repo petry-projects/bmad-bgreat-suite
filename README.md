@@ -2,7 +2,7 @@
 
 Additional agents to extend the [BMad Method](https://github.com/bmad-code-org/BMAD-METHOD) ecosystem.
 
-Two specialized agents — **Morgan** (SRE Lead) and **Riley** (DevOps Lead) — with four guided workflows that produce production-readiness artifacts alongside your architecture planning.
+Three specialized agents — **Morgan** (SRE Lead), **Riley** (DevOps Lead), and **Sam** (Security Lead) — with ten guided workflows and a cross-agent operations review that produce production-readiness artifacts alongside your architecture planning.
 
 ## What's Included
 
@@ -12,6 +12,7 @@ Two specialized agents — **Morgan** (SRE Lead) and **Riley** (DevOps Lead) —
 |-------|------|-----------|
 | **Morgan** (SRE Lead) | Observability, incident response, SLO/SLI, reliability | Golden Signals, RED/USE methods, OpenTelemetry, error budgets, chaos engineering, blameless postmortems |
 | **Riley** (DevOps Lead) | Infrastructure, CI/CD, deployment, platform engineering | Terraform/Pulumi, Kubernetes, GitOps, pipeline design, blue-green/canary deployments |
+| **Sam** (Security Lead) | Threat modeling, compliance, security architecture | STRIDE/PASTA, SOC2/HIPAA/PCI-DSS/GDPR compliance mapping, supply chain security |
 
 ### Workflows
 
@@ -19,17 +20,33 @@ Two specialized agents — **Morgan** (SRE Lead) and **Riley** (DevOps Lead) —
 |----------|-----------|-------|--------|
 | Create Observability Plan | `CO` | Morgan | Metrics, logging, tracing, SLOs, dashboards, alerting strategy |
 | Create Incident Response Plan | `CR` | Morgan | Severity levels, runbooks, on-call procedures, postmortem templates |
+| Create Disaster Recovery Plan | `CD` | Morgan | RTO/RPO targets, backup/restore, failover procedures, DR runbooks |
+| Create Resilience Testing Plan | `CT` | Morgan | Steady-state hypotheses, failure scenarios, chaos experiment procedures |
+| Create Chaos Game Day Plan | `CG` | Morgan | Hypothesis-driven experiments, blast radius controls, safety gates |
 | Create Infrastructure Plan | `CI` | Riley | IaC strategy, environment topology, containers, networking |
 | Create Pipeline Plan | `CP` | Riley | CI/CD stages, security scanning, deployment strategy, release gates |
+| Create Capacity Plan | `CC` | Morgan + Riley | Growth modeling, auto-scaling, resource scaling, load testing |
+| Create Cost Optimization Plan | `CF` | Riley + Morgan | FinOps strategy, right-sizing, reserved/spot, cost governance |
+| Create Security Plan | `CS` | Sam | Threat model, security controls, auth strategy, compliance mapping |
+| Operations Review | `OR` | Any agent | Cross-agent consistency review, coverage gaps, staleness checks |
 
 ### Recommended Workflow Order
 
 ```
-Architecture (bmm) --> Infrastructure (CI) --> Pipeline (CP)
-                   --> Observability (CO) --> Incident Response (CR)
+Architecture (bmm) --> Observability (CO) --> Incident Response (CR)
+                   |                      --> Chaos Game Day (CG)
+                   --> Infrastructure (CI) --> Pipeline (CP)
+                   |                       --> Disaster Recovery (CD)
+                   |                       --> Capacity Plan (CC)
+                   |                       --> Cost Optimization (CF)
+                   --> Security Plan (CS)
+
+Incident Response (CR) --> Resilience Testing (CT)
+
+After any workflows: Operations Review (OR)
 ```
 
-Both tracks can run in parallel after the architecture is defined.
+Multiple tracks can run in parallel after the architecture is defined.
 
 ## Installation
 
@@ -56,7 +73,7 @@ During installation, the module will ask:
 - **cloud_preference** — Primary cloud provider
 - **container_orchestration** — Container platform (Kubernetes, ECS, Cloud Run, etc.)
 
-These settings shape how Morgan and Riley tailor their guidance.
+These settings shape how Morgan, Riley, and Sam tailor their guidance.
 
 ## Usage
 
@@ -65,18 +82,26 @@ These settings shape how Morgan and Riley tailor their guidance.
 From the BMad help menu, select:
 - `MG` — Wake Morgan (SRE Lead)
 - `RL` — Wake Riley (DevOps Lead)
+- `SE` — Wake Sam (Security Lead)
 
 ### Run a workflow directly
 
 Invoke any workflow by menu code:
 - `CO` — Create Observability Plan
 - `CR` — Create Incident Response Plan
+- `CD` — Create Disaster Recovery Plan
+- `CT` — Create Resilience Testing Plan
+- `CG` — Create Chaos Game Day Plan
 - `CI` — Create Infrastructure Plan
 - `CP` — Create Pipeline Plan
+- `CC` — Create Capacity Plan
+- `CF` — Create Cost Optimization Plan
+- `CS` — Create Security Plan
+- `OR` — Operations Review
 
 ### Cross-module collaboration
 
-Morgan and Riley can both invoke the Architecture (`CA`) and Implementation Readiness (`IR`) workflows from the core BMad Method module, bringing their operational expertise into those conversations.
+Morgan, Riley, and Sam can all invoke the Architecture (`CA`) and Implementation Readiness (`IR`) workflows from the core BMad Method module, bringing their operational expertise into those conversations.
 
 ## Module Structure
 
@@ -87,11 +112,18 @@ src/
   agents/
     bgr-agent-morgan-sre/  # SRE Lead persona
     bgr-agent-riley-devops/# DevOps Lead persona
+    bgr-agent-sam-security/# Security Lead persona
   workflows/
     bgr-3-create-observability/
     bgr-3-create-incident-response/
+    bgr-3-create-disaster-recovery/
+    bgr-3-create-resilience-plan/
+    bgr-3-create-chaos-gameday-plan/
     bgr-3-create-infrastructure/
     bgr-3-create-pipeline/
+    bgr-3-create-capacity-plan/
+    bgr-3-create-cost-optimization-plan/
+    bgr-3-create-security-plan/
 ```
 
 Each workflow follows BMAD's micro-file architecture: a `workflow.md` orchestrator, sequential `steps/` for guided discovery, and `templates/` for output documents.
