@@ -112,7 +112,7 @@ Read `{bgr_maturity}` from config. When evaluating the quality gates above, appl
 
 When presenting validation results, report each gate's status as PASS, FAIL, or DEFERRED based on the team's maturity level.
 
-### 2. Coherence Validation
+### 2. Internal Coherence Validation
 
 Check that all infrastructure decisions work together:
 
@@ -140,6 +140,43 @@ Check that all infrastructure decisions work together:
 - Are there inconsistencies between staging and production topology?
 - Are rollback procedures manual rather than pipeline-driven?
 - Is there unaudited production access?
+
+### 2b. Cross-Workflow Coherence Validation
+
+Check alignment with other finalized workflow plans. For each plan, verify its `status` field before validating. If status is `draft`, note validation is deferred pending finalization.
+
+**If Security Plan exists and status is `complete`:**
+- Does the network architecture enforce the security plan's segmentation requirements?
+- Are encryption mandates (at rest, in transit) reflected in infrastructure provisioning?
+- Do IAM and access controls align with the security plan's trust boundaries?
+- Is secrets management consistent with the security plan's secret rotation and storage requirements?
+
+**If Disaster Recovery Plan exists and status is `complete`:**
+- Does the infrastructure topology support DR failover targets (multi-region, multi-AZ)?
+- Is backup storage provisioned according to DR plan's RPO requirements?
+- Are DR environments consistent with primary environment architecture?
+- Does IaC support rapid DR environment provisioning and teardown?
+
+**If Capacity Plan exists and status is `complete`:**
+- Does infrastructure sizing account for the capacity plan's growth projections?
+- Is auto-scaling provisioned for services identified in the capacity plan?
+- Are reserved capacity commitments aligned with infrastructure cost plans?
+- Does the environment topology support the capacity plan's load testing requirements?
+
+**If Observability Plan exists and status is `complete`:**
+- Are resources provisioned for monitoring agents, collectors, and telemetry data egress?
+- Does the network architecture allow observability tool traffic (metrics, logs, traces)?
+- Are storage and compute resources allocated for observability backends?
+
+**If Pipeline Plan exists and status is `complete`:**
+- Does the environment topology match pipeline deployment targets?
+- Is runner/agent infrastructure provisioned for CI/CD workloads?
+- Are promotion gates between environments consistent with pipeline stage definitions?
+
+**If Incident Response Plan exists and status is `complete`:**
+- Do environment access controls support on-call responder access procedures?
+- Are break-glass access paths documented and audited per incident response requirements?
+- Does the infrastructure support war room tooling and communication channels?
 
 ### 3. Architecture Alignment
 
