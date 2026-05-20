@@ -6,3 +6,6 @@ _bmad-output/
 .claude/skills/
 .cursor/skills/
 .dev-lead/
+.env
+*.pem
+*.key
