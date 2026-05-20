@@ -126,3 +126,28 @@ jobs:
 
       - name: Validate skill structural integrity
         run: bash tools/validate-skills.sh
+
+  secret-scan:
+    name: Secret scan (gitleaks)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout (full history)
+        # Pin to SHA per Action Pinning Policy (ci-standards.md#action-pinning-policy).
+        # Look up current SHA: gh api repos/actions/checkout/git/refs/tags/v4 --jq '.object.sha'
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+
+      - name: Install gitleaks
+        # gitleaks-action v2+ requires a paid license for GitHub organizations;
+        # install the FOSS binary directly instead (MIT-licensed, no license key needed).
+        run: |
+          VERSION=v8.24.0
+          curl -sSfL "https://github.com/gitleaks/gitleaks/releases/download/${VERSION}/gitleaks_8.24.0_linux_x64.tar.gz" \
+            | tar xz -C /tmp gitleaks
+          sudo mv /tmp/gitleaks /usr/local/bin/gitleaks
+
+      - name: Run gitleaks
+        run: gitleaks detect --source . --redact --verbose --exit-code 1
