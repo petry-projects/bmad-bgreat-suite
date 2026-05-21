@@ -6,12 +6,12 @@
 # AGENTS — READ BEFORE EDITING:
 #   • This file is a THIN CALLER STUB. All eligibility logic and the GitHub
 #     App token dance live in the reusable workflow above.
-#   • You MAY change: nothing in this file in normal use. Adopt verbatim.
+#   • You MAY change: the SHA in the `uses:` line when upgrading the reusable
+#     workflow version (bump SHA to the desired tag/commit of petry-projects/.github).
 #   • You MUST NOT change: trigger event (must be `pull_request_target`),
-#     the `uses:` line, `secrets: inherit`, or the job-level `permissions:`
-#     block — reusable workflows can be granted no more permissions than the
-#     calling job has, so removing the stanza breaks the reusable's gh API
-#     calls.
+#     `secrets: inherit`, or the job-level `permissions:` block — reusable
+#     workflows can be granted no more permissions than the calling job has,
+#     so removing the stanza breaks the reusable's gh API calls.
 #   • If you need different behaviour, open a PR against the reusable in the
 #     central repo.
 # ─────────────────────────────────────────────────────────────────────────────
@@ -35,5 +35,5 @@ jobs:
     permissions:
       contents: read
       pull-requests: read
-    uses: petry-projects/.github/.github/workflows/dependabot-automerge-reusable.yml@v1
+    uses: petry-projects/.github/.github/workflows/dependabot-automerge-reusable.yml@d3d768dabb7f28cc63283cdfe48630da53700e50 # v1
     secrets: inherit
