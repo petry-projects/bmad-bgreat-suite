@@ -23,15 +23,16 @@ fi
 echo "Applying repository settings to ${REPO}..."
 
 # ── Check-suite auto-trigger ──────────────────────────────────────────────────
-# The Claude GitHub App (ID 1236702) auto-trigger creates a queued check suite
-# on every push.  That suite is never completed, permanently blocking auto-merge.
-# Disable it so GitHub stops enqueuing phantom check suites for this app.
+# Disable auto-trigger for apps that enqueue phantom check suites on every push
+# but never complete them, permanently blocking auto-merge:
+#   - Claude GitHub App (ID 1236702)
+#   - CodeRabbit (ID 347564)
 gh api \
   --method PATCH \
   --header "Accept: application/vnd.github+json" \
   "/repos/${REPO}/check-suites/preferences" \
   --input - <<'JSON'
-{"auto_trigger_checks":[{"app_id":1236702,"setting":false}]}
+{"auto_trigger_checks":[{"app_id":1236702,"setting":false},{"app_id":347564,"setting":false}]}
 JSON
 
-echo "Done: disabled check-suite auto-trigger for Claude app (1236702) on ${REPO}."
+echo "Done: disabled check-suite auto-trigger for Claude app (1236702) and CodeRabbit (347564) on ${REPO}."
