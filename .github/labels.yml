@@ -52,3 +52,7 @@
 - name: scorecard
   color: "0075ca"
   description: OpenSSF Scorecard security compliance
+
+- name: in-progress
+  color: "fbca04"
+  description: An agent is actively working this issue
