@@ -406,3 +406,4 @@ _bmad-output/
 .env
 *.pem
 *.key
+.dev-lead/
