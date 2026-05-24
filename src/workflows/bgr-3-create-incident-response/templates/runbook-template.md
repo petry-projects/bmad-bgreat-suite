@@ -1,3 +1,8 @@
+---
+status: draft
+stepsCompleted: []
+---
+
 # Runbook: {service} — {failure_mode}
 
 ## Summary
