@@ -28,6 +28,8 @@ on:
   push:
     branches:
       - main
+  schedule:
+    - cron: '0 */4 * * *' # every 4 hours — safety net when no pushes to main trigger the chain
   workflow_dispatch: # allow manual trigger to flush Dependabot PR queue
 
 concurrency:
@@ -41,7 +43,7 @@ jobs:
     permissions:
       contents: write   # update-branch via GITHUB_TOKEN (may touch .github/workflows/)
       pull-requests: write  # re-approve PRs after branch update
-    uses: petry-projects/.github/.github/workflows/dependabot-rebase-reusable.yml@9a694e5798ebb596476e6eda80f11e832d8fd0a9 # main
+    uses: petry-projects/.github/.github/workflows/dependabot-rebase-reusable.yml@b51e2edf830ea085be0277bcf3174c7b3ec8f958 # main
     secrets:
       APP_ID: ${{ secrets.APP_ID }}
       APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
