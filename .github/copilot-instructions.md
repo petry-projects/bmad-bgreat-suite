@@ -4,7 +4,7 @@
 
 ## About
 
-BMad BGreat Suite is a custom BMad Method plugin providing three specialized agents (Morgan SRE Lead, Riley DevOps Lead, Sam Security) and guided operational workflows (Observability Plan, Incident Response Plan, Infrastructure Plan, Pipeline Plan, Chaos Gameday Plan, Capacity Plan, Cost Optimization Plan) for the petry-projects org.
+BMad BGreat Suite is a custom BMad Method plugin providing three specialized agents (Morgan SRE Lead, Riley DevOps Lead, Sam Security Lead) and guided operational workflows (Observability Plan, Incident Response Plan, Disaster Recovery Plan, Resilience Testing Plan, Chaos Game Day Plan, Infrastructure Plan, Pipeline Plan, Capacity Plan, Cost Optimization Plan, Security Plan) plus a cross-agent Operations Review skill for the petry-projects org.
 
 ## Tech Stack
 
@@ -28,10 +28,13 @@ src/
     bgr-3-create-capacity-plan/
     bgr-3-create-chaos-gameday-plan/
     bgr-3-create-cost-optimization-plan/
-    bgr-3-create-infrastructure-plan/
-    bgr-3-create-observability-plan/
-    bgr-3-create-incident-response-plan/
-    bgr-3-create-pipeline-plan/
+    bgr-3-create-disaster-recovery/
+    bgr-3-create-incident-response/
+    bgr-3-create-infrastructure/
+    bgr-3-create-observability/
+    bgr-3-create-pipeline/
+    bgr-3-create-resilience-plan/
+    bgr-3-create-security-plan/
   templates/
     bgr-production-readiness-checklist-template.md
   module.yaml                 # BMad module manifest
@@ -41,7 +44,8 @@ src/
 ## Local Dev Commands
 
 - Install plugin: `npx bmad-method install --custom-content /path/to/bmad-bgreat-suite/src`
-- No build, test, or lint commands (content-only package)
+- No build or test commands (content-only package)
+- Lint docs (if needed): use the repository's existing markdownlint configuration
 
 ## Required Environment Variables
 
