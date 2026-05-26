@@ -1,0 +1,70 @@
+# Copilot Instructions — BMad BGreat Suite
+
+## About
+
+BMad BGreat Suite is a BMAD Method extension module providing three specialized AI agents (Morgan/SRE, Riley/DevOps, Sam/Security) and eight guided workflows for production readiness planning.
+
+## Tech Stack
+
+- **Type:** Content-only (Markdown + YAML — no compiled code)
+- **Runtime:** None (workflow definitions executed by the BMAD Method runtime)
+- **Validation:** PyYAML (`pip install pyyaml`) for YAML syntax checks
+- **CI:** GitHub Actions — validate YAML, module structure, module-help.csv, skill integrity, gitleaks secret scan
+
+## Project Structure
+
+```
+src/
+├── agents/           # Agent persona definitions (SKILL.md + bmad-skill-manifest.yaml)
+├── workflows/        # Guided multi-step workflows
+│   └── {name}/
+│       ├── SKILL.md
+│       ├── bmad-skill-manifest.yaml
+│       ├── workflow.md
+│       ├── steps/        # step-01-init.md, step-02-*.md …
+│       └── templates/    # Output document templates
+├── templates/        # Shared templates (production readiness checklist)
+├── module.yaml       # Module configuration
+└── module-help.csv   # Skill registry with menu codes and dependencies
+```
+
+## Local Dev Commands
+
+```bash
+# Install validation dependency
+pip install pyyaml
+
+# Validate all YAML files
+find . \( -name '*.yaml' -o -name '*.yml' \) -not -path '*/.git/*' \
+  -exec python3 -c "import yaml, sys; yaml.safe_load(open(sys.argv[1]))" {} \;
+
+# Validate skill and workflow structural integrity (main test command)
+bash tools/validate-skills.sh
+```
+
+## Required Environment Variables
+
+None — this is a content-only repository with no runtime secrets or API keys.
+
+## Testing Framework
+
+No test runner. Structural validation is performed by `bash tools/validate-skills.sh`, which checks:
+
+- SKILL.md and `bmad-skill-manifest.yaml` present for every agent and workflow
+- `workflow.md`, `steps/`, `templates/` present for every workflow
+- Step file naming convention (`step-NN-*.md`)
+- Relative path references resolve to real files
+- Template frontmatter contains required fields (`status`, `stepsCompleted`)
+- `module-help.csv` menu codes are unique and exactly 2 characters
+- Config variable references exist in `module.yaml`
+
+## Repo-Specific Overrides
+
+- Markdown tables must use standard syntax (`| col | col |`) — no double pipes
+- Template variables use `{{variable}}` or `{variable}` syntax consistently
+- Config variables reference `{bgr_artifacts}`, `{bgr_maturity}`, `{communication_language}`, etc.
+- Step files must include a mandatory execution rules block and present `[C]ontinue / [R]evise` menus
+
+## Organization Standards
+
+See [petry-projects/.github AGENTS.md](https://github.com/petry-projects/.github/blob/main/AGENTS.md) for org-level standards.
