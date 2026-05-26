@@ -13,7 +13,7 @@
 # freely modified on PR branches to adjust triggers for repo-specific needs.
 #
 # REQUIRED secrets: CLAUDE_CODE_OAUTH_TOKEN
-# OPTIONAL secrets: GH_PAT_WORKFLOWS, GOOGLE_API_KEY, GH_PAT
+# OPTIONAL secrets: GH_PAT_WORKFLOWS, GH_PAT
 # ─────────────────────────────────────────────────────────────────────────────
 
 name: Dev-Lead Agent
@@ -36,6 +36,16 @@ on:
     types: [dev-lead-ci-failure]
 
 permissions: {}
+
+concurrency:
+  # One active run per repo; ci-relay (check_run) keeps an ephemeral per-SHA slot
+  # so it can fire immediately without blocking or being blocked by the dispatch queue.
+  group: >-
+    ${{
+      github.event_name == 'check_run' && format('dev-lead-ci-relay-{0}', github.event.check_run.head_sha) ||
+      'dev-lead'
+    }}
+  cancel-in-progress: false
 
 jobs:
   dev-lead:
