@@ -23,7 +23,7 @@ fi
 echo "Check 1: secret_scanning_ai_detection is set to enabled"
 if ! grep -q 'secret_scanning_ai_detection' "$SCRIPT"; then
   error "$SCRIPT does not contain a secret_scanning_ai_detection API call"
-elif ! grep -A5 'secret_scanning_ai_detection' "$SCRIPT" | grep -q 'enabled'; then
+elif ! grep -q '"secret_scanning_ai_detection":{"status":"enabled"}' "$SCRIPT"; then
   error "$SCRIPT references secret_scanning_ai_detection but does not set status to enabled"
 fi
 echo "  done."
