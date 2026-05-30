@@ -127,6 +127,9 @@ jobs:
       - name: Validate skill structural integrity
         run: bash tools/validate-skills.sh
 
+      - name: Validate repo-settings script coverage
+        run: bash tools/test-repo-settings.sh
+
   secret-scan:
     name: Secret scan (gitleaks)
     runs-on: ubuntu-latest
