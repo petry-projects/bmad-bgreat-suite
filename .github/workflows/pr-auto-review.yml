@@ -1,10 +1,30 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# SOURCE OF TRUTH: petry-projects/.github/standards/workflows/pr-auto-review.yml
+# Standard:        petry-projects/.github/standards/pr-review-policy.md
+# Reusable:        petry-projects/.github/.github/workflows/pr-auto-review-reusable.yml
+#
+# AGENTS — READ BEFORE EDITING:
+#   • This file is a THIN CALLER STUB. All approval-gating logic lives in the
+#     reusable workflow above.
+#   • You MAY change: the tag/SHA in the `uses:` line when upgrading the
+#     reusable workflow version (bump to the desired tag/commit of
+#     petry-projects/.github).
+#   • You MUST NOT change: trigger events (required for approval gating to fire
+#     on the correct workflow completions), the `permissions:` blocks, or the
+#     job name (used as a required status check).
+#   • If you need different behaviour, open a PR against the reusable in the
+#     central repo.
+# ─────────────────────────────────────────────────────────────────────────────
+#
+# PR Auto-Review — thin caller for the org-level reusable.
+# To adopt: copy this file to .github/workflows/pr-auto-review.yml in your repo.
+# Required org/repo secrets:
+#   GH_PAT_WORKFLOWS — PAT with workflows scope for approval operations
 name: PR Auto-Review — Ready Check
 
 on:
   workflow_run:
-    workflows: ["CI"]
-    types: [completed]
-  check_suite:
+    workflows: ["CI", "SonarCloud Analysis"]
     types: [completed]
   pull_request_review:
     types: [submitted, dismissed]
