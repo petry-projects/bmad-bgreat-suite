@@ -19,7 +19,7 @@ jobs:
   apply-settings:
     runs-on: ubuntu-latest
     permissions:
-      administration: write  # required to update check-suite preferences
+      administration: write  # required for check-suite preferences and security_and_analysis (secret scanning) PATCH via GITHUB_TOKEN
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v4
       - name: Apply repository settings
