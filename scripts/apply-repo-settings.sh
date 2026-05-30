@@ -40,12 +40,16 @@ echo "Done: disabled check-suite auto-trigger for Claude app (1236702) and CodeR
 # ── Secret scanning — non-provider patterns ───────────────────────────────────
 # Enable detection of non-provider secret patterns (e.g. generic API keys,
 # private tokens) per the push-protection standard.
+# Note: secret_scanning_non_provider_patterns requires GitHub Advanced Security
+# and the caller token must have administration:write on the repo. Both
+# secret_scanning and secret_scanning_non_provider_patterns are patched together
+# so this is idempotent on fresh repos where secret scanning is not yet enabled.
 gh api \
   --method PATCH \
   --header "Accept: application/vnd.github+json" \
   "/repos/${REPO}" \
   --input - <<'JSON'
-{"security_and_analysis":{"secret_scanning_non_provider_patterns":{"status":"enabled"}}}
+{"security_and_analysis":{"secret_scanning":{"status":"enabled"},"secret_scanning_non_provider_patterns":{"status":"enabled"}}}
 JSON
 
 echo "Done: enabled secret_scanning_non_provider_patterns on ${REPO}."

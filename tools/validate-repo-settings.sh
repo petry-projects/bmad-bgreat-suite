@@ -26,7 +26,7 @@ fi
 echo "Check: secret_scanning_non_provider_patterns is enabled in $SCRIPT"
 if ! grep -q 'secret_scanning_non_provider_patterns' "$SCRIPT"; then
   error "$SCRIPT does not configure secret_scanning_non_provider_patterns"
-elif ! grep -A5 'secret_scanning_non_provider_patterns' "$SCRIPT" | grep -q '"enabled"'; then
+elif ! grep -q '"secret_scanning_non_provider_patterns":{"status":"enabled"}' "$SCRIPT"; then
   error "$SCRIPT does not set secret_scanning_non_provider_patterns to \"enabled\""
 fi
 echo "  done."
