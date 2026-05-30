@@ -36,3 +36,16 @@ gh api \
 JSON
 
 echo "Done: disabled check-suite auto-trigger for Claude app (1236702) and CodeRabbit (347564) on ${REPO}."
+
+# ── Secret scanning — non-provider patterns ───────────────────────────────────
+# Enable detection of non-provider secret patterns (e.g. generic API keys,
+# private tokens) per the push-protection standard.
+gh api \
+  --method PATCH \
+  --header "Accept: application/vnd.github+json" \
+  "/repos/${REPO}" \
+  --input - <<'JSON'
+{"security_and_analysis":{"secret_scanning_non_provider_patterns":{"status":"enabled"}}}
+JSON
+
+echo "Done: enabled secret_scanning_non_provider_patterns on ${REPO}."
