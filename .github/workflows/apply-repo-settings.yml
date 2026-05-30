@@ -11,6 +11,9 @@ on:
       - main
     paths:
       - 'scripts/apply-repo-settings.sh'
+  schedule:
+    # Re-apply weekly on Monday at 06:00 UTC so settings cannot drift between pushes.
+    - cron: '0 6 * * 1'
   workflow_dispatch:
 
 permissions: {}
