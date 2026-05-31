@@ -7,7 +7,8 @@
 #   • This file is a THIN CALLER STUB. All rebase/merge serialization logic
 #     lives in the reusable workflow above.
 #   • You MAY change: the ref in the `uses:` line when upgrading the reusable
-#     workflow version (bump to latest commit SHA or tag of petry-projects/.github).
+#     workflow version (bump to latest commit SHA of petry-projects/.github only —
+#     never use a mutable tag; a moved tag silently changes the merge/rebase logic).
 #   • You MUST NOT change: the concurrency group name, the explicit secrets
 #     block, or the job-level `permissions:` block — reusable workflows can be
 #     granted no more permissions than the calling job has, so removing the
