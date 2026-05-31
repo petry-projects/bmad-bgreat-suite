@@ -11,6 +11,7 @@ on:
       - main
     paths:
       - 'scripts/apply-repo-settings.sh'
+      - '.github/workflows/apply-repo-settings.yml'
   workflow_dispatch:
 
 permissions: {}
