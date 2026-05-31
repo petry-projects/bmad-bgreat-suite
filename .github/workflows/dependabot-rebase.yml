@@ -44,7 +44,6 @@ jobs:
   dependabot-rebase:
     permissions:
       pull-requests: write # call update-branch API on behind PRs and merge when ready
-      contents: write # required by the reusable to merge PRs; reusable cannot exceed caller permissions
     uses: petry-projects/.github/.github/workflows/dependabot-rebase-reusable.yml@b51e2edf830ea085be0277bcf3174c7b3ec8f958 # v1
     secrets:
       APP_ID: ${{ secrets.APP_ID }}
