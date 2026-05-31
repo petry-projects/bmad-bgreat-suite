@@ -401,14 +401,14 @@ _bmad-output/
 .claude/skills/
 .cursor/skills/
 .dev-lead/
-
-# Required by push-protection standard (standards/push-protection.md)
-.env
-*.pem
-*.key
 .dev-lead/
-# compliance-ci-trigger
-# ci-trigger-179
+.dev-lead/
+.dev-lead/
+.dev-lead/
+.dev-lead/
+.dev-lead/
+.dev-lead/
+.dev-lead/
 .dev-lead/
 .dev-lead/
 .dev-lead/
