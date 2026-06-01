@@ -16,6 +16,24 @@ echo "=== BMad BGreat Suite — Skill Validator ==="
 echo ""
 
 # ---------------------------------------------------------------------------
+# Check 0: Required root-level files and directories exist
+# (mirrors ci.yml "Validate module structure" checks at lines 41-56)
+# ---------------------------------------------------------------------------
+echo "Check 0: Required root-level files and directories exist"
+for f in "$SRC/module.yaml" "$SRC/module-help.csv"; do
+  if [[ ! -f "$f" ]]; then
+    error "Missing required file: $f"
+  fi
+done
+if [[ ! -d "$SRC/agents" ]]; then
+  error "Missing required directory: $SRC/agents/"
+fi
+if [[ ! -d "$SRC/workflows" ]]; then
+  error "Missing required directory: $SRC/workflows/"
+fi
+echo "  done."
+
+# ---------------------------------------------------------------------------
 # Check 1: Every workflow directory has SKILL.md and bmad-skill-manifest.yaml
 # ---------------------------------------------------------------------------
 echo "Check 1: Workflow directories have SKILL.md and bmad-skill-manifest.yaml"
