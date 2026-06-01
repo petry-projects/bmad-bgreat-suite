@@ -65,6 +65,7 @@ No test runner. Structural validation is performed by `bash tools/validate-skill
 - Step file naming convention (`step-NN-*.md`)
 - Relative path references resolve to real files
 - Template frontmatter contains required fields (`status`, `stepsCompleted`)
+- Every agent and workflow directory is registered in `module-help.csv`
 - `module-help.csv` menu codes are unique and exactly 2 characters
 - Config variable references exist in `module.yaml`
 

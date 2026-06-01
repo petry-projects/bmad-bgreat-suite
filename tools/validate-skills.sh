@@ -234,6 +234,30 @@ done
 echo "  done."
 
 # ---------------------------------------------------------------------------
+# Check 11: Every agent and workflow directory is registered in module-help.csv
+# ---------------------------------------------------------------------------
+echo "Check 11: Agent and workflow directories registered in module-help.csv"
+if [[ -f "$SRC/module-help.csv" ]]; then
+  for dir in "$SRC"/agents/*/; do
+    [[ -d "$dir" ]] || continue
+    skill_name=$(basename "$dir")
+    if ! awk -F',' -v name="$skill_name" '{gsub(/^[[:space:]]+|[[:space:]]+$/, "", $2); if ($2 == name) { found=1; exit }} END { exit !found }' "$SRC/module-help.csv"; then
+      error "Agent '$skill_name' not registered in module-help.csv"
+    fi
+  done
+  for dir in "$SRC"/workflows/*/; do
+    [[ -d "$dir" ]] || continue
+    skill_name=$(basename "$dir")
+    if ! awk -F',' -v name="$skill_name" '{gsub(/^[[:space:]]+|[[:space:]]+$/, "", $2); if ($2 == name) { found=1; exit }} END { exit !found }' "$SRC/module-help.csv"; then
+      error "Workflow '$skill_name' not registered in module-help.csv"
+    fi
+  done
+else
+  error "Missing $SRC/module-help.csv"
+fi
+echo "  done."
+
+# ---------------------------------------------------------------------------
 # Summary
 # ---------------------------------------------------------------------------
 echo ""
