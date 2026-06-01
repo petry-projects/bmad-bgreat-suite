@@ -42,13 +42,14 @@ while IFS= read -r file; do
     status=1
   fi
 done < <(find . \( -name '*.yaml' -o -name '*.yml' \) -not -path '*/.git/*')
-exit $status
 
 # Validate skill and workflow structural integrity (main test command)
-bash tools/validate-skills.sh
+bash tools/validate-skills.sh || status=1
 
 # Validate repo-settings script coverage
-bash tools/test-repo-settings.sh
+bash tools/test-repo-settings.sh || status=1
+
+exit $status
 ```
 
 ## Required Environment Variables
