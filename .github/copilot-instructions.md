@@ -35,11 +35,20 @@ src/
 pip install pyyaml
 
 # Validate all YAML files
-find . \( -name '*.yaml' -o -name '*.yml' \) -not -path '*/.git/*' \
-  -exec python3 -c "import yaml, sys; yaml.safe_load(open(sys.argv[1]))" {} \;
+status=0
+while IFS= read -r file; do
+  if ! python3 -c "import yaml, sys; yaml.safe_load(open(sys.argv[1]))" "$file"; then
+    echo "Invalid YAML: $file"
+    status=1
+  fi
+done < <(find . \( -name '*.yaml' -o -name '*.yml' \) -not -path '*/.git/*')
+exit $status
 
 # Validate skill and workflow structural integrity (main test command)
 bash tools/validate-skills.sh
+
+# Validate repo-settings script coverage
+bash tools/test-repo-settings.sh
 ```
 
 ## Required Environment Variables
