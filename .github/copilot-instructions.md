@@ -41,7 +41,7 @@ while IFS= read -r file; do
     echo "Invalid YAML: $file"
     status=1
   fi
-done < <(find . \( -name '*.yaml' -o -name '*.yml' \) -not -path '*/.git/*')
+done < <(find . \( -name '*.yaml' -o -name '*.yml' \) -not -path '*/node_modules/*' -not -path '*/.git/*')
 
 # Validate skill and workflow structural integrity (main test command)
 bash tools/validate-skills.sh || status=1
