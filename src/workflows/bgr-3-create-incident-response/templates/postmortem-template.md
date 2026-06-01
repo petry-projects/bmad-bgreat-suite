@@ -1,10 +1,14 @@
+---
+status: draft
+stepsCompleted: []
+---
+
 # Postmortem: {incident_title}
 
 - **Date**:
 - **Severity**:
 - **Duration**:
 - **Author**:
-- **Status**: draft / reviewed / complete
 
 ## Incident Summary
 
