@@ -13,7 +13,7 @@ BMad BGreat Suite is a BMAD Method extension module providing three specialized 
 
 ## Project Structure
 
-```
+```text
 src/
 ├── agents/           # Agent persona definitions (SKILL.md + bmad-skill-manifest.yaml)
 ├── workflows/        # Guided multi-step workflows
