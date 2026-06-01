@@ -1,0 +1,28 @@
+# Apply repository settings — enforces check-suite auto-trigger preferences and
+# any other settings defined in scripts/apply-repo-settings.sh.
+#
+# Runs on push to main and on manual dispatch so settings are re-applied
+# automatically after each merge and are recoverable via workflow_dispatch.
+name: Apply repository settings
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'scripts/apply-repo-settings.sh'
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  apply-settings:
+    runs-on: ubuntu-latest
+    permissions:
+      administration: write  # required to update check-suite preferences
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v4
+      - name: Apply repository settings
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: bash scripts/apply-repo-settings.sh "${{ github.repository }}"
