@@ -401,17 +401,6 @@ _bmad-output/
 .claude/skills/
 .cursor/skills/
 .dev-lead/
-
-# Required by push-protection standard (standards/push-protection.md)
-.env
-*.pem
-*.key
-.dev-lead/
-.dev-lead/
-.dev-lead/
-.dev-lead/
-.dev-lead/
-.dev-lead/
 .dev-lead/
 .dev-lead/
 .dev-lead/
