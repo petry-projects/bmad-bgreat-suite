@@ -16,6 +16,24 @@ echo "=== BMad BGreat Suite — Skill Validator ==="
 echo ""
 
 # ---------------------------------------------------------------------------
+# Check 0: Required root-level files and directories exist
+# (mirrors ci.yml "Validate module structure" checks at lines 41-56)
+# ---------------------------------------------------------------------------
+echo "Check 0: Required root-level files and directories exist"
+for f in "$SRC/module.yaml" "$SRC/module-help.csv"; do
+  if [[ ! -f "$f" ]]; then
+    error "Missing required file: $f"
+  fi
+done
+if [[ ! -d "$SRC/agents" ]]; then
+  error "Missing required directory: $SRC/agents/"
+fi
+if [[ ! -d "$SRC/workflows" ]]; then
+  error "Missing required directory: $SRC/workflows/"
+fi
+echo "  done."
+
+# ---------------------------------------------------------------------------
 # Check 1: Every workflow directory has SKILL.md and bmad-skill-manifest.yaml
 # ---------------------------------------------------------------------------
 echo "Check 1: Workflow directories have SKILL.md and bmad-skill-manifest.yaml"
@@ -231,6 +249,38 @@ for stepfile in "$SRC"/workflows/*/steps/*.md "$SRC"/workflows/*/workflow.md "$S
     fi
   done
 done
+echo "  done."
+
+# ---------------------------------------------------------------------------
+# Check 11: Every agent, workflow, and standalone skill directory is registered
+#           in module-help.csv
+# ---------------------------------------------------------------------------
+echo "Check 11: Agent, workflow, and skill directories registered in module-help.csv"
+if [[ -f "$SRC/module-help.csv" ]]; then
+  for dir in "$SRC"/agents/*/; do
+    [[ -d "$dir" ]] || continue
+    skill_name=$(basename "$dir")
+    if ! awk -F',' -v name="$skill_name" '{ gsub(/^[[:space:]]+|[[:space:]]+$/, "", $2); if ($2 == name) { found=1; exit } } END { exit !found }' "$SRC/module-help.csv"; then
+      error "Agent '$skill_name' not registered in module-help.csv"
+    fi
+  done
+  for dir in "$SRC"/workflows/*/; do
+    [[ -d "$dir" ]] || continue
+    skill_name=$(basename "$dir")
+    if ! awk -F',' -v name="$skill_name" '{ gsub(/^[[:space:]]+|[[:space:]]+$/, "", $2); if ($2 == name) { found=1; exit } } END { exit !found }' "$SRC/module-help.csv"; then
+      error "Workflow '$skill_name' not registered in module-help.csv"
+    fi
+  done
+  for dir in "$SRC"/skills/*/; do
+    [[ -d "$dir" ]] || continue
+    skill_name=$(basename "$dir")
+    if ! awk -F',' -v name="$skill_name" '{ gsub(/^[[:space:]]+|[[:space:]]+$/, "", $2); if ($2 == name) { found=1; exit } } END { exit !found }' "$SRC/module-help.csv"; then
+      error "Skill '$skill_name' not registered in module-help.csv"
+    fi
+  done
+else
+  error "Missing $SRC/module-help.csv"
+fi
 echo "  done."
 
 # ---------------------------------------------------------------------------
