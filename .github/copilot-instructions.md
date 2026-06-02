@@ -57,6 +57,16 @@ bash tools/test-repo-settings.sh || status=1
 exit $status
 ```
 
+### Secret Scan (mirrors CI `secret-scan` job)
+
+Run this separately before opening a PR — especially after adding templates, workflow docs, or config examples that might contain accidental credentials. Requires [gitleaks](https://github.com/gitleaks/gitleaks#installing) to be installed locally.
+
+```bash
+gitleaks detect --source . --redact --verbose --exit-code 1
+```
+
+The CI `secret-scan` job (`.github/workflows/ci.yml` lines 133–164) runs this same command and will fail the workflow on any detected secrets. Running it locally first avoids a CI-blocking failure after push.
+
 ## Required Environment Variables
 
 None — this is a content-only repository with no runtime secrets or API keys.
