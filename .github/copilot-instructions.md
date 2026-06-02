@@ -23,6 +23,11 @@ src/
 │       ├── workflow.md
 │       ├── steps/        # step-01-init.md, step-02-*.md …
 │       └── templates/    # Output document templates
+├── skills/           # Standalone skills (single-step, no workflow structure)
+│   └── {name}/
+│       ├── SKILL.md
+│       ├── bmad-skill-manifest.yaml
+│       └── templates/    # Optional output templates
 ├── templates/        # Shared templates (production readiness checklist)
 ├── module.yaml       # Module configuration
 └── module-help.csv   # Skill registry with menu codes and dependencies
@@ -65,7 +70,7 @@ No test runner. Structural validation is performed by `bash tools/validate-skill
 - Step file naming convention (`step-NN-*.md`)
 - Relative path references resolve to real files
 - Template frontmatter contains required fields (`status`, `stepsCompleted`)
-- Every agent and workflow directory is registered in `module-help.csv`
+- Every agent, workflow, and standalone skill directory is registered in `module-help.csv`
 - `module-help.csv` menu codes are unique and exactly 2 characters
 - Config variable references exist in `module.yaml`
 
