@@ -35,7 +35,7 @@ gh api \
 {"auto_trigger_checks":[{"app_id":1236702,"setting":false},{"app_id":347564,"setting":false}]}
 JSON
 
-echo "Done: disabled check-suite auto-trigger for Claude app (1236702) and CodeRabbit (347564) on ${REPO}."
+echo "Done: disabled check-suite auto-trigger for Claude app (1236702) and CodeRabbit (347564) on ${REPO} [compliance: check-suite-auto-trigger-1236702, check-suite-auto-trigger-347564]."
 
 # ── Secret scanning AI detection ─────────────────────────────────────────────
 # Uses GitHub's AI model to surface additional potential secrets beyond the
