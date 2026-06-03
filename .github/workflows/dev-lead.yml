@@ -37,6 +37,10 @@ on:
 
 permissions: {}
 
+concurrency:
+  group: dev-lead-${{ github.event.pull_request.number || github.event.issue.number || github.sha }}
+  cancel-in-progress: true
+
 jobs:
   dev-lead:
     uses: petry-projects/.github-private/.github/workflows/dev-lead-reusable.yml@main
