@@ -29,6 +29,20 @@ fi
 echo "  done."
 
 echo ""
+echo "Check 2: check-suite auto-trigger is disabled for Claude app (1236702) and CodeRabbit (347564)"
+if ! grep -q 'check-suites/preferences' "$SCRIPT"; then
+  error "$SCRIPT does not contain a check-suite preferences API call"
+else
+  if ! grep -q '"app_id":1236702' "$SCRIPT" || ! grep -q '"setting":false' "$SCRIPT"; then
+    error "$SCRIPT does not disable check-suite auto-trigger for Claude app (1236702)"
+  fi
+  if ! grep -q '"app_id":347564' "$SCRIPT"; then
+    error "$SCRIPT does not disable check-suite auto-trigger for CodeRabbit (347564)"
+  fi
+fi
+echo "  done."
+
+echo ""
 if [[ "$ERRORS" -gt 0 ]]; then
   echo "Settings coverage check failed with $ERRORS error(s)" >&2
   exit 1
