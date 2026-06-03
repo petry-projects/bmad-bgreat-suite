@@ -45,7 +45,7 @@ gh api \
   --header "Accept: application/vnd.github+json" \
   "/repos/${REPO}" \
   --input - <<'JSON'
-{"security_and_analysis":{"secret_scanning_ai_detection":{"status":"enabled"}}}
+{"security_and_analysis":{"secret_scanning_ai_detection":{"status":"enabled"},"secret_scanning_non_provider_patterns":{"status":"enabled"}}}
 JSON
 
-echo "Done: enabled secret_scanning_ai_detection on ${REPO}."
+echo "Done: enabled secret_scanning_ai_detection and secret_scanning_non_provider_patterns on ${REPO}."
