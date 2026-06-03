@@ -32,11 +32,25 @@
 #   • fetch-depth on checkout is always overridden by the agent — do not rely on it here
 #   • This file MUST be present on the default branch to take effect
 #
+# AGENTS — READ BEFORE EDITING:
+#   This file is a PER-REPO TEMPLATE (Tier 2). There is no central reusable workflow
+#   because setup steps are inherently tech-stack-specific. Each repo owns its copy.
+#   Stay within the patterns documented in ci-standards.md §11. Do not change:
+#     • the job name (`copilot-setup-steps`)
+#     • the fork guard condition
+#     • the trigger events
+#     • the verify-environment step
+#   For changes to the org-wide pattern, open a PR against this file in
+#   petry-projects/.github and propagate to the fleet.
+#
 # STACK: BMAD methodology suite — no runtime build dependencies
 # ─────────────────────────────────────────────────────────────────────────────
 
 name: "Copilot Setup Steps"
 
+# Run automatically when this file changes (validates the setup steps work),
+# and allow manual runs from the Actions tab at any time.
+# NOT a standard CI trigger — this file should NOT be added to push: branches: [main].
 on:
   workflow_dispatch:
   push:
@@ -46,23 +60,44 @@ on:
     paths:
       - .github/workflows/copilot-setup-steps.yml
 
+# Defense-in-depth: reset top-level permissions; set exact grants per-job.
+# Pattern from envoyproxy/envoy and the org Permissions Policy (ci-standards.md).
 permissions: {}
 
 jobs:
+  # ── REQUIRED: Job name must be exactly `copilot-setup-steps` ────────────────
   copilot-setup-steps:
     # Skip on fork-origin pull requests — forks cannot access org secrets required for private packages.
+    # `github.event.repository.fork` reflects the base repo (always false for org repos); the
+    # correct guard is on the PR head repo so that external fork PRs are skipped while direct
+    # pushes and manual runs always proceed.
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.fork == false
 
     runs-on: ubuntu-latest
-    timeout-minutes: 10
 
+    # Adjust upward only if your build or download steps genuinely need more time.
+    # Hard maximum enforced by GitHub is 59 minutes.
+    timeout-minutes: 30
+
+    # Minimum permissions — Copilot receives its own separate token for its operations.
+    # Add `packages: read` if pulling from GitHub Packages (GHCR or npm private registry).
     permissions:
       contents: read
 
     steps:
+      # ── REQUIRED ──────────────────────────────────────────────────────────────
+      # Checkout the repository so dependency manifests (package.json, go.mod, etc.)
+      # are available for the install steps below.
+      # Note: fetch-depth is always overridden by the agent — set it here only if
+      # your install steps need history (rare).
       - name: Checkout code
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
+      # ── REQUIRED ──────────────────────────────────────────────────────────────
+      # Environment verification — always runs last. Fails loud if something is
+      # missing so the problem is caught here rather than mid-agent-session.
+      # Also surfaces the agent instruction files so session logs confirm they
+      # were found before the agent began working.
       - name: Verify environment
         run: |
           echo "=== petry-projects Copilot cloud agent environment ==="
@@ -73,6 +108,10 @@ jobs:
           echo "--- Installed tool versions ---"
           git   --version
           gh    --version 2>/dev/null | head -1 || echo "gh: not installed"
+          node  --version 2>/dev/null            || echo "node: not installed"
+          npm   --version 2>/dev/null            || echo "npm: not installed"
+          go    version   2>/dev/null            || echo "go: not installed"
+          python --version 2>/dev/null           || echo "python: not installed"
           echo ""
           echo "--- Agent instruction files ---"
           if [ -f "AGENTS.md" ]; then
@@ -86,6 +125,7 @@ jobs:
           else
             echo "ℹ️  .github/copilot-instructions.md — not present (optional but recommended)"
           fi
+          # Count path-scoped instruction files (guard against missing directory)
           INSTR_COUNT=0
           if [ -d ".github/instructions" ]; then
             INSTR_COUNT=$(find .github/instructions -name "*.instructions.md" | wc -l)
