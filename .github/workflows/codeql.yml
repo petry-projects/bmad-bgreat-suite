@@ -14,6 +14,11 @@ jobs:
   analyze:
     name: Analyze (actions)
     runs-on: ubuntu-latest
+    # Bootstrap guard: skip on pull_request while CodeQL default-setup is still active.
+    # GitHub rejects SARIF uploads when both default and advanced setup are enabled.
+    # apply-repo-settings.sh disables default-setup on push to main; remove this
+    # condition in a follow-up commit after that first run completes.
+    if: github.event_name != 'pull_request'
     permissions:
       security-events: write
       contents: read
