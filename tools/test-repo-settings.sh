@@ -66,6 +66,16 @@ fi
 echo "  done."
 
 echo ""
+# Check that CodeQL default setup is disabled in the script
+echo "Check 2: CodeQL default setup is set to not-configured"
+if ! grep -q 'code-scanning/default-setup' "$SCRIPT"; then
+  error "$SCRIPT does not contain a code-scanning/default-setup API call"
+elif ! grep -q '"state":"not-configured"' "$SCRIPT"; then
+  error "$SCRIPT references code-scanning/default-setup but does not set state to not-configured"
+fi
+echo "  done."
+
+echo ""
 if [[ "$ERRORS" -gt 0 ]]; then
   echo "Settings coverage check failed with $ERRORS error(s)" >&2
   exit 1
