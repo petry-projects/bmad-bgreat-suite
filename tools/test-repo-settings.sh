@@ -188,7 +188,7 @@ echo "  done."
 
 echo ""
 echo "Check 2: secret_scanning is set to enabled"
-if ! grep -q 'secret_scanning' "$SCRIPT"; then
+if ! grep -q '"secret_scanning"' "$SCRIPT"; then
   error "$SCRIPT does not contain a secret_scanning API call"
 elif ! grep -q '"secret_scanning":{"status":"enabled"}' "$SCRIPT"; then
   error "$SCRIPT references secret_scanning but does not set status to enabled"
@@ -214,11 +214,9 @@ fi
 echo "  done."
 
 echo ""
-echo "Check 5: dependabot_security_updates is set to enabled"
-if ! grep -q 'dependabot_security_updates' "$SCRIPT"; then
-  error "$SCRIPT does not contain a dependabot_security_updates API call"
-elif ! grep -q '"dependabot_security_updates":{"status":"enabled"}' "$SCRIPT"; then
-  error "$SCRIPT references dependabot_security_updates but does not set status to enabled"
+echo "Check 5: dependabot automated security fixes are enabled"
+if ! grep -q 'automated-security-fixes' "$SCRIPT"; then
+  error "$SCRIPT does not contain an automated-security-fixes API call"
 fi
 echo "  done."
 
