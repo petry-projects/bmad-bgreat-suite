@@ -27,6 +27,7 @@ jobs:
       security-events: write  # Upload SARIF results to GitHub Security tab
       contents: read          # Check out repository code for analysis
       actions: read           # Read Actions workflow files (analyzed language)
+      administration: read    # Read repository settings to check CodeQL default-setup state
     steps:
       - name: Guard against CodeQL default-setup conflict
         id: setup-guard
