@@ -44,9 +44,18 @@ echo "  done."
 # Check 4: continue-on-error must NOT be set on the gitleaks step
 # (having it would allow gitleaks findings to silently pass the build)
 echo "Check 4: gitleaks step does not use continue-on-error"
-# Extract lines around the gitleaks action usage and check for continue-on-error
-if awk '/gitleaks\/gitleaks-action/{found=1} found && /continue-on-error/{exit 1} found && /^      - name:/{found=0}' "$CI_FILE"; then
-  : # no continue-on-error found near gitleaks step
+# Track step boundaries (lines starting with "      - ") so that continue-on-error
+# is detected regardless of whether it appears before or after the uses: line.
+if awk '
+  /^      - / {
+    if (has_gitleaks && has_coe) exit 1
+    has_gitleaks = 0; has_coe = 0
+  }
+  /gitleaks\/gitleaks-action/ { has_gitleaks = 1 }
+  /continue-on-error/ { has_coe = 1 }
+  END { if (has_gitleaks && has_coe) exit 1 }
+' "$CI_FILE"; then
+  : # no continue-on-error found on the gitleaks step
 else
   error "$CI_FILE has 'continue-on-error' on the gitleaks step — findings will not fail the build"
 fi
