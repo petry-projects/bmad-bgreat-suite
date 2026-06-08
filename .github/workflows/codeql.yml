@@ -18,27 +18,43 @@ jobs:
   analyze:
     name: Analyze (actions)
     runs-on: ubuntu-latest
-    # Bootstrap guard: skip on pull_request while CodeQL default-setup is still active.
-    # GitHub rejects SARIF uploads when both default and advanced setup are enabled.
-    # apply-repo-settings.sh disables default-setup on push to main; remove this
-    # condition in a follow-up commit after that first run completes.
+    # Bootstrap guard: skip pull_request events until CodeQL default-setup is confirmed
+    # disabled. The push path has a runtime guard below (setup-guard step) that queries
+    # the API and skips the scan if default setup is still active, preventing the SARIF
+    # conflict that occurs when both default and advanced setup are enabled simultaneously.
     if: github.event_name != 'pull_request'
     permissions:
       security-events: write  # Upload SARIF results to GitHub Security tab
       contents: read          # Check out repository code for analysis
       actions: read           # Read Actions workflow files (analyzed language)
     steps:
+      - name: Guard against CodeQL default-setup conflict
+        id: setup-guard
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          state=$(gh api /repos/${{ github.repository }}/code-scanning/default-setup --jq '.state' 2>/dev/null || echo "not-configured")
+          if [ "$state" != "not-configured" ]; then
+            echo "::warning::CodeQL default setup is still active (state=$state). Skipping advanced scan to avoid SARIF conflict. Rerun after apply-repo-settings completes."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Checkout
+        if: steps.setup-guard.outputs.skip != 'true'
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           persist-credentials: false
 
       - name: Initialize CodeQL
+        if: steps.setup-guard.outputs.skip != 'true'
         uses: github/codeql-action/init@dd903d2e4f5405488e5ef1422510ee31c8b32357 # v3.36.2
         with:
           languages: actions
 
       - name: Analyze
+        if: steps.setup-guard.outputs.skip != 'true'
         uses: github/codeql-action/analyze@dd903d2e4f5405488e5ef1422510ee31c8b32357 # v3.36.2
         with:
           category: /language:actions
