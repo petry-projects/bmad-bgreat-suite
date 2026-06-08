@@ -27,16 +27,17 @@ jobs:
       security-events: write  # Upload SARIF results to GitHub Security tab
       contents: read          # Check out repository code for analysis
       actions: read           # Read Actions workflow files (analyzed language)
-      administration: read    # Read repository settings to check CodeQL default-setup state
     steps:
       - name: Guard against CodeQL default-setup conflict
         id: setup-guard
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          state=$(gh api /repos/${{ github.repository }}/code-scanning/default-setup --jq '.state' 2>/dev/null || echo "not-configured")
+          # Fail-closed: if the API call fails (e.g. auth error), treat state as unknown
+          # and skip the scan rather than assuming it is safe to proceed.
+          state=$(gh api /repos/${{ github.repository }}/code-scanning/default-setup --jq '.state' 2>/dev/null)
           if [ "$state" != "not-configured" ]; then
-            echo "::warning::CodeQL default setup is still active (state=$state). Skipping advanced scan to avoid SARIF conflict. Rerun after apply-repo-settings completes."
+            echo "::warning::CodeQL default setup state is '${state:-unknown (API error)}'. Skipping advanced scan to avoid SARIF conflict. Rerun after apply-repo-settings completes."
             echo "skip=true" >> "$GITHUB_OUTPUT"
           else
             echo "skip=false" >> "$GITHUB_OUTPUT"
