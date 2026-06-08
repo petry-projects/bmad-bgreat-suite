@@ -45,6 +45,10 @@ permissions: {}
 
 jobs:
   pr-auto-review:
+    # Dependabot pull_request events run in the Dependabot secret context where
+    # org secrets (GH_PAT_WORKFLOWS) are unavailable, causing gh CLI to fail.
+    # Dependabot PRs are handled by dependabot-automerge.yml instead.
+    if: github.actor != 'dependabot[bot]'
     permissions:
       pull-requests: read
       checks: read
