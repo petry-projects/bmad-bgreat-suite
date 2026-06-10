@@ -71,7 +71,7 @@ echo ""
 echo "Check 2: secret_scanning_non_provider_patterns is set to enabled"
 if ! grep -q 'secret_scanning_non_provider_patterns' "$SCRIPT"; then
   error "$SCRIPT does not contain a secret_scanning_non_provider_patterns API call"
-elif ! grep -q '"secret_scanning_non_provider_patterns":{"status":"enabled"}' "$SCRIPT"; then
+elif ! grep -E -q '"secret_scanning_non_provider_patterns"[[:space:]]*:[[:space:]]*\{[[:space:]]*"status"[[:space:]]*:[[:space:]]*"enabled"[[:space:]]*\}' "$SCRIPT"; then
   error "$SCRIPT references secret_scanning_non_provider_patterns but does not set status to enabled"
 fi
 echo "  done."
