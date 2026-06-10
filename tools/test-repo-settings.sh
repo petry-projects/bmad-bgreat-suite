@@ -52,6 +52,17 @@ elif ! grep -E -q '"app_id"[[:space:]]*:[[:space:]]*347564[[:space:]]*,[[:space:
 fi
 echo "  done."
 
+# Check that the workflow has no paths: filter so it runs on every push to main
+echo ""
+echo "Check 4: apply-repo-settings.yml triggers on every push to main (no paths: filter)"
+WORKFLOW=".github/workflows/apply-repo-settings.yml"
+if [[ ! -f "$WORKFLOW" ]]; then
+  error "Missing $WORKFLOW"
+elif grep -q '^[[:space:]]*paths:' "$WORKFLOW"; then
+  error "$WORKFLOW has a 'paths:' filter — the workflow will only run when the script itself changes, not on every push; the security setting may not be applied after a new merge"
+fi
+echo "  done."
+
 echo ""
 
 # Check that CodeQL default setup is disabled in the script
