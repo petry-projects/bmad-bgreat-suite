@@ -33,11 +33,13 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Fail-closed: if the API call fails (e.g. auth error), treat state as unknown
-          # and skip the scan rather than assuming it is safe to proceed.
-          state=$(gh api /repos/${{ github.repository }}/code-scanning/default-setup --jq '.state' 2>/dev/null)
-          if [ "$state" != "not-configured" ]; then
-            echo "::warning::CodeQL default setup state is '${state:-unknown (API error)}'. Skipping advanced scan to avoid SARIF conflict. Rerun after apply-repo-settings completes."
+          # Fail-open: GITHUB_TOKEN lacks the administration permission required by
+          # GET /code-scanning/default-setup, so treat any API error as "unknown" and
+          # allow the scan to proceed. Only skip when default setup is explicitly
+          # confirmed active (state="configured") to avoid a SARIF upload conflict.
+          state=$(gh api /repos/${{ github.repository }}/code-scanning/default-setup --jq '.state' 2>/dev/null || true)
+          if [ "$state" = "configured" ]; then
+            echo "::warning::CodeQL default setup is still active. Skipping advanced scan to avoid SARIF conflict. Rerun after apply-repo-settings completes."
             echo "skip=true" >> "$GITHUB_OUTPUT"
           else
             echo "skip=false" >> "$GITHUB_OUTPUT"
