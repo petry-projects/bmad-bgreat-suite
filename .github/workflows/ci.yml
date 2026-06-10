@@ -130,6 +130,9 @@ jobs:
       - name: Validate repo-settings script coverage
         run: bash tools/test-repo-settings.sh
 
+      - name: Validate CI secret-scan compliance
+        run: bash tools/test-ci-secret-scan.sh
+
   secret-scan:
     name: Secret scan (gitleaks)
     runs-on: ubuntu-latest
