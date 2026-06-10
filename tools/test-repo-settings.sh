@@ -45,9 +45,9 @@ echo ""
 echo "Check 3: check-suite auto-trigger disabled for CodeRabbit (app_id 347564)"
 if ! grep -q 'check-suites/preferences' "$SCRIPT"; then
   error "$SCRIPT does not contain a check-suites/preferences API call"
-elif ! grep -q '"app_id":347564' "$SCRIPT"; then
+elif ! grep -E -q '"app_id"[[:space:]]*:[[:space:]]*347564' "$SCRIPT"; then
   error "$SCRIPT does not configure auto-trigger for CodeRabbit (app_id 347564)"
-elif ! grep -q '"app_id":347564,"setting":false' "$SCRIPT"; then
+elif ! grep -E -q '"app_id"[[:space:]]*:[[:space:]]*347564[[:space:]]*,[[:space:]]*"setting"[[:space:]]*:[[:space:]]*false' "$SCRIPT"; then
   error "$SCRIPT does not disable auto-trigger for CodeRabbit (app_id 347564)"
 fi
 echo "  done."
