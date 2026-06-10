@@ -54,20 +54,8 @@ echo "  done."
 
 echo ""
 
-# Check that CodeQL default setup is configured in the script
-echo "Check 4: CodeQL default setup is configured"
-if ! grep -q 'code-scanning/default-setup' "$SCRIPT"; then
-  error "$SCRIPT does not contain a code-scanning/default-setup API call"
-elif ! grep -E -q 'state=configured|"state":"configured"' "$SCRIPT"; then
-  error "$SCRIPT references code-scanning/default-setup but does not set state to configured"
-elif ! grep -E -q 'query_suite=default|"query_suite":"default"' "$SCRIPT"; then
-  error "$SCRIPT references code-scanning/default-setup but does not set query_suite to default"
-fi
-echo "  done."
-
-echo ""
 # Check that CodeQL default setup is disabled in the script
-echo "Check 2: CodeQL default setup is set to not-configured"
+echo "Check 4: CodeQL default setup is set to not-configured"
 if ! grep -q 'code-scanning/default-setup' "$SCRIPT"; then
   error "$SCRIPT does not contain a code-scanning/default-setup API call"
 elif ! grep -q '"state"[[:space:]]*:[[:space:]]*"not-configured"' "$SCRIPT"; then

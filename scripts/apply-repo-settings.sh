@@ -51,15 +51,14 @@ JSON
 echo "Done: enabled secret_scanning_ai_detection on ${REPO}."
 
 # ── CodeQL default setup ──────────────────────────────────────────────────────
-# Enables GitHub-managed CodeQL scanning (default setup) with the default query
-# suite. Default setup auto-detects languages and manages analyzer versions,
-# eliminating per-repo codeql.yml maintenance.
+# Disables GitHub-managed CodeQL default setup to prevent SARIF upload conflicts
+# with the advanced CodeQL workflow in .github/workflows/codeql.yml.
 gh api \
   --method PATCH \
   --header "Accept: application/vnd.github+json" \
   "/repos/${REPO}/code-scanning/default-setup" \
   --input - <<'JSON'
-{"state":"configured","query_suite":"default"}
+{"state":"not-configured"}
 JSON
 
-echo "Done: enabled CodeQL default setup on ${REPO}."
+echo "Done: disabled CodeQL default setup on ${REPO}."
