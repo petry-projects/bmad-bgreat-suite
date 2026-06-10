@@ -40,6 +40,18 @@ elif ! grep -E -q '"app_id"[[:space:]]*:[[:space:]]*1236702[[:space:]]*,[[:space
 fi
 echo "  done."
 
+# Check that check-suite auto-trigger is disabled for CodeRabbit (app_id 347564)
+echo ""
+echo "Check 3: check-suite auto-trigger disabled for CodeRabbit (app_id 347564)"
+if ! grep -q 'check-suites/preferences' "$SCRIPT"; then
+  error "$SCRIPT does not contain a check-suites/preferences API call"
+elif ! grep -q '"app_id":347564' "$SCRIPT"; then
+  error "$SCRIPT does not configure auto-trigger for CodeRabbit (app_id 347564)"
+elif ! grep -q '"app_id":347564,"setting":false' "$SCRIPT"; then
+  error "$SCRIPT does not disable auto-trigger for CodeRabbit (app_id 347564)"
+fi
+echo "  done."
+
 echo ""
 if [[ "$ERRORS" -gt 0 ]]; then
   echo "Settings coverage check failed with $ERRORS error(s)" >&2
