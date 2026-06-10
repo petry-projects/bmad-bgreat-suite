@@ -55,7 +55,7 @@ echo "  done."
 echo ""
 
 # Check that CodeQL default setup is configured in the script
-echo "Check 3: CodeQL default setup is configured"
+echo "Check 4: CodeQL default setup is configured"
 if ! grep -q 'code-scanning/default-setup' "$SCRIPT"; then
   error "$SCRIPT does not contain a code-scanning/default-setup API call"
 elif ! grep -E -q 'state=configured|"state":"configured"' "$SCRIPT"; then
