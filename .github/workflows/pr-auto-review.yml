@@ -45,10 +45,16 @@ permissions: {}
 
 jobs:
   pr-auto-review:
-    # Dependabot pull_request events run in the Dependabot secret context where
-    # org secrets (GH_PAT_WORKFLOWS) are unavailable, causing gh CLI to fail.
+    # Dependabot PRs run in a restricted secret context where org secrets
+    # (GH_PAT_WORKFLOWS) are unavailable, causing gh CLI to fail. Gate on the PR
+    # author from the event payload, not the triggering actor: for events such as
+    # pull_request_review the actor is the human reviewer, not dependabot[bot].
+    # The actor check covers workflow_run events where the PR author is not
+    # surfaced directly. Long-term, this exclusion should live in the org reusable.
     # Dependabot PRs are handled by dependabot-automerge.yml instead.
-    if: github.actor != 'dependabot[bot]'
+    if: >-
+      github.actor != 'dependabot[bot]' &&
+      github.event.pull_request.user.login != 'dependabot[bot]'
     permissions:
       pull-requests: read
       checks: read
