@@ -292,7 +292,13 @@ echo "Check 12: .github/workflows/copilot-setup-steps.yml has job named copilot-
 COPILOT_WF=".github/workflows/copilot-setup-steps.yml"
 if [[ ! -f "$COPILOT_WF" ]]; then
   error "Missing $COPILOT_WF"
-elif ! grep -qE '^[[:space:]]+copilot-setup-steps[[:space:]]*:' "$COPILOT_WF"; then
+elif ! awk '
+  BEGIN { in_jobs=0; found=0 }
+  /^[[:space:]]*jobs:[[:space:]]*$/ { in_jobs=1; next }
+  in_jobs && /^[^[:space:]]/ { in_jobs=0 }
+  in_jobs && /^[[:space:]]+copilot-setup-steps[[:space:]]*:/ { found=1; exit }
+  END { exit(found ? 0 : 1) }
+' "$COPILOT_WF"; then
   error "$COPILOT_WF does not contain a job named 'copilot-setup-steps' (GitHub requires this exact name)"
 fi
 echo "  done."
