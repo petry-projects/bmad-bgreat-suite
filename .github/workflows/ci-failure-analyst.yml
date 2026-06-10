@@ -1,31 +1,27 @@
-# ─────────────────────────────────────────────────────────────────────────────
-# SOURCE OF TRUTH: petry-projects/.github-private/standards/workflows/ci-failure-analyst.yml
-# Standard:        petry-projects/.github-private/docs/aw/ci-failure-analyst.md
-# Reusable:        petry-projects/.github-private/.github/workflows/ci-failure-analyst-reusable.yml
+# Deploy this file to target repos as: .github/workflows/ci-failure-analyst.yml
 #
-# AGENTS — READ BEFORE EDITING:
-#   • This file is a THIN CALLER STUB. All analysis logic lives in the reusable
-#     workflow above (failing-step identification, root-cause classification,
-#     and PR comment posting).
-#   • You MAY change: the SHA in the `uses:` line when upgrading the reusable
-#     workflow version; the `workflows:` filter list when adding, renaming, or
-#     removing a workflow in this repo.
-#   • You MUST NOT change: the `workflow_run` trigger type, the `uses:` line
-#     structure, the concurrency group format, or the `if:` condition
-#     (loop-prevention guard).
-#   • If you need different behaviour, open a PR against the reusable in the
-#     central repo.
-# ─────────────────────────────────────────────────────────────────────────────
+# Purpose: Posts a read-only diagnostic comment on PRs within 2 minutes of a
+#   CI check failure. Identifies the failing step, classifies the root cause,
+#   and suggests a concrete fix action.
 #
-# CI Failure Analyst — thin caller for the org-level reusable.
-# To adopt: copy this file to .github/workflows/ci-failure-analyst.yml in your repo.
-# Required org/repo secrets:
+# All analysis logic lives in petry-projects/.github-private — this stub is
+# intentionally minimal. The `uses:` SHA pin should be updated to pick up
+# improvements or bug fixes from the central reusable workflow over time.
+#
+# Requirements:
 #   CLAUDE_CODE_OAUTH_TOKEN  org secret — must be granted to this repo in org
 #                            secret settings (Settings -> Secrets -> Actions)
 #
 # This workflow is independent of dev-lead. Both can coexist in the same repo:
-#   dev-lead             — diagnoses and attempts to fix CI failures (writes commits)
-#   ci-failure-analyst   — diagnoses only, always posts a fast diagnostic comment
+#   dev-lead        — diagnoses and attempts to fix CI failures (writes commits)
+#   ci-failure-analyst — diagnoses only, always posts a fast diagnostic comment
+#
+# NOTE: workflow_run is needed to catch GitHub Actions native CI failures —
+#   check_run events are not dispatched to GitHub Actions workflows for runs
+#   created by GitHub Actions itself. The private reusable does not yet support
+#   workflow_run; when it does, add a workflow_run trigger listing these names:
+#     "CI", "AgentShield", "Dependency audit", "SonarCloud Analysis"
+#   check_run covers third-party checks (e.g. SonarCloud, external GitHub Apps).
 #
 # Docs: https://github.com/petry-projects/.github-private/blob/main/docs/aw/ci-failure-analyst.md
 # ─────────────────────────────────────────────────────────────────────────────
@@ -33,48 +29,34 @@
 name: "CI Failure Analyst"
 
 on:
-  workflow_run:
-    # Explicit opt-in allowlist — intentional over a wildcard so transient or
-    # experimental workflow completions don't generate analyst noise. All 14
-    # entries here match the `name:` value of a workflow file in this repo.
-    # When adding a new workflow that should trigger failure analysis, add its
-    # exact `name:` value to this list. When renaming a workflow, update its
-    # entry here at the same time.
-    workflows:
-      - CI
-      - AgentShield
-      - Apply repository settings
-      - Auto-rebase non-Dependabot PRs
-      - Claude Code
-      - Copilot Setup Steps
-      - Dependabot auto-merge
-      - Dependabot update and merge
-      - Dependency audit
-      - Dev-Lead Agent
-      - PR Auto-Review — Ready Check
-      - PR Review — Mention Trigger
-      - PR Review Agent
-      - SonarCloud Analysis
+  check_run:
     types: [completed]
 
 permissions: {}
 
 concurrency:
-  group: "ci-failure-analyst-${{ github.event.workflow_run.head_sha }}"
+  group: "ci-failure-analyst-${{ github.event.check_run.id }}"
   cancel-in-progress: false
 
 jobs:
   analyze:
+    # Skip non-failure conclusions, the analyst's own run (prevent loops), and
+    # runs not associated with any PR (no-op context for the reusable).
+    # Restricted to check_run only: the pinned reusable reads
+    # github.event.check_run.* fields that are null for workflow_run payloads,
+    # causing the PR-resolution step to error. Re-enable workflow_run in the
+    # on: trigger once the reusable accepts workflow_run inputs.
+    if: >-
+      github.event_name == 'check_run' &&
+      contains(fromJSON('["failure","timed_out","cancelled","startup_failure"]'), github.event.check_run.conclusion) &&
+      !startsWith(github.event.check_run.name, 'CI Failure Analyst') &&
+      toJSON(github.event.check_run.pull_requests) != '[]'
+    uses: petry-projects/.github-private/.github/workflows/ci-failure-analyst-reusable.yml@121bee881bd13715706d30230b2d5a8d2d78b0b1 # main
+    secrets:
+      CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
     permissions:
       pull-requests: write
       issues: write        # post/read PR comments via the Issues comments API
       actions: read
       contents: read
       checks: read
-    # Skip non-failures and the analyst's own workflow run to prevent loops.
-    if: >-
-      github.event.workflow_run.conclusion == 'failure' &&
-      !startsWith(github.event.workflow_run.name, 'CI Failure Analyst')
-    uses: petry-projects/.github-private/.github/workflows/ci-failure-analyst-reusable.yml@121bee881bd13715706d30230b2d5a8d2d78b0b1 # main @ 2026-05-23
-    secrets:
-      CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
