@@ -46,15 +46,14 @@ permissions: {}
 jobs:
   pr-auto-review:
     # Dependabot PRs run in a restricted secret context where org secrets
-    # (GH_PAT_WORKFLOWS) are unavailable, causing gh CLI to fail. Gate on the PR
-    # author from the event payload, not github.actor (flagged by SonarCloud as
-    # forgeable in workflow_run contexts). For pull_request/pull_request_review
-    # events, pull_request.user.login is the PR author. For workflow_run events,
-    # workflow_run.actor.login is the triggering actor. For check_suite events,
-    # neither field is present so both checks pass and the job always runs.
-    # Dependabot PRs are handled by dependabot-automerge.yml instead.
+    # (GH_PAT_WORKFLOWS) are unavailable, causing gh CLI to fail. Skip them here;
+    # dependabot-automerge.yml handles Dependabot PRs instead.
+    # For workflow_run events, check head_branch (branch names are structural, not
+    # identity claims — actor fields are forgeable per SonarCloud S6931). For
+    # pull_request/pull_request_review events, pull_request.user.login is the PR
+    # author. For check_suite events, neither field is present so both pass.
     if: >-
-      github.event.workflow_run.actor.login != 'dependabot[bot]' &&
+      !startsWith(github.event.workflow_run.head_branch, 'dependabot/') &&
       github.event.pull_request.user.login != 'dependabot[bot]'
     permissions:
       pull-requests: read
