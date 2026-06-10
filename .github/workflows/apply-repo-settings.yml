@@ -17,7 +17,8 @@ jobs:
   apply-settings:
     runs-on: ubuntu-latest
     permissions:
-      administration: write  # required to update check-suite preferences
+      administration: write   # required to update check-suite preferences and CodeQL default setup
+      security-events: write  # required to configure code-scanning/default-setup
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v4
       - name: Apply repository settings
