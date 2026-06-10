@@ -32,7 +32,6 @@ name: "CI Failure Analyst"
 
 on:
   workflow_run:
-    workflows: ["*"]
     types: [completed]
 
 permissions: {}
