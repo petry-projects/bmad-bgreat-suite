@@ -66,8 +66,8 @@ fi
 echo "  done."
 
 echo ""
-echo "Check 2: secret_scanning is set to enabled"
-if ! grep -q '"secret_scanning"' "$SCRIPT"; then
+echo "Check 3: secret_scanning is set to enabled"
+if ! grep -q '"secret_scanning":' "$SCRIPT"; then
   error "$SCRIPT does not contain a secret_scanning API call"
 elif ! grep -q '"secret_scanning":{"status":"enabled"}' "$SCRIPT"; then
   error "$SCRIPT references secret_scanning but does not set status to enabled"
@@ -75,7 +75,7 @@ fi
 echo "  done."
 
 echo ""
-echo "Check 3: secret_scanning_push_protection is set to enabled"
+echo "Check 4: secret_scanning_push_protection is set to enabled"
 if ! grep -q 'secret_scanning_push_protection' "$SCRIPT"; then
   error "$SCRIPT does not contain a secret_scanning_push_protection API call"
 elif ! grep -q '"secret_scanning_push_protection":{"status":"enabled"}' "$SCRIPT"; then
@@ -84,7 +84,7 @@ fi
 echo "  done."
 
 echo ""
-echo "Check 4: secret_scanning_non_provider_patterns is set to enabled"
+echo "Check 5: secret_scanning_non_provider_patterns is set to enabled"
 if ! grep -q 'secret_scanning_non_provider_patterns' "$SCRIPT"; then
   error "$SCRIPT does not contain a secret_scanning_non_provider_patterns API call"
 elif ! grep -q '"secret_scanning_non_provider_patterns":{"status":"enabled"}' "$SCRIPT"; then
@@ -93,7 +93,7 @@ fi
 echo "  done."
 
 echo ""
-echo "Check 5: dependabot automated security fixes are enabled"
+echo "Check 6: dependabot automated security fixes are enabled"
 if ! grep -q 'automated-security-fixes' "$SCRIPT"; then
   error "$SCRIPT does not contain an automated-security-fixes API call"
 fi
