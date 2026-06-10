@@ -38,13 +38,14 @@ on:
   repository_dispatch:
     types: [pr-review-mention]
 
-permissions:
-  contents: read
-  pull-requests: write
-  checks: read
+permissions: {}
 
 jobs:
   review:
+    permissions:
+      contents: read
+      pull-requests: write
+      checks: read
     uses: petry-projects/.github-private/.github/workflows/pr-review.yml@pr-review/stable
     with:
       agent_ref: pr-review/stable
