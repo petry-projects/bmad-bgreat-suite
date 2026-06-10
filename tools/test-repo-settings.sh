@@ -176,6 +176,18 @@ if ! grep -q 'automated-security-fixes' "$SCRIPT"; then
 fi
 echo "$DONE_MARK"
 
+# Check that check-suite auto-trigger is disabled for Claude app (1236702)
+echo ""
+echo "Check 2: check-suite auto-trigger disabled for Claude app (1236702)"
+if ! grep -q 'check-suites/preferences' "$SCRIPT"; then
+  error "$SCRIPT does not contain a check-suite preferences API call"
+elif ! grep -E -q '"app_id"[[:space:]]*:[[:space:]]*1236702' "$SCRIPT"; then
+  error "$SCRIPT references check-suites/preferences but does not configure app_id 1236702"
+elif ! grep -E -q '"app_id"[[:space:]]*:[[:space:]]*1236702[[:space:]]*,[[:space:]]*"setting"[[:space:]]*:[[:space:]]*false' "$SCRIPT"; then
+  error "$SCRIPT configures app_id 1236702 but does not set setting to false"
+fi
+echo "  done."
+
 echo ""
 if [[ "$ERRORS" -gt 0 ]]; then
   echo "Settings coverage check failed with $ERRORS error(s)" >&2
