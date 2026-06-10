@@ -284,6 +284,20 @@ fi
 echo "  done."
 
 # ---------------------------------------------------------------------------
+# Check 12: copilot-setup-steps.yml has the required job name
+# GitHub requires the job to be named exactly `copilot-setup-steps` to pick
+# up the file for the Copilot cloud agent.
+# ---------------------------------------------------------------------------
+echo "Check 12: .github/workflows/copilot-setup-steps.yml has job named copilot-setup-steps"
+COPILOT_WF=".github/workflows/copilot-setup-steps.yml"
+if [[ ! -f "$COPILOT_WF" ]]; then
+  error "Missing $COPILOT_WF"
+elif ! grep -qE '^  copilot-setup-steps[[:space:]]*:' "$COPILOT_WF"; then
+  error "$COPILOT_WF does not contain a job named 'copilot-setup-steps' (GitHub requires this exact name)"
+fi
+echo "  done."
+
+# ---------------------------------------------------------------------------
 # Summary
 # ---------------------------------------------------------------------------
 echo ""
