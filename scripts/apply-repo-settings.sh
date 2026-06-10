@@ -50,6 +50,19 @@ JSON
 
 echo "Done: enabled secret_scanning_ai_detection on ${REPO}."
 
+# ── Secret scanning non-provider patterns ─────────────────────────────────────
+# Enables detection of secrets that don't match GitHub's built-in provider
+# pattern set, surfacing custom/internal tokens via generic detectors.
+gh api \
+  --method PATCH \
+  --header "Accept: application/vnd.github+json" \
+  "/repos/${REPO}" \
+  --input - <<'JSON'
+{"security_and_analysis":{"secret_scanning_non_provider_patterns":{"status":"enabled"}}}
+JSON
+
+echo "Done: enabled secret_scanning_non_provider_patterns on ${REPO}."
+
 # ── CodeQL default setup ──────────────────────────────────────────────────────
 # Enables GitHub-managed CodeQL scanning (default setup) with the default query
 # suite. Default setup auto-detects languages and manages analyzer versions,
