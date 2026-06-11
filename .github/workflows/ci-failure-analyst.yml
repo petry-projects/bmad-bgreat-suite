@@ -8,9 +8,11 @@
 #     workflow above (failing-step identification, root-cause classification,
 #     and PR comment posting).
 #   • You MAY change: the SHA in the `uses:` line when upgrading the reusable
-#     workflow version.
-#   • You MUST NOT change: the `workflow_run` trigger, the `uses:` line structure,
-#     the concurrency group format, or the `if:` condition (loop-prevention guard).
+#     workflow version; the `workflows:` filter list when adding, renaming, or
+#     removing a workflow in this repo.
+#   • You MUST NOT change: the `workflow_run` trigger type, the `uses:` line
+#     structure, the concurrency group format, or the `if:` condition
+#     (loop-prevention guard).
 #   • If you need different behaviour, open a PR against the reusable in the
 #     central repo.
 # ─────────────────────────────────────────────────────────────────────────────
@@ -32,6 +34,12 @@ name: "CI Failure Analyst"
 
 on:
   workflow_run:
+    # Explicit opt-in allowlist — intentional over a wildcard so transient or
+    # experimental workflow completions don't generate analyst noise. All 14
+    # entries here match the `name:` value of a workflow file in this repo.
+    # When adding a new workflow that should trigger failure analysis, add its
+    # exact `name:` value to this list. When renaming a workflow, update its
+    # entry here at the same time.
     workflows:
       - CI
       - AgentShield
