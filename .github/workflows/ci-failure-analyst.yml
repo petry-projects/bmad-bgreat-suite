@@ -32,6 +32,21 @@ name: "CI Failure Analyst"
 
 on:
   workflow_run:
+    workflows:
+      - CI
+      - AgentShield
+      - Apply repository settings
+      - Auto-rebase non-Dependabot PRs
+      - Claude Code
+      - Copilot Setup Steps
+      - Dependabot auto-merge
+      - Dependabot update and merge
+      - Dependency audit
+      - Dev-Lead Agent
+      - PR Auto-Review — Ready Check
+      - PR Review — Mention Trigger
+      - PR Review Agent
+      - SonarCloud Analysis
     types: [completed]
 
 permissions: {}
