@@ -21,15 +21,29 @@ if [[ ! -f "$WORKFLOW" ]]; then
   exit 1
 fi
 
+if ! command -v python3 > /dev/null 2>&1; then
+  error "python3 is required but not installed."
+  exit 1
+fi
+
+if ! python3 -c "import yaml" > /dev/null 2>&1; then
+  error "Python 'pyyaml' package is required but not installed. Please install it (e.g., pip install pyyaml)."
+  exit 1
+fi
+
 # Check 1: the workflow parses as valid YAML and declares a top-level
 # concurrency block with a non-empty group and cancel-in-progress: false.
 echo "Check 1: top-level concurrency block with group and cancel-in-progress: false"
-python3 - "$WORKFLOW" << 'PY' || error "dev-lead.yml concurrency block missing or malformed"
+if python3 - "$WORKFLOW" << 'PY'; then
 import sys
 import yaml
 
-with open(sys.argv[1]) as fh:
-    doc = yaml.safe_load(fh)
+try:
+    with open(sys.argv[1]) as fh:
+        doc = yaml.safe_load(fh)
+except yaml.YAMLError as e:
+    print(f"Invalid YAML syntax: {e}", file=sys.stderr)
+    sys.exit(1)
 
 if not isinstance(doc, dict):
     print("workflow did not parse to a mapping", file=sys.stderr)
@@ -55,7 +69,10 @@ if concurrency.get("cancel-in-progress") is not False:
     print("'concurrency.cancel-in-progress' must be false", file=sys.stderr)
     sys.exit(1)
 PY
-echo "  done."
+  echo "  done."
+else
+  error "dev-lead.yml concurrency block missing or malformed"
+fi
 
 echo ""
 if [[ "$ERRORS" -gt 0 ]]; then
