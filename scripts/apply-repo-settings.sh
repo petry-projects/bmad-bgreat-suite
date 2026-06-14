@@ -37,31 +37,19 @@ JSON
 
 echo "Done: disabled check-suite auto-trigger for Claude app (1236702) and CodeRabbit (347564) on ${REPO}."
 
-# ── Secret scanning AI detection ─────────────────────────────────────────────
-# Uses GitHub's AI model to surface additional potential secrets beyond the
-# built-in pattern set; required by the org push-protection standard.
+# ── Secret scanning (AI detection + non-provider patterns) ──────────────────
+# Enables GitHub's AI model for surfacing additional potential secrets beyond
+# built-in patterns, plus detection of secrets matching custom/internal pattern
+# sets via generic detectors. Combined into a single API call for efficiency.
 gh api \
   --method PATCH \
   --header "Accept: application/vnd.github+json" \
   "/repos/${REPO}" \
   --input - <<'JSON'
-{"security_and_analysis":{"secret_scanning_ai_detection":{"status":"enabled"}}}
+{"security_and_analysis":{"secret_scanning_ai_detection":{"status":"enabled"},"secret_scanning_non_provider_patterns":{"status":"enabled"}}}
 JSON
 
-echo "Done: enabled secret_scanning_ai_detection on ${REPO}."
-
-# ── Secret scanning non-provider patterns ─────────────────────────────────────
-# Enables detection of secrets that don't match GitHub's built-in provider
-# pattern set, surfacing custom/internal tokens via generic detectors.
-gh api \
-  --method PATCH \
-  --header "Accept: application/vnd.github+json" \
-  "/repos/${REPO}" \
-  --input - <<'JSON'
-{"security_and_analysis":{"secret_scanning_non_provider_patterns":{"status":"enabled"}}}
-JSON
-
-echo "Done: enabled secret_scanning_non_provider_patterns on ${REPO}."
+echo "Done: enabled secret_scanning_ai_detection and secret_scanning_non_provider_patterns on ${REPO}."
 
 # ── CodeQL default setup ──────────────────────────────────────────────────────
 # Enables GitHub-managed CodeQL scanning (default setup) with the default query
