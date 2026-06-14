@@ -66,13 +66,47 @@ echo "  done."
 echo ""
 
 # Check that CodeQL default setup is configured in the script
-echo "Check 4: CodeQL default setup is configured"
+echo "Check 5: CodeQL default setup is configured"
 if ! grep -q 'code-scanning/default-setup' "$SCRIPT"; then
   error "$SCRIPT does not contain a code-scanning/default-setup API call"
 elif ! grep -E -q 'state=configured|"state":"configured"' "$SCRIPT"; then
   error "$SCRIPT references code-scanning/default-setup but does not set state to configured"
 elif ! grep -E -q 'query_suite=default|"query_suite":"default"' "$SCRIPT"; then
   error "$SCRIPT references code-scanning/default-setup but does not set query_suite to default"
+fi
+echo "  done."
+
+echo ""
+echo "Check 6: secret_scanning is set to enabled"
+if ! grep -q '"secret_scanning":' "$SCRIPT"; then
+  error "$SCRIPT does not contain a secret_scanning API call"
+elif ! grep -q '"secret_scanning":{"status":"enabled"}' "$SCRIPT"; then
+  error "$SCRIPT references secret_scanning but does not set status to enabled"
+fi
+echo "  done."
+
+echo ""
+echo "Check 7: secret_scanning_push_protection is set to enabled"
+if ! grep -q 'secret_scanning_push_protection' "$SCRIPT"; then
+  error "$SCRIPT does not contain a secret_scanning_push_protection API call"
+elif ! grep -q '"secret_scanning_push_protection":{"status":"enabled"}' "$SCRIPT"; then
+  error "$SCRIPT references secret_scanning_push_protection but does not set status to enabled"
+fi
+echo "  done."
+
+echo ""
+echo "Check 8: secret_scanning_non_provider_patterns is set to enabled"
+if ! grep -q 'secret_scanning_non_provider_patterns' "$SCRIPT"; then
+  error "$SCRIPT does not contain a secret_scanning_non_provider_patterns API call"
+elif ! grep -q '"secret_scanning_non_provider_patterns":{"status":"enabled"}' "$SCRIPT"; then
+  error "$SCRIPT references secret_scanning_non_provider_patterns but does not set status to enabled"
+fi
+echo "  done."
+
+echo ""
+echo "Check 9: dependabot automated security fixes are enabled"
+if ! grep -q 'automated-security-fixes' "$SCRIPT"; then
+  error "$SCRIPT does not contain an automated-security-fixes API call"
 fi
 echo "  done."
 
