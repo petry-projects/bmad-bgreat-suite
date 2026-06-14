@@ -27,6 +27,6 @@ jobs:
           fetch-depth: 0
       - name: SonarCloud Scan
         if: ${{ env.SONAR_TOKEN != '' }}
-        uses: SonarSource/sonarqube-scan-action@8b5bbc91166eee8d1a5ac14b9d4bab58e39c4046 # v8.0.0
+        uses: SonarSource/sonarqube-scan-action@59db25f34e16620e48ab4bb9e4a5dce155cb5432 # v8.0.0
         with:
           skipSignatureVerification: true
