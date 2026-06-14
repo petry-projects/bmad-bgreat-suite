@@ -306,6 +306,26 @@ fi
 echo "$DONE_MARK"
 
 # ---------------------------------------------------------------------------
+# Check 12: copilot-setup-steps.yml has the required job name
+# GitHub requires the job to be named exactly `copilot-setup-steps` to pick
+# up the file for the Copilot cloud agent.
+# ---------------------------------------------------------------------------
+echo "Check 12: .github/workflows/copilot-setup-steps.yml has job named copilot-setup-steps"
+COPILOT_WF=".github/workflows/copilot-setup-steps.yml"
+if [[ ! -f "$COPILOT_WF" ]]; then
+  error "Missing $COPILOT_WF"
+elif ! awk '
+  BEGIN { in_jobs=0; found=0 }
+  /^[[:space:]]*jobs:[[:space:]]*$/ { in_jobs=1; next }
+  in_jobs && /^[^[:space:]]/ { in_jobs=0 }
+  in_jobs && /^[[:space:]]+copilot-setup-steps[[:space:]]*:/ { found=1; exit }
+  END { exit(found ? 0 : 1) }
+' "$COPILOT_WF"; then
+  error "$COPILOT_WF does not contain a job named 'copilot-setup-steps' (GitHub requires this exact name)"
+fi
+echo "  done."
+
+# ---------------------------------------------------------------------------
 # Summary
 # ---------------------------------------------------------------------------
 echo ""
