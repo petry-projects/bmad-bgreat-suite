@@ -235,6 +235,58 @@ elif ! grep -E -q '"secret_scanning_non_provider_patterns"[[:space:]]*:[[:space:
 fi
 echo "  done."
 
+# Check that every permissions: scope in the workflow is a valid GitHub Actions
+# scope. An invalid scope (e.g. `administration`, which is not a GITHUB_TOKEN
+# permission) makes the whole file an "invalid workflow file" that fails at
+# startup with 0s duration on every run.
+echo ""
+echo "Check 6: apply-repo-settings.yml uses only valid permissions scopes"
+if [[ ! -f "$WORKFLOW" ]]; then
+  error "Missing $WORKFLOW"
+elif ! command -v python3 >/dev/null 2>&1 || ! python3 -c "import yaml" >/dev/null 2>&1; then
+  echo "  python3/PyYAML unavailable — skipping permissions-scope validation"
+else
+  invalid_scopes=$(python3 - "$WORKFLOW" <<'PY'
+import sys, yaml
+
+# Valid GITHUB_TOKEN permission scopes accepted in a workflow `permissions:` block.
+ALLOWED = {
+    "actions", "attestations", "checks", "contents", "deployments",
+    "discussions", "id-token", "issues", "models", "packages", "pages",
+    "pull-requests", "repository-projects", "security-events", "statuses",
+}
+
+with open(sys.argv[1]) as fh:
+    wf = yaml.safe_load(fh)
+
+if not isinstance(wf, dict):
+    wf = {}
+
+def scopes(perms):
+    # A mapping of scope -> level; a bare string ("read-all"/"write-all") or
+    # empty mapping declares no individual scopes to validate.
+    return set(perms) if isinstance(perms, dict) else set()
+
+bad = set()
+bad |= scopes(wf.get("permissions"))
+jobs = wf.get("jobs")
+if isinstance(jobs, dict):
+    for job in jobs.values():
+        if isinstance(job, dict):
+            bad |= scopes(job.get("permissions"))
+bad -= ALLOWED
+print("\n".join(sorted(bad)))
+PY
+)
+  if [[ -n "$invalid_scopes" ]]; then
+    while IFS= read -r scope; do
+      [[ -z "$scope" ]] && continue
+      error "$WORKFLOW declares invalid permissions scope '$scope' — GitHub rejects this as an invalid workflow file, causing every run to fail at startup"
+    done <<< "$invalid_scopes"
+  fi
+fi
+echo "  done."
+
 echo ""
 if [[ "$ERRORS" -gt 0 ]]; then
   echo "Settings coverage check failed with $ERRORS error(s)" >&2
