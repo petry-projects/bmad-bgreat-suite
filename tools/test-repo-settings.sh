@@ -66,13 +66,23 @@ echo "  done."
 echo ""
 
 # Check that CodeQL default setup is configured in the script
-echo "Check 4: CodeQL default setup is configured"
+echo "Check 5: CodeQL default setup is configured"
 if ! grep -q 'code-scanning/default-setup' "$SCRIPT"; then
   error "$SCRIPT does not contain a code-scanning/default-setup API call"
 elif ! grep -E -q 'state=configured|"state":"configured"' "$SCRIPT"; then
   error "$SCRIPT references code-scanning/default-setup but does not set state to configured"
 elif ! grep -E -q 'query_suite=default|"query_suite":"default"' "$SCRIPT"; then
   error "$SCRIPT references code-scanning/default-setup but does not set query_suite to default"
+fi
+echo "  done."
+
+# Check that delete_branch_on_merge is enabled in the script
+echo ""
+echo "Check 6: delete_branch_on_merge is enabled"
+if ! grep -q 'delete_branch_on_merge' "$SCRIPT"; then
+  error "$SCRIPT does not contain a delete_branch_on_merge API call"
+elif ! grep -E -q '"delete_branch_on_merge"[[:space:]]*:[[:space:]]*true' "$SCRIPT"; then
+  error "$SCRIPT references delete_branch_on_merge but does not set it to true"
 fi
 echo "  done."
 
