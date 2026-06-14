@@ -37,6 +37,14 @@ on:
 
 permissions: {}
 
+# Serialize dev-lead runs repo-wide. Trigger bursts (e.g. several issues labeled
+# at once) otherwise spawn parallel runs that collide on the shared Claude API
+# quota and fail with HTTP 429. cancel-in-progress is false because an in-flight
+# run may be writing commits or opening a PR — overflow must queue, not cancel.
+concurrency:
+  group: "dev-lead-${{ github.repository }}"
+  cancel-in-progress: false
+
 jobs:
   dev-lead:
     uses: petry-projects/.github-private/.github/workflows/dev-lead-reusable.yml@dev-lead/stable
