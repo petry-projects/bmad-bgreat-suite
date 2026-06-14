@@ -23,7 +23,7 @@ fi
 echo "Check 1: secret_scanning_ai_detection is set to enabled"
 if ! grep -q 'secret_scanning_ai_detection' "$SCRIPT"; then
   error "$SCRIPT does not contain a secret_scanning_ai_detection API call"
-elif ! grep -q '"secret_scanning_ai_detection":{"status":"enabled"}' "$SCRIPT"; then
+elif ! grep -E -q '"secret_scanning_ai_detection"[[:space:]]*:[[:space:]]*\{[[:space:]]*"status"[[:space:]]*:[[:space:]]*"enabled"[[:space:]]*\}' "$SCRIPT"; then
   error "$SCRIPT references secret_scanning_ai_detection but does not set status to enabled"
 fi
 echo "  done."
@@ -62,6 +62,17 @@ elif ! grep -E -q 'state=configured|"state":"configured"' "$SCRIPT"; then
   error "$SCRIPT references code-scanning/default-setup but does not set state to configured"
 elif ! grep -E -q 'query_suite=default|"query_suite":"default"' "$SCRIPT"; then
   error "$SCRIPT references code-scanning/default-setup but does not set query_suite to default"
+fi
+echo "  done."
+
+echo ""
+
+# Check that secret_scanning_non_provider_patterns is enabled in the script
+echo "Check 3: secret_scanning_non_provider_patterns is set to enabled"
+if ! grep -q 'secret_scanning_non_provider_patterns' "$SCRIPT"; then
+  error "$SCRIPT does not contain a secret_scanning_non_provider_patterns API call"
+elif ! grep -E -q '"secret_scanning_non_provider_patterns"[[:space:]]*:[[:space:]]*\{[[:space:]]*"status"[[:space:]]*:[[:space:]]*"enabled"[[:space:]]*\}' "$SCRIPT"; then
+  error "$SCRIPT references secret_scanning_non_provider_patterns but does not set status to enabled"
 fi
 echo "  done."
 
