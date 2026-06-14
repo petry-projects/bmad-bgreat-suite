@@ -130,6 +130,9 @@ jobs:
       - name: Validate repo-settings script coverage
         run: bash tools/test-repo-settings.sh
 
+      - name: Validate dev-lead concurrency guard
+        run: bash tools/test-dev-lead-concurrency.sh
+
   secret-scan:
     name: Secret scan (gitleaks)
     runs-on: ubuntu-latest
