@@ -43,7 +43,7 @@ jobs:
     permissions:
       contents: write   # update-branch via GITHUB_TOKEN (may touch .github/workflows/)
       pull-requests: write  # re-approve PRs after branch update
-    uses: petry-projects/.github/.github/workflows/dependabot-rebase-reusable.yml@e1f6b5d2effedb995ffed1cf09ee6dcfd7454641 # main
+    uses: petry-projects/.github/.github/workflows/dependabot-rebase-reusable.yml@897e4dede3518cdd7273b9dc63e607d0d05cbdda # main
     secrets:
       APP_ID: ${{ secrets.APP_ID }}
       APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
