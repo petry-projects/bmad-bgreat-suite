@@ -111,6 +111,9 @@ ALLOWED = {
 with open(sys.argv[1]) as fh:
     wf = yaml.safe_load(fh)
 
+if not isinstance(wf, dict):
+    wf = {}
+
 def scopes(perms):
     # A mapping of scope -> level; a bare string ("read-all"/"write-all") or
     # empty mapping declares no individual scopes to validate.
@@ -118,9 +121,11 @@ def scopes(perms):
 
 bad = set()
 bad |= scopes(wf.get("permissions"))
-for job in (wf.get("jobs") or {}).values():
-    if isinstance(job, dict):
-        bad |= scopes(job.get("permissions"))
+jobs = wf.get("jobs")
+if isinstance(jobs, dict):
+    for job in jobs.values():
+        if isinstance(job, dict):
+            bad |= scopes(job.get("permissions"))
 bad -= ALLOWED
 print("\n".join(sorted(bad)))
 PY
