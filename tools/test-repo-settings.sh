@@ -23,7 +23,7 @@ fi
 echo "Check 1: secret_scanning_ai_detection is set to enabled"
 if ! grep -q 'secret_scanning_ai_detection' "$SCRIPT"; then
   error "$SCRIPT does not contain a secret_scanning_ai_detection API call"
-elif ! grep -q '"secret_scanning_ai_detection":{"status":"enabled"}' "$SCRIPT"; then
+elif ! grep -E -q '"secret_scanning_ai_detection"[[:space:]]*:[[:space:]]*\{[[:space:]]*"status"[[:space:]]*:[[:space:]]*"enabled"[[:space:]]*\}' "$SCRIPT"; then
   error "$SCRIPT references secret_scanning_ai_detection but does not set status to enabled"
 fi
 echo "  done."
@@ -83,6 +83,17 @@ if ! grep -q 'delete_branch_on_merge' "$SCRIPT"; then
   error "$SCRIPT does not contain a delete_branch_on_merge API call"
 elif ! grep -E -q '"delete_branch_on_merge"[[:space:]]*:[[:space:]]*true' "$SCRIPT"; then
   error "$SCRIPT references delete_branch_on_merge but does not set it to true"
+fi
+echo "  done."
+
+echo ""
+
+# Check that secret_scanning_non_provider_patterns is enabled in the script
+echo "Check 3: secret_scanning_non_provider_patterns is set to enabled"
+if ! grep -q 'secret_scanning_non_provider_patterns' "$SCRIPT"; then
+  error "$SCRIPT does not contain a secret_scanning_non_provider_patterns API call"
+elif ! grep -E -q '"secret_scanning_non_provider_patterns"[[:space:]]*:[[:space:]]*\{[[:space:]]*"status"[[:space:]]*:[[:space:]]*"enabled"[[:space:]]*\}' "$SCRIPT"; then
+  error "$SCRIPT references secret_scanning_non_provider_patterns but does not set status to enabled"
 fi
 echo "  done."
 
