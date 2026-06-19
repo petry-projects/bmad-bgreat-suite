@@ -24,7 +24,8 @@ if python3 - "$WORKFLOW" <<'PY'
 import re
 import sys
 
-lines = open(sys.argv[1]).read().splitlines()
+with open(sys.argv[1], encoding="utf-8") as f:
+    lines = f.read().splitlines()
 jobs_indent = None
 child_indent = None
 in_jobs = False
