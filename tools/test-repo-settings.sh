@@ -224,6 +224,16 @@ elif ! grep -E -q 'query_suite=default|"query_suite":"default"' "$SCRIPT"; then
 fi
 echo "  done."
 
+# Check that delete_branch_on_merge is enabled in the script
+echo ""
+echo "Check 6: delete_branch_on_merge is enabled"
+if ! grep -q 'delete_branch_on_merge' "$SCRIPT"; then
+  error "$SCRIPT does not contain a delete_branch_on_merge API call"
+elif ! grep -E -q '"delete_branch_on_merge"[[:space:]]*:[[:space:]]*true' "$SCRIPT"; then
+  error "$SCRIPT references delete_branch_on_merge but does not set it to true"
+fi
+echo "  done."
+
 echo ""
 
 # Check that secret_scanning_non_provider_patterns is enabled in the script
