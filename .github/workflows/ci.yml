@@ -124,6 +124,9 @@ jobs:
           fi
           exit $status
 
+      - name: Validate copilot-setup-steps job name
+        run: bash tools/test-copilot-setup-steps.sh
+
       - name: Validate skill structural integrity
         run: bash tools/validate-skills.sh
 
