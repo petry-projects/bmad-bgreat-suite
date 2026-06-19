@@ -64,3 +64,16 @@ gh api \
 JSON
 
 echo "Done: enabled CodeQL default setup on ${REPO}."
+
+# ── Delete branch on merge ────────────────────────────────────────────────────
+# Automatically delete head branches after a pull request is merged, keeping
+# the branch list tidy and matching the org standard.
+gh api \
+  --method PATCH \
+  --header "Accept: application/vnd.github+json" \
+  "/repos/${REPO}" \
+  --input - <<'JSON'
+{"delete_branch_on_merge":true}
+JSON
+
+echo "Done: enabled delete_branch_on_merge on ${REPO}."
