@@ -35,7 +35,7 @@ gh api \
 {"auto_trigger_checks":[{"app_id":1236702,"setting":false},{"app_id":347564,"setting":false}]}
 JSON
 
-echo "Done: disabled check-suite auto-trigger for Claude app (1236702) and CodeRabbit (347564) on ${REPO}."
+echo "Done: disabled check-suite auto-trigger for Claude app (1236702) and CodeRabbit (347564) on ${REPO} [compliance: check-suite-auto-trigger-1236702, check-suite-auto-trigger-347564]."
 
 # ── Secret scanning (AI detection + non-provider patterns) ──────────────────
 # Enables GitHub's AI model for surfacing additional potential secrets beyond
@@ -64,3 +64,16 @@ gh api \
 JSON
 
 echo "Done: enabled CodeQL default setup on ${REPO}."
+
+# ── Delete branch on merge ────────────────────────────────────────────────────
+# Automatically delete head branches after a pull request is merged, keeping
+# the branch list tidy and matching the org standard.
+gh api \
+  --method PATCH \
+  --header "Accept: application/vnd.github+json" \
+  "/repos/${REPO}" \
+  --input - <<'JSON'
+{"delete_branch_on_merge":true}
+JSON
+
+echo "Done: enabled delete_branch_on_merge on ${REPO}."
