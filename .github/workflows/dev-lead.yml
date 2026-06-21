@@ -37,9 +37,12 @@ on:
 
 permissions: {}
 
-# Concurrency is centralised in the reusable workflow (dev-lead-reusable.yml) with
-# per-issue / per-PR lanes, so issue pickups are never cancelled by PR follow-up
-# traffic and the grouping can't drift per-repo. See petry-projects/.github#402.
+# cancel-in-progress must be false: in-flight runs write commits and open PRs;
+# cancelling mid-run would strand partial work. Overflow must queue, not cancel.
+# Per-PR/issue granularity serializes bursts without blocking unrelated events.
+concurrency:
+  group: dev-lead-${{ github.repository }}-${{ github.event.pull_request.number || github.event.issue.number || github.ref }}
+  cancel-in-progress: false
 
 jobs:
   dev-lead:
