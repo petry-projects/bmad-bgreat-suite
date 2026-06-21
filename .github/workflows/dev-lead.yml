@@ -47,9 +47,10 @@ concurrency:
 
 jobs:
   dev-lead:
-    uses: petry-projects/.github-private/.github/workflows/dev-lead-reusable.yml@dev-lead/stable
+    # First-party channel tag — do NOT SHA-pin (AGENTS.md mutable-ref exception; rings #499/#500/#871).
+    uses: petry-projects/.github-private/.github/workflows/dev-lead-reusable.yml@dev-lead/ring1
     with:
-      agent_ref: dev-lead/stable
+      agent_ref: dev-lead/ring1
     secrets: inherit
     permissions:
       contents: write
