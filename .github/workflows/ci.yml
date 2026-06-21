@@ -136,6 +136,9 @@ jobs:
       - name: Validate dev-lead concurrency guard
         run: bash tools/test-dev-lead-concurrency.sh
 
+      - name: Validate secret-scan job compliance
+        run: bash tools/test-ci-secret-scan.sh
+
   secret-scan:
     name: Secret scan (gitleaks)
     runs-on: ubuntu-latest
@@ -149,6 +152,6 @@ jobs:
           fetch-depth: 0
 
       - name: Run gitleaks
-        uses: gitleaks/gitleaks-action@5b0d1d8da4627f3a8ab2a576ac7a7c0b9ea81a3b # v3.2.1
+        uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e # v3.0.0
         with:
           args: --redact --verbose --exit-code 1
