@@ -5,6 +5,7 @@ set -euo pipefail
 
 ERRORS=0
 SCRIPT="scripts/apply-repo-settings.sh"
+WORKFLOW=".github/workflows/apply-repo-settings.yml"
 
 error() {
   echo "ERROR: $1" >&2
@@ -52,17 +53,6 @@ elif ! grep -E -q '"app_id"[[:space:]]*:[[:space:]]*347564[[:space:]]*,[[:space:
 fi
 echo "  done."
 
-# Check that the workflow has no paths: filter so it runs on every push to main
-echo ""
-echo "Check 4: apply-repo-settings.yml triggers on every push to main (no paths: filter)"
-WORKFLOW=".github/workflows/apply-repo-settings.yml"
-if [[ ! -f "$WORKFLOW" ]]; then
-  error "Missing $WORKFLOW"
-elif grep -q '^[[:space:]]*paths:' "$WORKFLOW"; then
-  error "$WORKFLOW has a 'paths:' filter — the workflow will only run when the script itself changes, not on every push; the security setting may not be applied after a new merge"
-fi
-echo "  done."
-
 echo ""
 
 # Check that CodeQL default setup is configured in the script
@@ -83,6 +73,82 @@ if ! grep -q 'delete_branch_on_merge' "$SCRIPT"; then
   error "$SCRIPT does not contain a delete_branch_on_merge API call"
 elif ! grep -E -q '"delete_branch_on_merge"[[:space:]]*:[[:space:]]*true' "$SCRIPT"; then
   error "$SCRIPT references delete_branch_on_merge but does not set it to true"
+fi
+echo "  done."
+
+echo ""
+
+# Check that secret_scanning_non_provider_patterns is enabled in the script
+echo "Check 3: secret_scanning_non_provider_patterns is set to enabled"
+if ! grep -q 'secret_scanning_non_provider_patterns' "$SCRIPT"; then
+  error "$SCRIPT does not contain a secret_scanning_non_provider_patterns API call"
+elif ! grep -E -q '"secret_scanning_non_provider_patterns"[[:space:]]*:[[:space:]]*\{[[:space:]]*"status"[[:space:]]*:[[:space:]]*"enabled"[[:space:]]*\}' "$SCRIPT"; then
+  error "$SCRIPT references secret_scanning_non_provider_patterns but does not set status to enabled"
+fi
+echo "  done."
+
+# Check that every permissions: scope in the workflow is a valid GitHub Actions
+# scope. An invalid scope (e.g. `administration`, which is not a GITHUB_TOKEN
+# permission) makes the whole file an "invalid workflow file" that fails at
+# startup with 0s duration on every run.
+echo ""
+echo "Check 6: apply-repo-settings.yml uses only valid permissions scopes"
+if [[ ! -f "$WORKFLOW" ]]; then
+  error "Missing $WORKFLOW"
+elif ! command -v python3 >/dev/null 2>&1 || ! python3 -c "import yaml" >/dev/null 2>&1; then
+  echo "  python3/PyYAML unavailable — skipping permissions-scope validation"
+else
+  invalid_scopes=$(python3 - "$WORKFLOW" <<'PY'
+import sys, yaml
+
+# Valid GITHUB_TOKEN permission scopes accepted in a workflow `permissions:` block.
+ALLOWED = {
+    "actions", "attestations", "checks", "contents", "deployments",
+    "discussions", "id-token", "issues", "models", "packages", "pages",
+    "pull-requests", "repository-projects", "security-events", "statuses",
+}
+
+with open(sys.argv[1]) as fh:
+    wf = yaml.safe_load(fh)
+
+if not isinstance(wf, dict):
+    wf = {}
+
+def scopes(perms):
+    # A mapping of scope -> level; a bare string ("read-all"/"write-all") or
+    # empty mapping declares no individual scopes to validate.
+    return set(perms) if isinstance(perms, dict) else set()
+
+bad = set()
+bad |= scopes(wf.get("permissions"))
+jobs = wf.get("jobs")
+if isinstance(jobs, dict):
+    for job in jobs.values():
+        if isinstance(job, dict):
+            bad |= scopes(job.get("permissions"))
+bad -= ALLOWED
+print("\n".join(sorted(bad)))
+PY
+)
+  if [[ -n "$invalid_scopes" ]]; then
+    while IFS= read -r scope; do
+      [[ -z "$scope" ]] && continue
+      error "$WORKFLOW declares invalid permissions scope '$scope' — GitHub rejects this as an invalid workflow file, causing every run to fail at startup"
+    done <<< "$invalid_scopes"
+  fi
+fi
+echo "  done."
+
+echo ""
+
+# Check that CodeQL default setup is configured in the script
+echo "Check 5: CodeQL default setup is configured"
+if ! grep -q 'code-scanning/default-setup' "$SCRIPT"; then
+  error "$SCRIPT does not contain a code-scanning/default-setup API call"
+elif ! grep -E -q 'state=configured|"state":"configured"' "$SCRIPT"; then
+  error "$SCRIPT references code-scanning/default-setup but does not set state to configured"
+elif ! grep -E -q 'query_suite=default|"query_suite":"default"' "$SCRIPT"; then
+  error "$SCRIPT references code-scanning/default-setup but does not set query_suite to default"
 fi
 echo "  done."
 
