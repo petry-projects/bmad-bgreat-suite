@@ -237,7 +237,7 @@ echo "  done."
 echo ""
 
 # Check that secret_scanning_non_provider_patterns is enabled in the script
-echo "Check 3: secret_scanning_non_provider_patterns is set to enabled"
+echo "Check 7: secret_scanning_non_provider_patterns is set to enabled"
 if ! grep -q 'secret_scanning_non_provider_patterns' "$SCRIPT"; then
   error "$SCRIPT does not contain a secret_scanning_non_provider_patterns API call"
 elif ! grep -E -q '"secret_scanning_non_provider_patterns"[[:space:]]*:[[:space:]]*\{[[:space:]]*"status"[[:space:]]*:[[:space:]]*"enabled"[[:space:]]*\}' "$SCRIPT"; then
@@ -250,7 +250,7 @@ echo "  done."
 # permission) makes the whole file an "invalid workflow file" that fails at
 # startup with 0s duration on every run.
 echo ""
-echo "Check 6: apply-repo-settings.yml uses only valid permissions scopes"
+echo "Check 8: apply-repo-settings.yml uses only valid permissions scopes"
 if [[ ! -f "$WORKFLOW" ]]; then
   error "Missing $WORKFLOW"
 elif ! command -v python3 >/dev/null 2>&1 || ! python3 -c "import yaml" >/dev/null 2>&1; then
@@ -298,26 +298,27 @@ fi
 echo "  done."
 
 echo ""
-
-# Check that CodeQL default setup is configured in the script
-echo "Check 4: CodeQL default setup is configured"
-if ! grep -q 'code-scanning/default-setup' "$SCRIPT"; then
-  error "$SCRIPT does not contain a code-scanning/default-setup API call"
-elif ! grep -E -q 'state=configured|"state":"configured"' "$SCRIPT"; then
-  error "$SCRIPT references code-scanning/default-setup but does not set state to configured"
-elif ! grep -E -q 'query_suite=default|"query_suite":"default"' "$SCRIPT"; then
-  error "$SCRIPT references code-scanning/default-setup but does not set query_suite to default"
+echo "Check 9: secret_scanning is set to enabled"
+if ! grep -q '"secret_scanning":' "$SCRIPT"; then
+  error "$SCRIPT does not contain a secret_scanning API call"
+elif ! grep -q '"secret_scanning":{"status":"enabled"}' "$SCRIPT"; then
+  error "$SCRIPT references secret_scanning but does not set status to enabled"
 fi
 echo "  done."
 
 echo ""
+echo "Check 10: secret_scanning_push_protection is set to enabled"
+if ! grep -q 'secret_scanning_push_protection' "$SCRIPT"; then
+  error "$SCRIPT does not contain a secret_scanning_push_protection API call"
+elif ! grep -q '"secret_scanning_push_protection":{"status":"enabled"}' "$SCRIPT"; then
+  error "$SCRIPT references secret_scanning_push_protection but does not set status to enabled"
+fi
+echo "  done."
 
-# Check that secret_scanning_non_provider_patterns is enabled in the script
-echo "Check 3: secret_scanning_non_provider_patterns is set to enabled"
-if ! grep -q 'secret_scanning_non_provider_patterns' "$SCRIPT"; then
-  error "$SCRIPT does not contain a secret_scanning_non_provider_patterns API call"
-elif ! grep -E -q '"secret_scanning_non_provider_patterns"[[:space:]]*:[[:space:]]*\{[[:space:]]*"status"[[:space:]]*:[[:space:]]*"enabled"[[:space:]]*\}' "$SCRIPT"; then
-  error "$SCRIPT references secret_scanning_non_provider_patterns but does not set status to enabled"
+echo ""
+echo "Check 11: dependabot automated security fixes are enabled"
+if ! grep -q 'automated-security-fixes' "$SCRIPT"; then
+  error "$SCRIPT does not contain an automated-security-fixes API call"
 fi
 echo "  done."
 
