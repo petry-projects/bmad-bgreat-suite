@@ -57,7 +57,7 @@ permissions: {}
 
 jobs:
   claude-code:
-    uses: petry-projects/.github/.github/workflows/claude-code-reusable.yml@v2
+    uses: petry-projects/.github/.github/workflows/claude-code-reusable.yml@v2  # NOSONAR(githubactions:S7637) first-party channel ref
     secrets: inherit
     permissions:
       contents: write
