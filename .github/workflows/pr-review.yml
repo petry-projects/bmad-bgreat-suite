@@ -46,7 +46,7 @@ jobs:
       contents: read
       pull-requests: write
       checks: read
-    uses: petry-projects/.github-private/.github/workflows/pr-review.yml@pr-review/stable
+    uses: petry-projects/.github-private/.github/workflows/pr-review.yml@pr-review/stable  # NOSONAR(githubactions:S7637) first-party channel ref
     with:
       agent_ref: pr-review/stable
       pr_url: ${{ inputs.pr_url || '' }}
