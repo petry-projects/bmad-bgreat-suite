@@ -37,17 +37,21 @@ on:
 
 permissions: {}
 
-# Serialize dev-lead runs repo-wide. Trigger bursts (e.g. several issues labeled
-# at once) otherwise spawn parallel runs that collide on the shared Claude API
-# quota and fail with HTTP 429. cancel-in-progress is false because an in-flight
-# run may be writing commits or opening a PR — overflow must queue, not cancel.
+# cancel-in-progress must be false: in-flight runs write commits and open PRs;
+# cancelling mid-run would strand partial work. Overflow must queue, not cancel.
+# Per-PR/issue granularity serializes bursts without blocking unrelated events.
 concurrency:
-  group: "dev-lead-${{ github.repository }}"
+  group: dev-lead-${{ github.repository }}-${{ github.event.pull_request.number || github.event.issue.number || github.ref }}
   cancel-in-progress: false
 
 jobs:
   dev-lead:
-    uses: petry-projects/.github-private/.github/workflows/dev-lead-reusable.yml@dev-lead/stable
+    # Pinned to the moving dev-lead/stable channel tag, not @main, so a broken
+    # change to dev-lead can no longer gate its own fix (the self-host circular
+    # dependency). Promotion is done by moving the dev-lead/stable tag centrally; this
+    # caller is never edited on release. agent_ref threads the same channel into
+    # dev-lead's own scripts/prompts checkout. See ci-standards.md#dev-lead-agent.
+    uses: petry-projects/.github-private/.github/workflows/dev-lead-reusable.yml@dev-lead/stable # NOSONAR(githubactions:S7637)
     with:
       agent_ref: dev-lead/stable
     secrets: inherit
@@ -57,4 +61,4 @@ jobs:
       issues: write
       actions: read
       checks: read
-      statuses: read   # required by dev-lead-reusable.yml since #435
+      statuses: read
