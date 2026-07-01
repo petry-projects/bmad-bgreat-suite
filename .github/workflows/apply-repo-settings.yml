@@ -19,7 +19,9 @@ jobs:
     permissions:
       contents: read  # checkout only; repo-admin API calls use GH_PAT_WORKFLOWS
     steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v4
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
       - name: Apply repository settings
         # The default GITHUB_TOKEN cannot be granted repo-admin scope, which the
         # check-suites/security/code-scanning API calls require, so authenticate
