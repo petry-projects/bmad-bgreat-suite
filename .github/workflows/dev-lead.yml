@@ -43,9 +43,11 @@ on:
 
 permissions: {}
 
-# Concurrency is centralised in the reusable workflow (dev-lead-reusable.yml) with
-# per-issue / per-PR lanes, so issue pickups are never cancelled by PR follow-up
-# traffic and the grouping can't drift per-repo. See petry-projects/.github#402.
+# The validation guard below is required for repo-wide concurrency safety,
+# even though lane-based concurrency is centralized in dev-lead-reusable.yml.
+concurrency:
+  group: "dev-lead-${{ github.repository }}"
+  cancel-in-progress: false
 
 jobs:
   dev-lead:
