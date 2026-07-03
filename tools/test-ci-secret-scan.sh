@@ -6,9 +6,11 @@ set -euo pipefail
 
 ERRORS=0
 CI_FILE=".github/workflows/ci.yml"
+readonly DONE_MARK="  done."
 
 error() {
-  echo "ERROR: $1" >&2
+  local msg="$1"
+  echo "ERROR: $msg" >&2
   ERRORS=$((ERRORS + 1))
 }
 
@@ -25,7 +27,7 @@ echo "Check 1: secret-scan job is defined"
 if ! grep -q '^  secret-scan:' "$CI_FILE"; then
   error "$CI_FILE does not contain a 'secret-scan' job"
 fi
-echo "  done."
+echo "$DONE_MARK"
 
 # Extract only the secret-scan job block (from its job key to the next top-level
 # job entry) so checks 2-4 cannot be satisfied by content in other jobs or by
@@ -39,7 +41,7 @@ echo "Check 2: secret-scan job uses gitleaks/gitleaks-action"
 if ! grep -qE '^\s+uses:\s+gitleaks/gitleaks-action' "$TMPFILE"; then
   error "secret-scan job does not use gitleaks/gitleaks-action on a uses: line"
 fi
-echo "  done."
+echo "$DONE_MARK"
 
 # Check 3: fetch-depth: 0 is set in the checkout step's with: block (not just anywhere in the job)
 echo "Check 3: secret-scan checkout uses fetch-depth: 0"
@@ -53,7 +55,7 @@ if ! awk '
 ' "$TMPFILE"; then
   error "secret-scan checkout step does not set fetch-depth: 0 in its with: block"
 fi
-echo "  done."
+echo "$DONE_MARK"
 
 # Check 4: continue-on-error must NOT be set on the gitleaks step
 # (having it would allow gitleaks findings to silently pass the build)
@@ -66,7 +68,7 @@ if awk '/^[[:space:]]+-[[:space:]]/ { if (gitleaks && cont) { found=1; exit } gi
 else
   error "secret-scan job has 'continue-on-error' on the gitleaks step — findings will not fail the build"
 fi
-echo "  done."
+echo "$DONE_MARK"
 
 # Check 5: gitleaks step passes --redact and --exit-code 1 in its args
 echo "Check 5: gitleaks step passes --redact and --exit-code 1"
@@ -81,7 +83,7 @@ fi
 if ! echo "$GITLEAKS_ARGS" | grep -q -- '--exit-code 1'; then
   error "gitleaks step args do not include --exit-code 1"
 fi
-echo "  done."
+echo "$DONE_MARK"
 
 echo ""
 if [[ "$ERRORS" -gt 0 ]]; then
