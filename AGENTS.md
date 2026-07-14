@@ -85,4 +85,3 @@ All PRs must pass:
 - **AgentShield** — Agent config security (secrets scan, permission bypass detection, frontmatter validation)
 - **CodeQL** — SAST scanning for GitHub Actions
 - **SonarCloud** — Code quality analysis
-- **Claude Code** — AI-assisted PR review

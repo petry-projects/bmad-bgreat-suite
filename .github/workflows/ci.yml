@@ -136,6 +136,9 @@ jobs:
       - name: Validate dev-lead concurrency guard
         run: bash tools/test-dev-lead-concurrency.sh
 
+      - name: Validate ci-failure-analyst allowlist
+        run: bash tools/test-ci-failure-analyst-allowlist.sh
+
       - name: Validate secret-scan job compliance
         run: bash tools/test-ci-secret-scan.sh
 

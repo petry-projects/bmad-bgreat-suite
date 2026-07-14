@@ -35,7 +35,7 @@ name: "CI Failure Analyst"
 on:
   workflow_run:
     # Explicit opt-in allowlist — intentional over a wildcard so transient or
-    # experimental workflow completions don't generate analyst noise. All 14
+    # experimental workflow completions don't generate analyst noise. All 13
     # entries here match the `name:` value of a workflow file in this repo.
     # When adding a new workflow that should trigger failure analysis, add its
     # exact `name:` value to this list. When renaming a workflow, update its
@@ -45,7 +45,6 @@ on:
       - AgentShield
       - Apply repository settings
       - Auto-rebase non-Dependabot PRs
-      - Claude Code
       - Copilot Setup Steps
       - Dependabot auto-merge
       - Dependabot update and merge
