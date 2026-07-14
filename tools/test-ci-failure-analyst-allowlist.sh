@@ -54,7 +54,7 @@ def workflow_names(directory):
         os.path.join(directory, "*.yaml")
     ):
         try:
-            with open(path) as fh:
+            with open(path, encoding="utf-8") as fh:
                 doc = yaml.safe_load(fh)
         except yaml.YAMLError as exc:
             print(f"Invalid YAML syntax in {path}: {exc}", file=sys.stderr)
@@ -65,7 +65,7 @@ def workflow_names(directory):
 
 
 try:
-    with open(analyst_path) as fh:
+    with open(analyst_path, encoding="utf-8") as fh:
         analyst = yaml.safe_load(fh)
 except yaml.YAMLError as exc:
     print(f"Invalid YAML syntax in {analyst_path}: {exc}", file=sys.stderr)
@@ -107,7 +107,7 @@ if orphans:
 PY
   echo "  done."
 else
-  error "ci-failure-analyst.yml lists workflow(s) that no longer exist"
+  error "ci-failure-analyst.yml validation failed"
 fi
 
 echo ""
