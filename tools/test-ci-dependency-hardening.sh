@@ -40,7 +40,7 @@ echo "  done."
 
 echo "Check 2: every pip install passes --only-binary :all: (S8541)"
 for entry in "${PIP_LINES[@]}"; do
-  if ! grep -qE -- '--only-binary[[:space:]]+:all:' <<< "$entry"; then
+  if ! grep -qE -- '--only-binary([[:space:]]+|=):all:' <<< "$entry"; then
     error "pip install missing '--only-binary :all:': ${entry#*:}"
   fi
 done
@@ -56,9 +56,7 @@ done
 echo "  done."
 
 echo "Check 4: a committed lock file accompanies package.json (S8564)"
-if [[ ! -f "package.json" ]]; then
-  error "Missing package.json"
-elif [[ ! -f "$LOCK_FILE" ]]; then
+if [[ -f "package.json" && ! -f "$LOCK_FILE" ]]; then
   error "Missing $LOCK_FILE — package.json needs a committed lock file"
 fi
 echo "  done."
