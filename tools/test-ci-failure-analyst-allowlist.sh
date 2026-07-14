@@ -107,7 +107,7 @@ if orphans:
 PY
   echo "  done."
 else
-  error "ci-failure-analyst.yml validation failed"
+  error "Python validation script exited with an error (see details above)"
 fi
 
 echo ""
