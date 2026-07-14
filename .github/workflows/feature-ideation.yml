@@ -97,10 +97,7 @@ jobs:
   redispatch:
     if: >-
       github.event_name == 'discussion' &&
-      github.event.discussion.category.slug == 'ideas' &&
-      (github.event.discussion.author_association == 'OWNER' ||
-       github.event.discussion.author_association == 'MEMBER' ||
-       github.event.discussion.author_association == 'COLLABORATOR')
+      github.event.discussion.category.slug == 'ideas'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions: {}
@@ -115,6 +112,33 @@ jobs:
             echo "::error::GH_PAT_WORKFLOWS is required — a workflow_dispatch fired with GITHUB_TOKEN will not start a run."
             exit 1
           fi
+      - name: Verify author permissions
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT_WORKFLOWS }}
+          REPO: ${{ github.repository }}
+          USERNAME: ${{ github.event.sender.login }}
+        run: |
+          # Verify author has required permissions via API (author_association event metadata is deprecated).
+          # Check for admin/write collaborator access OR org membership/ownership.
+          PERMISSION=$(gh api repos/$REPO/collaborators/$USERNAME/permission --jq '.permission' --silent 2>/dev/null) || PERMISSION="none"
+          case "$PERMISSION" in
+            admin|maintain|write)
+              exit 0
+              ;;
+            *)
+              # Check if user is an owner or org member
+              OWNER_LOGIN=$(gh api repos/$REPO --jq '.owner.login')
+              if [[ "$OWNER_LOGIN" == "$USERNAME" ]]; then
+                exit 0
+              fi
+              # Check org membership if repo is org-owned
+              if [[ "$OWNER_LOGIN" != "$REPO" ]]; then
+                gh api orgs/$OWNER_LOGIN/members/$USERNAME --silent >/dev/null 2>&1 && exit 0
+              fi
+              echo "::error::User $USERNAME does not have required permissions to trigger workflow"
+              exit 1
+              ;;
+          esac
       - name: Re-dispatch under workflow_dispatch
         env:
           GH_TOKEN: ${{ secrets.GH_PAT_WORKFLOWS }}
