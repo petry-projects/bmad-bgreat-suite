@@ -30,7 +30,7 @@ fi
 
 # Collect every `pip install` invocation in the CI workflow so each one is held
 # to the same hardening bar (no unpinned / source-buildable install slips in).
-mapfile -t PIP_LINES < <(grep -nE 'pip[[:space:]]+install' "$CI_FILE" || true)
+mapfile -t PIP_LINES < <(grep -nE 'pip[[:space:]]+install' "$CI_FILE" | grep -vE '^[0-9]+:[[:space:]]*#' || true)
 
 echo "Check 1: at least one pip install step exists to validate"
 if [[ ${#PIP_LINES[@]} -eq 0 ]]; then
