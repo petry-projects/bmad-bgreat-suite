@@ -186,7 +186,7 @@ elif ! grep -E -q '"app_id"[[:space:]]*:[[:space:]]*1236702' "$SCRIPT"; then
 elif ! grep -E -q '"app_id"[[:space:]]*:[[:space:]]*1236702[[:space:]]*,[[:space:]]*"setting"[[:space:]]*:[[:space:]]*false' "$SCRIPT"; then
   error "$SCRIPT configures app_id 1236702 but does not set setting to false"
 fi
-echo "  done."
+echo "$DONE_MARKER"
 
 # Check that check-suite auto-trigger is disabled for CodeRabbit (app_id 347564)
 echo ""
@@ -198,7 +198,7 @@ elif ! grep -E -q '"app_id"[[:space:]]*:[[:space:]]*347564' "$SCRIPT"; then
 elif ! grep -E -q '"app_id"[[:space:]]*:[[:space:]]*347564[[:space:]]*,[[:space:]]*"setting"[[:space:]]*:[[:space:]]*false' "$SCRIPT"; then
   error "$SCRIPT does not disable auto-trigger for CodeRabbit (app_id 347564)"
 fi
-echo "  done."
+echo "$DONE_MARKER"
 
 # Check that the workflow has no paths: filter so it runs on every push to main
 echo ""
@@ -209,7 +209,7 @@ if [[ ! -f "$WORKFLOW" ]]; then
 elif grep -q '^[[:space:]]*paths:' "$WORKFLOW"; then
   error "$WORKFLOW has a 'paths:' filter — the workflow will only run when the script itself changes, not on every push; the security setting may not be applied after a new merge"
 fi
-echo "  done."
+echo "$DONE_MARKER"
 
 echo ""
 
@@ -222,7 +222,7 @@ elif ! grep -E -q 'state=configured|"state":"configured"' "$SCRIPT"; then
 elif ! grep -E -q 'query_suite=default|"query_suite":"default"' "$SCRIPT"; then
   error "$SCRIPT references code-scanning/default-setup but does not set query_suite to default"
 fi
-echo "  done."
+echo "$DONE_MARKER"
 
 # Check that delete_branch_on_merge is enabled in the script
 echo ""
@@ -232,7 +232,7 @@ if ! grep -q 'delete_branch_on_merge' "$SCRIPT"; then
 elif ! grep -E -q '"delete_branch_on_merge"[[:space:]]*:[[:space:]]*true' "$SCRIPT"; then
   error "$SCRIPT references delete_branch_on_merge but does not set it to true"
 fi
-echo "  done."
+echo "$DONE_MARKER"
 
 echo ""
 
@@ -243,7 +243,7 @@ if ! grep -q 'secret_scanning_non_provider_patterns' "$SCRIPT"; then
 elif ! grep -E -q '"secret_scanning_non_provider_patterns"[[:space:]]*:[[:space:]]*\{[[:space:]]*"status"[[:space:]]*:[[:space:]]*"enabled"[[:space:]]*\}' "$SCRIPT"; then
   error "$SCRIPT references secret_scanning_non_provider_patterns but does not set status to enabled"
 fi
-echo "  done."
+echo "$DONE_MARKER"
 
 # Check that every permissions: scope in the workflow is a valid GitHub Actions
 # scope. An invalid scope (e.g. `administration`, which is not a GITHUB_TOKEN
@@ -295,7 +295,7 @@ PY
     done <<< "$invalid_scopes"
   fi
 fi
-echo "  done."
+echo "$DONE_MARKER"
 
 echo ""
 echo "Check 9: secret_scanning is set to enabled"
@@ -304,7 +304,7 @@ if ! grep -q '"secret_scanning":' "$SCRIPT"; then
 elif ! grep -q '"secret_scanning":{"status":"enabled"}' "$SCRIPT"; then
   error "$SCRIPT references secret_scanning but does not set status to enabled"
 fi
-echo "  done."
+echo "$DONE_MARKER"
 
 echo ""
 echo "Check 10: secret_scanning_push_protection is set to enabled"
@@ -313,14 +313,14 @@ if ! grep -q 'secret_scanning_push_protection' "$SCRIPT"; then
 elif ! grep -q '"secret_scanning_push_protection":{"status":"enabled"}' "$SCRIPT"; then
   error "$SCRIPT references secret_scanning_push_protection but does not set status to enabled"
 fi
-echo "  done."
+echo "$DONE_MARKER"
 
 echo ""
 echo "Check 11: dependabot automated security fixes are enabled"
 if ! grep -q 'automated-security-fixes' "$SCRIPT"; then
   error "$SCRIPT does not contain an automated-security-fixes API call"
 fi
-echo "  done."
+echo "$DONE_MARKER"
 
 echo ""
 
@@ -333,7 +333,7 @@ elif ! grep -E -q 'state=configured|"state":"configured"' "$SCRIPT"; then
 elif ! grep -E -q 'query_suite=default|"query_suite":"default"' "$SCRIPT"; then
   error "$SCRIPT references code-scanning/default-setup but does not set query_suite to default"
 fi
-echo "  done."
+echo "$DONE_MARKER"
 
 echo ""
 
@@ -344,7 +344,7 @@ if ! grep -q 'secret_scanning_non_provider_patterns' "$SCRIPT"; then
 elif ! grep -E -q '"secret_scanning_non_provider_patterns"[[:space:]]*:[[:space:]]*\{[[:space:]]*"status"[[:space:]]*:[[:space:]]*"enabled"[[:space:]]*\}' "$SCRIPT"; then
   error "$SCRIPT references secret_scanning_non_provider_patterns but does not set status to enabled"
 fi
-echo "  done."
+echo "$DONE_MARKER"
 
 # Check that every permissions: scope in the workflow is a valid GitHub Actions
 # scope. An invalid scope (e.g. `administration`, which is not a GITHUB_TOKEN
@@ -396,7 +396,7 @@ PY
     done <<< "$invalid_scopes"
   fi
 fi
-echo "  done."
+echo "$DONE_MARKER"
 
 echo ""
 if [[ "$ERRORS" -gt 0 ]]; then

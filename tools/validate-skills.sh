@@ -335,7 +335,7 @@ if [[ -f "$SRC/module-help.csv" ]]; then
 else
   error "Missing $SRC/module-help.csv"
 fi
-echo "  done."
+echo "$DONE_MARKER"
 
 # ---------------------------------------------------------------------------
 # Check 12: copilot-setup-steps.yml has the required job name
@@ -355,7 +355,7 @@ elif ! awk '
 ' "$COPILOT_WF"; then
   error "$COPILOT_WF does not contain a job named 'copilot-setup-steps' (GitHub requires this exact name)"
 fi
-echo "  done."
+echo "$DONE_MARKER"
 
 # ---------------------------------------------------------------------------
 # Summary
