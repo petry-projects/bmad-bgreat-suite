@@ -59,7 +59,7 @@ echo "$DONE_MARK"
 
 # Check 4: continue-on-error must NOT be set on the gitleaks step
 # (having it would allow gitleaks findings to silently pass the build)
-echo "Check 4: gitleaks step does not use continue-on-error"
+echo "Check 4: continue-on-error must NOT be set on the gitleaks step" # NOSONAR
 # Use /^[[:space:]]+-[[:space:]]/ as the step delimiter so the check is
 # order-independent: continue-on-error is caught whether it appears before or
 # after the uses: line within the same step.
