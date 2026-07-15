@@ -52,4 +52,4 @@ jobs:
       pr_url: ${{ inputs.pr_url || '' }}
       dry_run: ${{ inputs.dry_run || '' }}
       force_review: ${{ inputs.force_review || '' }}
-    secrets: inherit
+    secrets: inherit  # NOSONAR(githubactions:S7635) first-party trusted reusable

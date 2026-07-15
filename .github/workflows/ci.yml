@@ -21,7 +21,7 @@ jobs:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
       - name: Install PyYAML
-        run: pip install pyyaml
+        run: "pip install --only-binary :all: pyyaml==6.0.2"
 
       - name: Validate YAML files
         run: |
@@ -141,6 +141,9 @@ jobs:
 
       - name: Validate secret-scan job compliance
         run: bash tools/test-ci-secret-scan.sh
+
+      - name: Validate dependency hardening
+        run: bash tools/test-ci-dependency-hardening.sh
 
   secret-scan:
     name: Secret scan (gitleaks)
