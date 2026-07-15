@@ -6,9 +6,11 @@ set -euo pipefail
 
 ERRORS=0
 SRC="src"
+readonly DONE_MARK="  done."
 
 error() {
-  echo "ERROR: $1" >&2
+  local msg="$1"
+  echo "ERROR: $msg" >&2
   ERRORS=$((ERRORS + 1))
 }
 
@@ -31,7 +33,7 @@ fi
 if [[ ! -d "$SRC/workflows" ]]; then
   error "Missing required directory: $SRC/workflows/"
 fi
-echo "  done."
+echo "$DONE_MARK"
 
 # ---------------------------------------------------------------------------
 # Check 1: Every workflow directory has SKILL.md and bmad-skill-manifest.yaml
@@ -47,7 +49,7 @@ for dir in "$SRC"/workflows/*/; do
     error "Missing bmad-skill-manifest.yaml in workflows/$name"
   fi
 done
-echo "  done."
+echo "$DONE_MARK"
 
 # ---------------------------------------------------------------------------
 # Check 2: Every workflow directory has workflow.md
@@ -60,7 +62,7 @@ for dir in "$SRC"/workflows/*/; do
     error "Missing workflow.md in workflows/$name"
   fi
 done
-echo "  done."
+echo "$DONE_MARK"
 
 # ---------------------------------------------------------------------------
 # Check 3: Every workflow directory has a steps/ directory with at least step-01-init.md
@@ -75,7 +77,7 @@ for dir in "$SRC"/workflows/*/; do
     error "Missing steps/step-01-init.md in workflows/$name"
   fi
 done
-echo "  done."
+echo "$DONE_MARK"
 
 # ---------------------------------------------------------------------------
 # Check 4: Every workflow directory has a templates/ directory with at least one template
@@ -93,7 +95,7 @@ for dir in "$SRC"/workflows/*/; do
     fi
   fi
 done
-echo "  done."
+echo "$DONE_MARK"
 
 # ---------------------------------------------------------------------------
 # Check 5: Step files follow naming convention (step-NN-*.md or step-NNb-*.md)
@@ -110,7 +112,7 @@ for dir in "$SRC"/workflows/*/steps; do
     fi
   done
 done
-echo "  done."
+echo "$DONE_MARK"
 
 # ---------------------------------------------------------------------------
 # Check 6: All relative path references in step files resolve to real files
@@ -142,7 +144,7 @@ for dir in "$SRC"/workflows/*/; do
     done < <(grep -oE '\.\./templates/[A-Za-z0-9._-]+\.md|\.\./\.\./\.\./templates/[A-Za-z0-9._-]+\.md' "$stepfile" 2>/dev/null || true)
   done
 done
-echo "  done."
+echo "$DONE_MARK"
 
 # ---------------------------------------------------------------------------
 # Check 7: All templates have required frontmatter fields (status, stepsCompleted)
@@ -178,7 +180,7 @@ for tmpl in "$SRC"/templates/*.md; do
     fi
   fi
 done
-echo "  done."
+echo "$DONE_MARK"
 
 # ---------------------------------------------------------------------------
 # Check 8: module-help.csv menu codes are unique and exactly 2 characters
@@ -204,7 +206,7 @@ if [[ -f "$SRC/module-help.csv" ]]; then
 else
   error "Missing $SRC/module-help.csv"
 fi
-echo "  done."
+echo "$DONE_MARK"
 
 # ---------------------------------------------------------------------------
 # Check 9: Every agent directory has SKILL.md and bmad-skill-manifest.yaml
@@ -220,7 +222,7 @@ for dir in "$SRC"/agents/*/; do
     error "Missing bmad-skill-manifest.yaml in agents/$name"
   fi
 done
-echo "  done."
+echo "$DONE_MARK"
 
 # ---------------------------------------------------------------------------
 # Check 10: Config variables referenced in step files exist in module.yaml
@@ -249,7 +251,7 @@ for stepfile in "$SRC"/workflows/*/steps/*.md "$SRC"/workflows/*/workflow.md "$S
     fi
   done
 done
-echo "  done."
+echo "$DONE_MARK"
 
 # ---------------------------------------------------------------------------
 # Check 11: Every agent, workflow, and standalone skill directory is registered
@@ -281,7 +283,7 @@ if [[ -f "$SRC/module-help.csv" ]]; then
 else
   error "Missing $SRC/module-help.csv"
 fi
-echo "  done."
+echo "$DONE_MARK"
 
 # ---------------------------------------------------------------------------
 # Check 12: copilot-setup-steps.yml has the required job name
@@ -301,7 +303,7 @@ elif ! awk '
 ' "$COPILOT_WF"; then
   error "$COPILOT_WF does not contain a job named 'copilot-setup-steps' (GitHub requires this exact name)"
 fi
-echo "  done."
+echo "$DONE_MARK"
 
 # ---------------------------------------------------------------------------
 # Summary
