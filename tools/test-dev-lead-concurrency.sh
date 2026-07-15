@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
-# Validates that .github/workflows/dev-lead.yml declares a concurrency block so
-# bursts of triggering events serialize instead of running in parallel and
-# exhausting the shared Claude API quota (HTTP 429), which was the root cause of
-# the dev-lead workflow's degraded failure rate (issue #308).
+# Validates that .github/workflows/dev-lead.yml does NOT declare a top-level
+# concurrency block. Since petry-projects/.github#402, concurrency is centralised
+# in the reusable workflow (dev-lead-reusable.yml) with per-issue / per-PR lanes.
+# A local concurrency block in the caller would override the reusable's lanes and
+# re-introduce the serialisation problems fixed by #402.
 set -euo pipefail
 
 ERRORS=0
@@ -31,9 +32,11 @@ if ! python3 -c "import yaml" > /dev/null 2>&1; then
   exit 1
 fi
 
-# Check 1: the workflow parses as valid YAML and declares a top-level
-# concurrency block with a non-empty group and cancel-in-progress: false.
-echo "Check 1: top-level concurrency block with group and cancel-in-progress: false"
+# Check 1: the workflow parses as valid YAML and does NOT declare a top-level
+# concurrency block. Since petry-projects/.github#402, concurrency lives in the
+# reusable workflow. A caller-level block would override the reusable's per-lane
+# grouping and re-introduce API-quota exhaustion (HTTP 429).
+echo "Check 1: no top-level concurrency block (concurrency is in the reusable)"
 if python3 - "$WORKFLOW" << 'PY'; then
 import sys
 import yaml
@@ -50,28 +53,17 @@ if not isinstance(doc, dict):
     sys.exit(1)
 
 concurrency = doc.get("concurrency")
-if concurrency is None:
-    print("no top-level 'concurrency:' key", file=sys.stderr)
-    sys.exit(1)
-
-if not isinstance(concurrency, dict):
-    print("'concurrency:' must be a mapping with group/cancel-in-progress", file=sys.stderr)
-    sys.exit(1)
-
-group = concurrency.get("group")
-if not isinstance(group, str) or not group.strip():
-    print("'concurrency.group' must be a non-empty string", file=sys.stderr)
-    sys.exit(1)
-
-# In-flight dev-lead runs write commits and open PRs; cancelling them mid-run
-# would strand partial work. Overflow must queue, not cancel.
-if concurrency.get("cancel-in-progress") is not False:
-    print("'concurrency.cancel-in-progress' must be false", file=sys.stderr)
+if concurrency is not None:
+    print(
+        "top-level 'concurrency:' key found — remove it; concurrency is "
+        "centralised in the reusable workflow (petry-projects/.github#402)",
+        file=sys.stderr,
+    )
     sys.exit(1)
 PY
   echo "  done."
 else
-  error "dev-lead.yml concurrency block missing or malformed"
+  error "dev-lead.yml has a top-level concurrency block that must be removed"
 fi
 
 echo ""
