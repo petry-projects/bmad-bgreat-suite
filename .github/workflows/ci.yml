@@ -28,8 +28,10 @@ jobs:
             if pip install --only-binary :all: pyyaml==6.0.2; then
               exit 0
             fi
-            echo "PyYAML install attempt ${attempt} failed; retrying in $((attempt * 5))s" >&2
-            sleep "$((attempt * 5))"
+            if [[ $attempt -lt 3 ]]; then
+              echo "PyYAML install attempt ${attempt} failed; retrying in $((attempt * 5))s" >&2
+              sleep "$((attempt * 5))"
+            fi
           done
           echo "::error::PyYAML install failed after 3 attempts"
           exit 1

@@ -29,8 +29,8 @@ fi
 # the next step's `- name:` line) so the checks below cannot be satisfied by
 # unrelated content elsewhere in the workflow.
 STEP_BLOCK=$(awk '
-  /^[[:space:]]*-[[:space:]]+name:[[:space:]]+Install PyYAML[[:space:]]*$/ { grab=1; print; next }
-  grab && /^[[:space:]]*-[[:space:]]+name:/ { exit }
+  /^[[:space:]]*-[[:space:]]+name:[[:space:]]+["'"'"'"]?Install PyYAML["'"'"'"]?[[:space:]]*$/ { grab=1; print; next }
+  grab && /^[[:space:]]*-[[:space:]]+(name|uses|run|id|if):/ { exit }
   grab { print }
 ' "$CI_FILE")
 
@@ -46,10 +46,10 @@ fi
 echo "$DONE_MARK"
 
 echo "Check 2: the install still pins pyyaml with --only-binary :all:"
-if ! grep -qE 'pip[[:space:]]+install' <<< "$STEP_BLOCK"; then
+if ! grep -qE 'pip[0-9]*[[:space:]]+install' <<< "$STEP_BLOCK"; then
   error "Install PyYAML step no longer contains a 'pip install' invocation"
 fi
-if ! grep -qE 'pyyaml==[0-9]' <<< "$STEP_BLOCK"; then
+if ! grep -qiE 'pyyaml==[0-9]' <<< "$STEP_BLOCK"; then
   error "Install PyYAML step no longer pins an exact pyyaml version (pyyaml==X.Y.Z)"
 fi
 if ! grep -qE -- '--only-binary([[:space:]]+|=):all:' <<< "$STEP_BLOCK"; then
@@ -57,9 +57,9 @@ if ! grep -qE -- '--only-binary([[:space:]]+|=):all:' <<< "$STEP_BLOCK"; then
 fi
 echo "$DONE_MARK"
 
-echo "Check 3: the install runs inside a retry loop"
-if ! grep -qE '(^|[[:space:]])(for|while|until)[[:space:]]' <<< "$STEP_BLOCK"; then
-  error "Install PyYAML step does not wrap 'pip install' in a retry loop (for/while/until)"
+echo "Check 3: the install runs inside a bounded retry loop"
+if ! grep -qE '(for[[:space:]]+[[:alnum:]_]+[[:space:]]+in[[:space:]]+([0-9]+[[:space:]]*){2,}|\{[0-9]+\.\.[0-9]+\})' <<< "$STEP_BLOCK"; then
+  error "Install PyYAML step does not use a bounded retry loop (e.g., 'for n in 1 2 3' or 'for n in {1..3}')"
 fi
 echo "$DONE_MARK"
 
