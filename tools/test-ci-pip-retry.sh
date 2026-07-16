@@ -13,7 +13,8 @@ CI_FILE=".github/workflows/ci.yml"
 readonly DONE_MARK="  done."
 
 error() {
-  echo "ERROR: $1" >&2
+  local message="$1"
+  echo "ERROR: $message" >&2
   ERRORS=$((ERRORS + 1))
 }
 
@@ -58,7 +59,7 @@ fi
 echo "$DONE_MARK"
 
 echo "Check 3: the install runs inside a bounded retry loop"
-if ! grep -qE '(for[[:space:]]+[[:alnum:]_]+[[:space:]]+in[[:space:]]+([0-9]+[[:space:]]*){2,}|\{[0-9]+\.\.[0-9]+\})' <<< "$STEP_BLOCK"; then
+if ! grep -qE 'for[[:space:]]+[[:alnum:]_]+[[:space:]]+in[[:space:]]+(([0-9]+[[:space:]]*){2,}|\{[0-9]+\.\.[0-9]+\})' <<< "$STEP_BLOCK"; then
   error "Install PyYAML step does not use a bounded retry loop (e.g., 'for n in 1 2 3' or 'for n in {1..3}')"
 fi
 echo "$DONE_MARK"
