@@ -21,7 +21,18 @@ jobs:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
       - name: Install PyYAML
-        run: "pip install --only-binary :all: pyyaml==6.0.2"
+        # Retry to absorb transient PyPI/network hiccups so a single failed
+        # download does not fail the whole CI run (Fleet Monitor issue #381).
+        run: |
+          for attempt in 1 2 3; do
+            if pip install --only-binary :all: pyyaml==6.0.2; then
+              exit 0
+            fi
+            echo "PyYAML install attempt ${attempt} failed; retrying in $((attempt * 5))s" >&2
+            sleep "$((attempt * 5))"
+          done
+          echo "::error::PyYAML install failed after 3 attempts"
+          exit 1
 
       - name: Validate YAML files
         run: |
@@ -141,6 +152,9 @@ jobs:
 
       - name: Validate dependency hardening
         run: bash tools/test-ci-dependency-hardening.sh
+
+      - name: Validate PyYAML install retry hardening
+        run: bash tools/test-ci-pip-retry.sh
 
   secret-scan:
     name: Secret scan (gitleaks)
