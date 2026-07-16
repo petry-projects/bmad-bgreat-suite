@@ -46,7 +46,7 @@ fi
 echo "$DONE_MARK"
 
 echo "Check 2: the install still pins pyyaml with --only-binary :all:"
-if ! grep -qE 'pip[0-9]*[[:space:]]+install' <<< "$STEP_BLOCK"; then
+if ! grep -qiE 'pip[0-9]*[[:space:]]+install' <<< "$STEP_BLOCK"; then
   error "Install PyYAML step no longer contains a 'pip install' invocation"
 fi
 if ! grep -qiE 'pyyaml==[0-9]' <<< "$STEP_BLOCK"; then
