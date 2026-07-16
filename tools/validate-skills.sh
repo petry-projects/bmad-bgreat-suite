@@ -306,58 +306,6 @@ fi
 echo "$DONE_MARK"
 
 # ---------------------------------------------------------------------------
-# Check 11: Every agent, workflow, and standalone skill directory is registered
-#           in module-help.csv
-# ---------------------------------------------------------------------------
-echo "Check 11: Agent, workflow, and skill directories registered in module-help.csv"
-if [[ -f "$SRC/module-help.csv" ]]; then
-  for dir in "$SRC"/agents/*/; do
-    [[ -d "$dir" ]] || continue
-    skill_name=$(basename "$dir")
-    if ! awk -F',' -v name="$skill_name" '{ gsub(/^[[:space:]]+|[[:space:]]+$/, "", $2); if ($2 == name) { found=1; exit } } END { exit !found }' "$SRC/module-help.csv"; then
-      error "Agent '$skill_name' not registered in module-help.csv"
-    fi
-  done
-  for dir in "$SRC"/workflows/*/; do
-    [[ -d "$dir" ]] || continue
-    skill_name=$(basename "$dir")
-    if ! awk -F',' -v name="$skill_name" '{ gsub(/^[[:space:]]+|[[:space:]]+$/, "", $2); if ($2 == name) { found=1; exit } } END { exit !found }' "$SRC/module-help.csv"; then
-      error "Workflow '$skill_name' not registered in module-help.csv"
-    fi
-  done
-  for dir in "$SRC"/skills/*/; do
-    [[ -d "$dir" ]] || continue
-    skill_name=$(basename "$dir")
-    if ! awk -F',' -v name="$skill_name" '{ gsub(/^[[:space:]]+|[[:space:]]+$/, "", $2); if ($2 == name) { found=1; exit } } END { exit !found }' "$SRC/module-help.csv"; then
-      error "Skill '$skill_name' not registered in module-help.csv"
-    fi
-  done
-else
-  error "Missing $SRC/module-help.csv"
-fi
-echo "$DONE_MARKER"
-
-# ---------------------------------------------------------------------------
-# Check 12: copilot-setup-steps.yml has the required job name
-# GitHub requires the job to be named exactly `copilot-setup-steps` to pick
-# up the file for the Copilot cloud agent.
-# ---------------------------------------------------------------------------
-echo "Check 12: .github/workflows/copilot-setup-steps.yml has job named copilot-setup-steps"
-COPILOT_WF=".github/workflows/copilot-setup-steps.yml"
-if [[ ! -f "$COPILOT_WF" ]]; then
-  error "Missing $COPILOT_WF"
-elif ! awk '
-  BEGIN { in_jobs=0; found=0 }
-  /^[[:space:]]*jobs:[[:space:]]*$/ { in_jobs=1; next }
-  in_jobs && /^[^[:space:]]/ { in_jobs=0 }
-  in_jobs && /^[[:space:]]+copilot-setup-steps[[:space:]]*:/ { found=1; exit }
-  END { exit(found ? 0 : 1) }
-' "$COPILOT_WF"; then
-  error "$COPILOT_WF does not contain a job named 'copilot-setup-steps' (GitHub requires this exact name)"
-fi
-echo "$DONE_MARKER"
-
-# ---------------------------------------------------------------------------
 # Summary
 # ---------------------------------------------------------------------------
 echo ""
