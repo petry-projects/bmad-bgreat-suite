@@ -161,6 +161,9 @@ jobs:
       - name: Validate PyYAML install retry hardening
         run: bash tools/test-ci-pip-retry.sh
 
+      - name: Validate dependency-audit required-check contract
+        run: bash tools/test-dependency-audit-check.sh
+
   secret-scan:
     name: Secret scan (gitleaks)
     runs-on: ubuntu-latest
