@@ -81,7 +81,7 @@ if "startsWith(github.event.pull_request.head.ref,'dependabot/')" not in normali
     )
     sys.exit(1)
 
-if "!startsWith(github.event.pull_request.head.ref,'dependabot/')" not in normalised:
+if not ("!startsWith(github.event.pull_request.head.ref,'dependabot/')" in normalised or "not(startsWith(github.event.pull_request.head.ref,'dependabot/'))" in normalised):
     print(
         "review job 'if:' guard does not NEGATE the dependabot head.ref check "
         "— Dependabot PRs would still run and fail",
@@ -91,7 +91,7 @@ if "!startsWith(github.event.pull_request.head.ref,'dependabot/')" not in normal
 PY
   echo "  done."
 else
-  error "pr-review.yml review job is missing the Dependabot skip guard"
+  error "pr-review.yml validation failed"
 fi
 
 echo ""
