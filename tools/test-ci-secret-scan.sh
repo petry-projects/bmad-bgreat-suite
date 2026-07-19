@@ -86,11 +86,10 @@ fi
 echo "$DONE_MARK"
 
 # Check 6: secret-scan job is skipped for Dependabot events.
-# Dependabot runs workflows with a restricted secret context, so the licensed
-# gitleaks-action's required GITLEAKS_LICENSE is unavailable and the job fails
-# with "missing gitleaks license" (Fleet Monitor issue #397). Dependabot only
-# bumps dependency pins and cannot introduce secrets, so the job must carry a
-# job-level `if:` guard that excludes the dependabot[bot] actor.
+# Dependabot PR runs do not have access to secrets.GITLEAKS_LICENSE; the
+# licensed gitleaks-action requires that secret and fails with "missing gitleaks
+# license" (Fleet Monitor issue #397). The job must carry a job-level `if:`
+# guard that excludes the dependabot[bot] actor.
 echo "Check 6: secret-scan job skips Dependabot via job-level if: guard"
 JOB_IF=$(awk '
   /^  secret-scan:/ { in_job=1; next }
