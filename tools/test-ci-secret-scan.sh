@@ -94,9 +94,9 @@ echo "$DONE_MARK"
 echo "Check 6: secret-scan job skips Dependabot via job-level if: guard"
 JOB_IF=$(awk '
   /^  secret-scan:/ { in_job=1; next }
-  in_job && /^[[:space:]]+-[[:space:]]/ { exit }
-  in_job && /^[[:space:]]+steps:/ { exit }
-  in_job && /^[[:space:]]+if:/ { print; exit }
+  in_job && /^[[:space:]]+-[[:space:]]+["]?(name|uses|run|id|if)["]?:/ { exit }
+  in_job && /^[[:space:]]+"?steps"?:/ { exit }
+  in_job && /^[[:space:]]+"?if"?:/ { print; exit }
 ' "$TMPFILE")
 if ! echo "$JOB_IF" | grep -q "dependabot\[bot\]"; then
   error "secret-scan job has no job-level 'if:' guard excluding dependabot[bot]"
