@@ -161,6 +161,12 @@ jobs:
   secret-scan:
     name: Secret scan (gitleaks)
     runs-on: ubuntu-latest
+    # Dependabot runs workflows with a restricted secret context, so the
+    # licensed gitleaks-action's required GITLEAKS_LICENSE is unavailable and the
+    # job fails with "missing gitleaks license" (Fleet Monitor issue #397).
+    # Dependabot only bumps dependency pins and cannot introduce secrets, so skip
+    # the scan on its events; full coverage still runs on all human/push runs.
+    if: ${{ github.actor != 'dependabot[bot]' }}
     permissions:
       contents: read
       security-events: write
