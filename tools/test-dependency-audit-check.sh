@@ -27,7 +27,8 @@ CALLER_JOB="dependency-audit"
 
 ERRORS=0
 error() {
-  echo "ERROR: $1" >&2
+  local message="$1"
+  echo "ERROR: $message" >&2
   ERRORS=$((ERRORS + 1))
 }
 
@@ -47,17 +48,27 @@ if command -v python3 >/dev/null 2>&1 && python3 -c "import yaml" >/dev/null 2>&
 import sys, yaml
 
 with open(sys.argv[1]) as fh:
-    wf = yaml.safe_load(fh) or {}
+    wf = yaml.safe_load(fh)
+if not isinstance(wf, dict):
+    wf = {}
 
-# YAML parses the bare key `on:` as the boolean True, so accept either form.
+# YAML parses the bare key 'on:' as the boolean True, so accept either form.
 on = wf.get("on", wf.get(True, {}))
-if not isinstance(on, dict):
+if isinstance(on, list):
+    on = {k: None for k in on}
+elif isinstance(on, str):
+    on = {on: None}
+elif not isinstance(on, dict):
     on = {}
 
 def branches(event):
+    if event not in on:
+        return None
     node = on.get(event)
     if not isinstance(node, dict):
-        return None
+        return ["main"]
+    if "branches" not in node:
+        return ["main"]
     b = node.get("branches")
     if isinstance(b, str):
         return [b]
@@ -86,14 +97,14 @@ echo "  done."
 
 echo ""
 echo "Check 2: a job with id '$CALLER_JOB' exists (left side of the check context)"
-if ! grep -qE "^[[:space:]]{2}${CALLER_JOB}:[[:space:]]*$" "$WORKFLOW"; then
+if ! grep -qE "^[[:space:]]+${CALLER_JOB}:[[:space:]]*$" "$WORKFLOW"; then
   error "$WORKFLOW does not define a job id '$CALLER_JOB' — the check context would not be '$CALLER_JOB / Detect ecosystems'"
 fi
 echo "  done."
 
 echo ""
 echo "Check 3: the job calls the org dependency-audit reusable, pinned to a ref"
-if ! grep -qE "uses:[[:space:]]*${REUSABLE}@" "$WORKFLOW"; then
+if ! grep -qE "uses:[[:space:]]*['\"]?${REUSABLE}@" "$WORKFLOW"; then
   error "$WORKFLOW does not call '${REUSABLE}@<ref>' — the reusable's 'Detect ecosystems' job supplies the right side of the check context"
 fi
 echo "  done."
