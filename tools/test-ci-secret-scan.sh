@@ -85,6 +85,23 @@ if ! echo "$GITLEAKS_ARGS" | grep -q -- '--exit-code 1'; then
 fi
 echo "$DONE_MARK"
 
+# Check 6: secret-scan job is skipped for Dependabot events.
+# Dependabot PR runs do not have access to secrets.GITLEAKS_LICENSE; the
+# licensed gitleaks-action requires that secret and fails with "missing gitleaks
+# license" (Fleet Monitor issue #397). The job must carry a job-level `if:`
+# guard that excludes the dependabot[bot] actor.
+echo "Check 6: secret-scan job skips Dependabot via job-level if: guard"
+JOB_IF=$(awk '
+  /^  secret-scan:/ { in_job=1; next }
+  in_job && /^[[:space:]]+-[[:space:]]+["]?(name|uses|run|id|if)["]?:/ { exit }
+  in_job && /^[[:space:]]+"?steps"?:/ { exit }
+  in_job && /^[[:space:]]+"?if"?:/ { print; exit }
+' "$TMPFILE")
+if ! echo "$JOB_IF" | grep -q "dependabot\[bot\]"; then
+  error "secret-scan job has no job-level 'if:' guard excluding dependabot[bot]"
+fi
+echo "$DONE_MARK"
+
 echo ""
 if [[ "$ERRORS" -gt 0 ]]; then
   echo "secret-scan compliance check failed with $ERRORS error(s)" >&2
