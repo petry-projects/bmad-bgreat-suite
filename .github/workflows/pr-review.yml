@@ -42,6 +42,15 @@ permissions: {}
 
 jobs:
   review:
+    # Dependabot-triggered pull_request events run in a restricted secret context
+    # where org secrets forwarded via `secrets: inherit` (DON_PETRY_BOT_GH_PAT_CLASSIC)
+    # are unavailable, so the reusable's "Verify auth scopes" step fails and the run
+    # turns red (Fleet Monitor issue #398). Skip them here — Dependabot PRs are
+    # handled by dependabot-automerge.yml, mirroring pr-auto-review.yml.
+    # The check uses the structural branch name, not actor/identity fields (S6931).
+    # For check_suite / workflow_dispatch / repository_dispatch events there is no
+    # pull_request.head.ref, so startsWith(null, ...) == false and the job runs.
+    if: "!startsWith(github.event.pull_request.head.ref, 'dependabot/')"
     permissions:
       contents: read
       pull-requests: write
