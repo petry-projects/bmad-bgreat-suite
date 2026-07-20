@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 # Validates that .github/workflows/pr-review-mention.yml skips bot-authored comments.
 #
-# The mention-trigger caller fires on issue_comment / pull_request_review_comment
-# events. When a bot (e.g. GitHub Copilot, CodeRabbit) posts a review comment,
+# The mention-trigger caller fires on issue_comment, pull_request_review_comment,
+# and pull_request (review_requested) events. When a bot (e.g. GitHub Copilot,
+# CodeRabbit) posts a review comment,
 # GitHub gates the resulting workflow run as `action_required` (pending manual
 # approval); it never runs, and Fleet Monitor counts it as a failure — which
 # pushed the failure rate over threshold (issue #402). The mention trigger only
