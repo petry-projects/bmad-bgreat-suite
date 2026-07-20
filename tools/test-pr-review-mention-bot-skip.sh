@@ -74,7 +74,7 @@ if guard is None:
     sys.exit(1)
 
 # Normalise whitespace so the assertion is robust to formatting.
-normalised = "".join(str(guard).split())
+normalised = "".join(str(guard).split()).replace('"', "'")
 
 if "github.event.comment.user.type" not in normalised:
     print(
