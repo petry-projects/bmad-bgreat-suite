@@ -396,10 +396,6 @@ actionlint.tar.gz
 # End of petry-projects secrets baseline
 # ============================================================================
 # <<< END petry-projects secrets baseline <<<
-#
-#
-
-# 13. Agent / local worktrees (org coding policy)
 
 # bmad-bgreat-suite repo-specific entries
 node_modules/
