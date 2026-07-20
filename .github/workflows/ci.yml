@@ -152,6 +152,9 @@ jobs:
       - name: Validate pr-review Dependabot skip guard
         run: bash tools/test-pr-review-dependabot-skip.sh
 
+      - name: Validate pr-review-mention bot-comment skip guard
+        run: bash tools/test-pr-review-mention-bot-skip.sh
+
       - name: Validate secret-scan job compliance
         run: bash tools/test-ci-secret-scan.sh
 
