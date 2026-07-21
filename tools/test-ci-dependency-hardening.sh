@@ -14,9 +14,11 @@ set -euo pipefail
 ERRORS=0
 CI_FILE=".github/workflows/ci.yml"
 LOCK_FILE="package-lock.json"
+readonly DONE_MSG="  done."
 
 error() {
-  echo "ERROR: $1" >&2
+  local message="$1"
+  echo "ERROR: $message" >&2
   ERRORS=$((ERRORS + 1))
 }
 
@@ -36,7 +38,7 @@ echo "Check 1: at least one pip install step exists to validate"
 if [[ ${#PIP_LINES[@]} -eq 0 ]]; then
   error "$CI_FILE has no 'pip install' step — expected the PyYAML install"
 fi
-echo "  done."
+echo "$DONE_MSG"
 
 echo "Check 2: every pip install passes --only-binary :all: (S8541)"
 for entry in "${PIP_LINES[@]}"; do
@@ -44,7 +46,7 @@ for entry in "${PIP_LINES[@]}"; do
     error "pip install missing '--only-binary :all:': ${entry#*:}"
   fi
 done
-echo "  done."
+echo "$DONE_MSG"
 
 echo "Check 3: every pip install pins an exact version with == (S8544)"
 for entry in "${PIP_LINES[@]}"; do
@@ -53,13 +55,13 @@ for entry in "${PIP_LINES[@]}"; do
     error "pip install does not pin a version (name==X.Y.Z): ${entry#*:}"
   fi
 done
-echo "  done."
+echo "$DONE_MSG"
 
 echo "Check 4: a committed lock file accompanies package.json (S8564)"
 if [[ -f "package.json" && ! -f "$LOCK_FILE" ]]; then
   error "Missing $LOCK_FILE — package.json needs a committed lock file"
 fi
-echo "  done."
+echo "$DONE_MSG"
 
 echo ""
 if [[ "$ERRORS" -gt 0 ]]; then
