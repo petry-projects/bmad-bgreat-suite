@@ -18,7 +18,7 @@ readonly DONE_MSG="  done."
 
 error() {
   local message="$1"
-  echo "ERROR: $message" >&2
+  printf "ERROR: %s\n" "$message" >&2
   ERRORS=$((ERRORS + 1))
 }
 
