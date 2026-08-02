@@ -35,6 +35,15 @@ permissions: {}
 
 jobs:
   pr-review-mention:
+    # Bot-authored comment events (e.g. GitHub Copilot, CodeRabbit posting review
+    # comments) trigger this workflow but are gated by GitHub as `action_required`
+    # (pending manual approval); they never run, and Fleet Monitor counts them as
+    # failures, pushing the failure rate over threshold (issue #402). The mention
+    # trigger only needs to respond to human @-mentions, so skip comment events
+    # whose author is a Bot. Uses the structural comment-author type, not
+    # spoofable actor/identity fields (S6931). For pull_request (review_requested)
+    # events there is no comment object, so the field is null and the job runs.
+    if: ${{ github.event.comment.user.type != 'Bot' }}
     permissions:
       pull-requests: write
     uses: petry-projects/.github/.github/workflows/pr-review-mention-reusable.yml@pr-review-mention/v2-ring1  # NOSONAR(githubactions:S7637) first-party channel ref

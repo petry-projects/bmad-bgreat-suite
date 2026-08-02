@@ -18,7 +18,7 @@ jobs:
     name: Validate
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Install PyYAML
         # Retry to absorb transient PyPI/network hiccups so a single failed
@@ -149,6 +149,12 @@ jobs:
       - name: Validate dev-lead concurrency guard
         run: bash tools/test-dev-lead-concurrency.sh
 
+      - name: Validate pr-review Dependabot skip guard
+        run: bash tools/test-pr-review-dependabot-skip.sh
+
+      - name: Validate pr-review-mention bot-comment skip guard
+        run: bash tools/test-pr-review-mention-bot-skip.sh
+
       - name: Validate secret-scan job compliance
         run: bash tools/test-ci-secret-scan.sh
 
@@ -158,15 +164,23 @@ jobs:
       - name: Validate PyYAML install retry hardening
         run: bash tools/test-ci-pip-retry.sh
 
+      - name: Validate dependency-audit required-check contract
+        run: bash tools/test-dependency-audit-check.sh
+
   secret-scan:
     name: Secret scan (gitleaks)
     runs-on: ubuntu-latest
+    # Dependabot PR runs do not have access to secrets.GITLEAKS_LICENSE; the
+    # licensed gitleaks-action requires that secret and fails with "missing gitleaks
+    # license" (Fleet Monitor issue #397). Skip the scan on its events;
+    # full coverage still runs on all human/push runs.
+    if: ${{ github.actor != 'dependabot[bot]' }}
     permissions:
       contents: read
       security-events: write
     steps:
       - name: Checkout (full history)
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
 
