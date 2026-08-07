@@ -71,10 +71,13 @@ echo ""
 echo "Check 4: $WORKFLOW runs $APPLIER for the pr-quality ruleset"
 if [[ ! -f "$WORKFLOW" ]]; then
   error "Missing $WORKFLOW"
-elif ! grep -q 'apply-rulesets.sh' "$WORKFLOW"; then
-  error "$WORKFLOW does not invoke apply-rulesets.sh — the ruleset will not be re-applied on merge"
-elif ! grep -Eq 'apply-rulesets\.sh.*pr-quality' "$WORKFLOW"; then
-  error "$WORKFLOW invokes apply-rulesets.sh but not for the pr-quality ruleset"
+else
+  normalized_workflow=$(tr '"' "'" < "$WORKFLOW")
+  if ! echo "$normalized_workflow" | grep -q "apply-rulesets.sh"; then
+    error "$WORKFLOW does not invoke apply-rulesets.sh — the ruleset will not be re-applied on merge"
+  elif ! echo "$normalized_workflow" | grep -Eq "apply-rulesets\.sh.*pr-quality"; then
+    error "$WORKFLOW invokes apply-rulesets.sh but not for the pr-quality ruleset"
+  fi
 fi
 echo "$DONE_MARK"
 

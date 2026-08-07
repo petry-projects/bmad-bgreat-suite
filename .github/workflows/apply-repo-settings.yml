@@ -12,6 +12,10 @@ on:
       - main
   workflow_dispatch:
 
+concurrency:
+  group: apply-repo-settings
+  cancel-in-progress: false
+
 permissions: {}
 
 jobs:
