@@ -61,14 +61,14 @@ apply_one() {
     echo "  update ruleset '${name}' (id ${id}) on ${repo}"
     if [ "$DRY_RUN" = "true" ]; then echo "    [dry-run] PUT repos/${repo}/rulesets/${id}"; return 0; fi
     gh api --method PUT "repos/${repo}/rulesets/${id}" --input "$file" >/dev/null || {
-      echo "::error::failed to update ruleset '${name}' on ${repo}" >&2
+      echo "::error::API request failed" >&2
       return 1
     }
   else
     echo "  create ruleset '${name}' on ${repo}"
     if [ "$DRY_RUN" = "true" ]; then echo "    [dry-run] POST repos/${repo}/rulesets"; return 0; fi
     gh api --method POST "repos/${repo}/rulesets" --input "$file" >/dev/null || {
-      echo "::error::failed to create ruleset '${name}' on ${repo}" >&2
+      echo "::error::API request failed" >&2
       return 1
     }
   fi
