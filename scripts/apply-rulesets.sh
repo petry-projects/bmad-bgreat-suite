@@ -50,7 +50,7 @@ apply_one() {
   local repo="$1" file="$2"
   local name id id_rc=0
   name="$(jq -r '.name' "$file")"
-  [[ -n "$name" ]] && [[ "$name" != "null" ]] || { echo "::error::$file has no .name" >&2; return 1; }
+  [[ -n "$name" && "$name" != "null" ]] || { echo "::error::$file has no .name" >&2; return 1; }
   id="$(ruleset_id_by_name "$repo" "$name")" && id_rc=0 || id_rc=$?
   if [[ "$id_rc" -ne 0 ]]; then
     echo "::error::failed to resolve ruleset ID for '${name}' on ${repo}" >&2
@@ -59,14 +59,14 @@ apply_one() {
 
   if [[ -n "$id" ]]; then
     echo "  update ruleset '${name}' (id ${id}) on ${repo}"
-    if [[ "$DRY_RUN" = "true" ]]; then echo "    [dry-run] PUT repos/${repo}/rulesets/${id}"; return 0; fi
+    if [[ "$DRY_RUN" == "true" ]]; then echo "    [dry-run] PUT repos/${repo}/rulesets/${id}"; return 0; fi
     gh api --method PUT "repos/${repo}/rulesets/${id}" --input "$file" >/dev/null || {
       echo "::error::API request failed" >&2
       return 1
     }
   else
     echo "  create ruleset '${name}' on ${repo}"
-    if [[ "$DRY_RUN" = "true" ]]; then echo "    [dry-run] POST repos/${repo}/rulesets"; return 0; fi
+    if [[ "$DRY_RUN" == "true" ]]; then echo "    [dry-run] POST repos/${repo}/rulesets"; return 0; fi
     gh api --method POST "repos/${repo}/rulesets" --input "$file" >/dev/null || {
       echo "::error::API request failed" >&2
       return 1
@@ -131,6 +131,6 @@ main() {
 }
 
 # Source-guard: tests source this to exercise ruleset_id_by_name / apply_one.
-if [[ "${BASH_SOURCE[0]:-$0}" = "$0" ]]; then
+if [[ "${BASH_SOURCE[0]:-$0}" == "$0" ]]; then
   main "$@"
 fi
