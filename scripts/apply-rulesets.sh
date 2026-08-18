@@ -122,8 +122,12 @@ main() {
   if [[ "${#names[@]}" -eq 0 ]]; then names=("${FLEET_RULESETS[@]}"); fi
   local n
   for n in "${names[@]}"; do
-    [[ -f "${RULESETS_DIR}/${n}.json" ]] && files+=("${RULESETS_DIR}/${n}.json") \
-      || { echo "::error::no ruleset file ${n}.json in ${RULESETS_DIR}" >&2; return 1; }
+    if [[ -f "${RULESETS_DIR}/${n}.json" ]]; then
+      files+=("${RULESETS_DIR}/${n}.json")
+    else
+      echo "::error::no ruleset file ${n}.json in ${RULESETS_DIR}" >&2
+      return 1
+    fi
   done
   [[ "${#files[@]}" -gt 0 ]] || { echo "  no ruleset files to apply"; return 0; }
 
