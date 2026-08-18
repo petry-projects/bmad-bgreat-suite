@@ -37,12 +37,12 @@ readonly FLEET_RULESETS=(pr-quality)
 ruleset_id_by_name() {
   local repo="$1" name="$2"
   local output rc=0
-  output=$(gh api --paginate "repos/${repo}/rulesets" 2>/dev/null) && rc=0 || rc=$?
+  output=$(gh api --paginate "repos/${repo}/rulesets?includes_parents=false" 2>/dev/null) && rc=0 || rc=$?
   if [ "$rc" -ne 0 ]; then
     echo "::error::failed to fetch rulesets for ${repo} (exit code ${rc})" >&2
     return "$rc"
   fi
-  echo "$output" | jq -r --arg n "$name" 'if type=="array" then .[] else . end | select(.name==$n) | .id'
+  echo "$output" | jq -r --arg n "$name" --arg r "$repo" 'if type=="array" then .[] else . end | select(.name == $n and .source_type == "Repository" and .source == $r) | .id'
 }
 
 # apply_one <repo> <json_file> — create or update the ruleset described by json_file.

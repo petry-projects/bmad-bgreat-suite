@@ -46,14 +46,31 @@ if not pr_rules:
     sys.exit("no pull_request rule found")
 
 for rule in pr_rules:
-    if rule.get("parameters", {}).get("dismiss_stale_reviews_on_push") is not True:
+    params = rule.get("parameters", {})
+
+    if params.get("dismiss_stale_reviews_on_push") is not True:
         sys.exit("dismiss_stale_reviews_on_push is not true")
+
+    if params.get("allowed_merge_methods") != ["squash"]:
+        sys.exit("allowed_merge_methods must equal exactly [\"squash\"]")
+
+    if not isinstance(params.get("required_approving_review_count"), int) or params.get("required_approving_review_count") < 1:
+        sys.exit("required_approving_review_count must be at least 1")
+
+    if params.get("require_code_owner_review") is not True:
+        sys.exit("require_code_owner_review must be true")
+
+    if params.get("required_review_thread_resolution") is not True:
+        sys.exit("required_review_thread_resolution must be true")
+
+    if params.get("require_last_push_approval") is not True:
+        sys.exit("require_last_push_approval must be true")
 PY
   then
-    error "$RULESET does not set dismiss_stale_reviews_on_push to true in the pull_request rule"
+    error "$RULESET does not comply with required pull_request controls"
   fi
 else
-  error "Cannot check dismiss_stale_reviews_on_push — $RULESET is missing"
+  error "Cannot check pull_request controls — $RULESET is missing"
 fi
 echo "$DONE_MARK"
 
