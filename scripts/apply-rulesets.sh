@@ -101,6 +101,7 @@ main() {
       --repo)
         [[ "$#" -ge 2 ]] || { echo "::error::--repo requires a value" >&2; return 2; }
         local value="$2"
+        [[ "$value" != --* ]] || { echo "::error::--repo requires a repository value, not a flag: $value" >&2; return 2; }
         target="$value"; shift 2 ;;
       --dry-run) DRY_RUN=true; shift ;;
       --*)       echo "::error::unknown flag: $arg" >&2; return 2 ;;
