@@ -30,7 +30,7 @@ fi
 echo "$DONE_MARK"
 
 # Check 2: the pull_request rule requires dismiss_stale_reviews_on_push (compliance
-# check ruleset-drift-pr-quality-dismiss_stale_reviews_on_push, issues #427, #445, #447).
+# check ruleset-drift-pr-quality-dismiss_stale_reviews_on_push, issues #427, #445, #447, #453).
 echo ""
 echo "Check 2: pull_request rule sets dismiss_stale_reviews_on_push to true"
 if [[ -f "$RULESET" ]]; then
