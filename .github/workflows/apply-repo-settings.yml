@@ -35,8 +35,6 @@ on:
         default: false
   push:
     branches: [main]
-    paths:
-      - '.github/workflows/apply-repo-settings.yml'
 
 permissions: {}
 
