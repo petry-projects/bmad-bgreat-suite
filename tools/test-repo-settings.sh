@@ -54,14 +54,22 @@ elif ! grep -E -q '"app_id"[[:space:]]*:[[:space:]]*347564[[:space:]]*,[[:space:
 fi
 echo "$DONE_MARK"
 
-# Check that the workflow has no paths: filter so it runs on every push to main
+# Check that the workflow uses the reusable caller-stub trigger model: a weekly
+# self-heal schedule plus manual dispatch, so settings converge on a cadence and
+# remain recoverable. As a thin caller for the org reusable workflow it also runs
+# on a path-scoped push when the stub file itself changes, so a `paths:` filter is
+# expected here and is no longer rejected.
 echo ""
-echo "Check 4: apply-repo-settings.yml triggers on every push to main (no paths: filter)"
+echo "Check 4: apply-repo-settings.yml uses the weekly + workflow-change trigger model"
 WORKFLOW=".github/workflows/apply-repo-settings.yml"
 if [[ ! -f "$WORKFLOW" ]]; then
   error "Missing $WORKFLOW"
-elif grep -q '^[[:space:]]*paths:' "$WORKFLOW"; then
-  error "$WORKFLOW has a 'paths:' filter — the workflow will only run when the script itself changes, not on every push; the security setting may not be applied after a new merge"
+elif ! grep -Eq '^[[:space:]]*schedule:[[:space:]]*$' "$WORKFLOW"; then
+  error "$WORKFLOW has no weekly 'schedule:' trigger — settings must converge on a cadence, not only on push"
+elif ! grep -Eq '^[[:space:]]*-[[:space:]]*cron:' "$WORKFLOW"; then
+  error "$WORKFLOW declares 'schedule:' but defines no cron entry for the weekly self-heal"
+elif ! grep -Eq '^[[:space:]]*workflow_dispatch:' "$WORKFLOW"; then
+  error "$WORKFLOW has no 'workflow_dispatch:' trigger — settings must remain manually recoverable"
 fi
 echo "$DONE_MARK"
 

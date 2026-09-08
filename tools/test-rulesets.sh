@@ -82,18 +82,26 @@ if [[ ! -f "$APPLIER" ]]; then
 fi
 echo "$DONE_MARK"
 
-# Check 4: the settings workflow applies the pr-quality ruleset on push to main so
-# drift self-heals after each merge.
+# Check 4: the settings workflow converges the pr-quality ruleset so drift
+# self-heals. This is satisfied either by the thin caller-stub model — the workflow
+# references the approved org reusable (apply-repo-settings-reusable.yml on its
+# first-party channel pin), which runs the ruleset remediation centrally — or by
+# the legacy model where the workflow invokes apply-rulesets.sh for pr-quality
+# locally. Either contract keeps pr-quality drift self-healing.
 echo ""
-echo "Check 4: $WORKFLOW runs $APPLIER for the pr-quality ruleset"
+echo "Check 4: $WORKFLOW converges the pr-quality ruleset (reusable ref or local applier)"
 if [[ ! -f "$WORKFLOW" ]]; then
   error "Missing $WORKFLOW"
 else
   normalized_workflow=$(tr '"' "'" < "$WORKFLOW")
-  if ! echo "$normalized_workflow" | grep -q "apply-rulesets.sh"; then
-    error "$WORKFLOW does not invoke apply-rulesets.sh — the ruleset will not be re-applied on merge"
-  elif ! echo "$normalized_workflow" | grep -Eq "apply-rulesets\.sh.*pr-quality"; then
+  if echo "$normalized_workflow" | grep -Eq "uses:[[:space:]]*petry-projects/\.github/\.github/workflows/apply-repo-settings-reusable\.yml@apply-repo-settings/"; then
+    :  # approved reusable-workflow reference — ruleset remediation runs centrally
+  elif echo "$normalized_workflow" | grep -Eq "apply-rulesets\.sh.*pr-quality"; then
+    :  # legacy local applier model — also compliant
+  elif echo "$normalized_workflow" | grep -q "apply-rulesets.sh"; then
     error "$WORKFLOW invokes apply-rulesets.sh but not for the pr-quality ruleset"
+  else
+    error "$WORKFLOW neither references the approved apply-repo-settings-reusable workflow nor invokes apply-rulesets.sh for pr-quality — the ruleset will not be re-applied on merge"
   fi
 fi
 echo "$DONE_MARK"
