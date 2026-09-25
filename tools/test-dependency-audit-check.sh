@@ -81,13 +81,42 @@ for event in ("pull_request", "push"):
         problems.append(f"missing '{event}:' trigger")
     elif "main" not in b:
         problems.append(f"'{event}:' does not target 'main' (got {b})")
+
+# 'merge_group' is part of the canonical trigger set (standards/workflows/
+# dependency-audit.yml). It is required so the 'dependency-audit / Detect
+# ecosystems' check reports on a merge queue's 'gh-readonly-queue/*' ref;
+# dropping it is centrally-owned 'on:' drift.
+if "merge_group" not in on:
+    problems.append("missing 'merge_group:' trigger")
+else:
+    # A bare 'merge_group:' (null) or one without an explicit 'types:' uses the
+    # default activity type 'checks_requested', which fires on a merge queue. But
+    # an explicit 'types:' that omits 'checks_requested' silently stops the
+    # workflow from running on merge-queue requests while still passing a
+    # bare-presence check, so the required check never reports there.
+    mg = on.get("merge_group")
+    if isinstance(mg, dict) and "types" in mg:
+        types = mg.get("types")
+        if isinstance(types, str):
+            types = [types]
+        if not isinstance(types, list) or "checks_requested" not in types:
+            problems.append(
+                "'merge_group:' types do not include 'checks_requested' "
+                f"(got {mg.get('types')}) — the check would not run on a merge queue"
+            )
 print("\n".join(problems))
 PY
 )
   if [[ -n "$trigger_problems" ]]; then
     while IFS= read -r p; do
       [[ -z "$p" ]] && continue
-      error "$WORKFLOW $p — the required check must run on PRs to main to be satisfiable"
+      # 'merge_group' problems concern the merge-queue ref, not PRs to main, so
+      # branch the satisfiability suffix to steer a fixing developer correctly.
+      if [[ "$p" == *merge_group* ]]; then
+        error "$WORKFLOW $p — the required check must run on the merge queue (gh-readonly-queue/*) to be satisfiable"
+      else
+        error "$WORKFLOW $p — the required check must run on PRs to main to be satisfiable"
+      fi
     done <<< "$trigger_problems"
   fi
 else
