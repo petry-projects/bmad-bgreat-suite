@@ -88,6 +88,22 @@ for event in ("pull_request", "push"):
 # dropping it is centrally-owned 'on:' drift.
 if "merge_group" not in on:
     problems.append("missing 'merge_group:' trigger")
+else:
+    # A bare 'merge_group:' (null) or one without an explicit 'types:' uses the
+    # default activity type 'checks_requested', which fires on a merge queue. But
+    # an explicit 'types:' that omits 'checks_requested' silently stops the
+    # workflow from running on merge-queue requests while still passing a
+    # bare-presence check, so the required check never reports there.
+    mg = on.get("merge_group")
+    if isinstance(mg, dict) and "types" in mg:
+        types = mg.get("types")
+        if isinstance(types, str):
+            types = [types]
+        if not isinstance(types, list) or "checks_requested" not in types:
+            problems.append(
+                "'merge_group:' types do not include 'checks_requested' "
+                f"(got {mg.get('types')}) — the check would not run on a merge queue"
+            )
 print("\n".join(problems))
 PY
 )
