@@ -110,7 +110,13 @@ PY
   if [[ -n "$trigger_problems" ]]; then
     while IFS= read -r p; do
       [[ -z "$p" ]] && continue
-      error "$WORKFLOW $p — the required check must run on PRs to main to be satisfiable"
+      # 'merge_group' problems concern the merge-queue ref, not PRs to main, so
+      # branch the satisfiability suffix to steer a fixing developer correctly.
+      if [[ "$p" == *merge_group* ]]; then
+        error "$WORKFLOW $p — the required check must run on the merge queue (gh-readonly-queue/*) to be satisfiable"
+      else
+        error "$WORKFLOW $p — the required check must run on PRs to main to be satisfiable"
+      fi
     done <<< "$trigger_problems"
   fi
 else
