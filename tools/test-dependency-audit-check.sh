@@ -81,6 +81,13 @@ for event in ("pull_request", "push"):
         problems.append(f"missing '{event}:' trigger")
     elif "main" not in b:
         problems.append(f"'{event}:' does not target 'main' (got {b})")
+
+# 'merge_group' is part of the canonical trigger set (standards/workflows/
+# dependency-audit.yml). It is required so the 'dependency-audit / Detect
+# ecosystems' check reports on a merge queue's 'gh-readonly-queue/*' ref;
+# dropping it is centrally-owned 'on:' drift.
+if "merge_group" not in on:
+    problems.append("missing 'merge_group:' trigger")
 print("\n".join(problems))
 PY
 )
