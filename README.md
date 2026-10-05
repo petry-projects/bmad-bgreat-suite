@@ -1,5 +1,7 @@
 # BMad BGreat Suite
 
+[![Contributing](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](https://github.com/petry-projects/.github/blob/main/CONTRIBUTING.md)
+
 Additional agents to extend the [BMad Method](https://github.com/bmad-code-org/BMAD-METHOD) ecosystem.
 
 Three specialized agents — **Morgan** (SRE Lead), **Riley** (DevOps Lead), and **Sam** (Security Lead) — with ten guided workflows and a cross-agent operations review that produce production-readiness artifacts alongside your architecture planning.
@@ -141,14 +143,29 @@ This module incorporates ideas from these MIT-licensed projects in the BMad ecos
 - [Ricoledan/bmad-architecture-agent](https://github.com/Ricoledan/bmad-architecture-agent) — Platform Engineering expansion pack patterns (agent "Sam")
 - [bacoco/BMad-Skills](https://github.com/bacoco/BMad-Skills) — Observability readiness skill structure and reference patterns
 
+## Commercial Support & Integration
+
+Need enterprise SLAs, custom integrations, or managed DevOps/SRE agent workflows for the BMad Method ecosystem?
+
+Commercial support and services are offered through **[CombSmith LLC](https://combsmith.com)**:
+- **Enterprise Support SLAs:** Priority bug fixes, dedicated maintenance windows, and security updates.
+- **Custom Integrations:** Bespoke SRE/DevOps agents, pipeline integrations, and custom BMad workflows.
+- **Consulting & Implementation:** Architectural guidance, reliability engineering, and agentic DevOps rollout.
+
+For commercial inquiries, email [support@combsmith.com](mailto:support@combsmith.com) or visit [combsmith.com](https://combsmith.com).
+
+---
+
 ## Contributing
 
-Contributions welcome. This module is designed to grow — new agents and workflows can be added following the patterns in `src/agents/` and `src/workflows/`.
+See the org-wide [Contributing Guide](https://github.com/petry-projects/.github/blob/main/CONTRIBUTING.md). Contributions welcome. This module is designed to grow — new agents and workflows can be added following the patterns in `src/agents/` and `src/workflows/`.
 
 1. Fork the repo
 2. Create a feature branch
 3. Follow existing conventions (SKILL.md, bmad-skill-manifest.yaml, workflow.md, steps/)
 4. Submit a PR with a clear description
+
+---
 
 ## License
 
